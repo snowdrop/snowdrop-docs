@@ -1,8 +1,6 @@
 jQuery(document).ready(function($) {
 
-    var all_genre = ["Crime", "Drama", "Thriller", "Adventure", "Western", "Action", "Biography",
-        "History", "War", "Fantasy", "Sci-Fi", "Mystery", "Romance", "Family", "Horror",
-        "Film-Noir", "Comedy", "Animation", "Musical", "Music", "Sport"];
+    var all_genre = ["Microservice", "Security", "Openshift"];
     var genre_template = Mustache.compile($.trim($("#genre_template").html()))
         ,$genre_container = $('#genre_criteria')
 
@@ -34,8 +32,8 @@ jQuery(document).ready(function($) {
         }
     });
 
-    $.each(Movies, function(i, m){ m.id = i+1; });
-    window.mf = MovieFilter(Movies);
+    $.each(guides, function(i, m){ m.id = i+1; });
+    window.mf = guideFilter(guides);
 
     $('#genre_criteria :checkbox').prop('checked', true);
     $('#all_genre').on('click', function(e){
@@ -45,16 +43,16 @@ jQuery(document).ready(function($) {
 
 });
 
-var MovieFilter = function(data){
+var guideFilter = function(data){
     var template = Mustache.compile($.trim($("#template").html()));
 
-    var view = function(movie){
-        movie.stars = movie.stars.join(', ');
-        return template(movie);
+    var view = function(guide){
+        guide.stars = guide.stars.join(', ');
+        return template(guide);
     };
     var callbacks = {
         after_filter: function(result){
-            $('#total_movies').text(result.length);
+            $('#total_guides').text(result.length);
         },
         before_add: function(data){
             var offset = this.data.length;
@@ -82,11 +80,11 @@ var MovieFilter = function(data){
         callbacks: callbacks,
         search: {input: '#searchbox'},
         streaming: {
-            data_url: 'data/top_movies_data.json',
+            data_url: 'data/top_guides_data.json',
             stream_after: 1,
             batch_size: 50
         }
     }
 
-    return FilterJS(data, "#movies", view, options);
+    return FilterJS(data, "#guides", view, options);
 }

@@ -2,10 +2,10 @@ $(document).ready(function(){
 
     initSliders();
 
-    var FJS = FilterJS.auto(movies)
+    var FJS = FilterJS.auto(guides)
 
     FJS.addCallback('afterFilter', function(result){
-        $('#total_movies').text(result.length);
+        $('#total_guides').text(result.length);
     });
 
     FJS.filter();

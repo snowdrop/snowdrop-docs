@@ -1,0 +1,10 @@
+= Sample Page
+:page-layout: guide
+:page-permalink: /guides/
+:uri-asciidoctor: http://asciidoctor.org
+
+This is a simple HTTP Api quickstart.
+Jekyll converts it to HTML using {uri-asciidoctor}[Asciidoctor].
+
+[source,ruby]
+puts "Hello, World!"

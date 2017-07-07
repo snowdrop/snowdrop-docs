@@ -6,16 +6,16 @@
   <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
   <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
 
-  <link rel="shortcut icon" src="{{ "assets/img/snowdrop_icon_16px.ico" | prepend: site.url }}">
+  <link rel="shortcut icon" src="{{ site.url }}{{ site.baseurl }}/assets/img/snowdrop_icon_16px.ico">
 
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="{{ "assets/bootstrap.min.css" | prepend: site.url }}">
+  <link rel="stylesheet" href="{{ site.url }}{{ site.baseurl }}/assets/bootstrap.min.css">
   <!-- Custom styles for this template -->
-  <link rel="stylesheet" href="{{ "assets/narrow-jumbotron.css" | prepend: site.url }}">
+  <link rel="stylesheet" href="{{ site.url }}{{ site.baseurl }}/assets/narrow-jumbotron.css">
 
-  <link rel="stylesheet" href="{{ "assets/main.css" | prepend: site.url }}">
+  <link rel="stylesheet" href="{{ site.url }}{{ site.baseurl }}/assets/main.css">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
-  <link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }}" href="{{ "/feed.xml" | relative_url }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }}" href="{{ site.url }}{{ site.baseurl }}/feed.xml">
   
   {% if jekyll.environment == 'production' and site.google_analytics %}
   {% include google-analytics.html %}

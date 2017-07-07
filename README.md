@@ -1,6 +1,8 @@
 # Instructions
 
 ```bash
+rm -rf _site
+jekyll build --baseurl /site
 rm -rf gh-pages && git clone https://github.com/snowdrop/site.git gh-pages
 cd gh-pages && git checkout gh-pages
 git rm -rf .

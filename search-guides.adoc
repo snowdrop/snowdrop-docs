@@ -1,0 +1,9 @@
+:page-layout: search-guides
+:page-permalink: /search-guides/
+:page-menu-guides: active
+
+# Guides
+
+Whatever you're building, these guides are designed to get you productive as quickly as possible –
+using the latest Spring project releases and techniques as recommended by the Spring team.
+Have a suggestion for a new guide? Let us know at @snowdrop.

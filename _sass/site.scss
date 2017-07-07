@@ -1,0 +1,24 @@
+// Custom variables for Snowdrop site
+$hero-container-width: 60rem;
+$snowdrop-color: #21a559;
+
+
+/* Customize container */
+@media (min-width: 48em) {
+  .container {
+    max-width: $hero-container-width;
+  }
+}
+
+
+.nav-pills .nav-link.active {
+  background-color: $snowdrop-color;
+}
+
+a {
+  color: $snowdrop-color;
+}
+
+.btn-success {
+  background-color: $snowdrop-color;
+}

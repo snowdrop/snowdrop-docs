@@ -15,36 +15,61 @@
 </head>
 <body>
 <div class="container">
-<!--    <div class="row">
-        <div class="col-lg-12">
-            <div class="page-header">
-                <h1>jQuery Searchable Plugin</h1>
+    <!--    <div class="row">
+            <div class="col-lg-12">
+                <div class="page-header">
+                    <h1>jQuery Searchable Plugin</h1>
+                </div>
+                <p>You can find the source of this plugin at <a href="http://github.com/stidges/jquery-searchable"
+                                                                target="_blank">Github</a>
+                    (http://github.com/stidges/jquery-searchable)!</p>
             </div>
-            <p>You can find the source of this plugin at <a href="http://github.com/stidges/jquery-searchable"
-                                                            target="_blank">Github</a>
-                (http://github.com/stidges/jquery-searchable)!</p>
+        </div>-->
+    <div class="container">
+        <div class="header clearfix">
+            <nav>
+                <ul class="nav navbar-default nav-pills float-right">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Overview <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="guides-search.html">Guides</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Community</a>
+                    </li>
+                </ul>
+            </nav>
+            <img src="img/snowdrop-logo.png" width="200" height="100"/>
         </div>
-    </div>-->
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="title">Guides</h1>
-            <div class="col-md-12">
-                Whatever you're building, these guides are designed to get you productive as quickly as possible – using the
-                latest Spring project releases and techniques as recommended by the Spring team.
-                Have a suggestion for a new guide? Let us know at @snowdrop.
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="title">Guides</h1>
+                <div class="col-md-12">
+                    Whatever you're building, these guides are designed to get you productive as quickly as possible –
+                    using the
+                    latest Spring project releases and techniques as recommended by the Spring team.
+                    Have a suggestion for a new guide? Let us know at @snowdrop.
+                </div>
             </div>
         </div>
-    </div>
-    <hr/>
-    <div class="row">
-        <div class="col-lg-4 col-lg-offset-12">
-            <input type="search" id="search" value="" class="form-control" placeholder="Search using Fuzzy searching">
+        <hr/>
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-12">
+                <input type="search" id="search" value="" class="form-control"
+                       placeholder="Search using Fuzzy searching">
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <table class="table table-borderless" id="table">
-                <tbody>
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-borderless" id="table">
+                    <tbody>
                     <tr>
                         <td>
                             <a href="https://github.com/snowdrop/spring-boot-http-booster">HTTP Api</a>
@@ -67,7 +92,8 @@
                         </td>
                         <td>
                             <a href="https://github.com/snowdrop/spring-boot-configmap-booster">Config Map</a>
-                            <p>Quickstart to expose a REST Greeting endpoint using Spring Boot where the message is defined
+                            <p>Quickstart to expose a REST Greeting endpoint using Spring Boot where the message is
+                                defined
                                 as a Kubernetes Config Map property</p>
                         </td>
                         <td>
@@ -77,7 +103,8 @@
                     </tr>
                     <tr>
                         <td>
-                            <a href="https://github.com/snowdrop/spring-boot-circuit-breaker-booster">Circuit Breaker</a>
+                            <a href="https://github.com/snowdrop/spring-boot-circuit-breaker-booster">Circuit
+                                Breaker</a>
                             <p>Service implementing Hystrix Circuit Breaker</p>
                         </td>
                         <td>
@@ -85,28 +112,37 @@
                             <p>Blank Spring Boot mission</p>
                         </td>
                     </tr>
-                </tbody>
-            </table>
-            <hr>
+                    </tbody>
+                </table>
+                <hr>
+            </div>
         </div>
     </div>
-</div>
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="js/jquery-3.2.1.min.js"></script>
-<script src="js/tether-1.4.0.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery-searchable-1.1.0.min.js"></script>
-<script>
-    $(function () {
-        $('#table').searchable({
-            striped: true,
-            searchType: 'fuzzy',
-            selector: 'tbody tr td',
-            childSelector: 'a'
+
+    <footer class="footer">
+        <p>&copy; Red Hat 2017</p>
+    </footer>
+</div> <!-- /container -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/tether.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+    <script src="js/jquery-searchable-1.1.0.min.js"></script>
+    <script>
+        $(function () {
+            $('#table').searchable({
+                striped: true,
+                searchType: 'fuzzy',
+                selector: 'tbody tr td',
+                childSelector: 'a'
+            });
         });
-    });
-</script>
+    </script>
 </body>
 </html>

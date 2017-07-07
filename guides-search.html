@@ -97,7 +97,8 @@
         $('#table').searchable({
             striped: true,
             searchType: 'fuzzy',
-            selector: "tbody tr"
+            selector: 'tbody tr td',
+            childSelector: 'a'
         });
     });
 </script>

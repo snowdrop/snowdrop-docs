@@ -2,10 +2,10 @@
     <nav>
         <ul class="nav navbar-default nav-pills float-right">
             <li class="nav-item">
-                <a class="nav-link {{ page.menu-index }}" href="{{ "/index.html" | prepend: site.url }}">Overview <span class="sr-only">(current)</span></a>
+                <a class="nav-link {{ page.menu-index }}" href="{{ "index.html" | prepend: site.url }}">Overview <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ page.menu-guides }}" href="{{ "/search-guides" | prepend: site.url }}">Guides</a>
+                <a class="nav-link {{ page.menu-guides }}" href="{{ "search-guides" | prepend: site.url }}">Guides</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Projects</a>
@@ -17,9 +17,9 @@
                 <a class="nav-link" href="#">Community</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ page.menu-about }}" href="{{ "/about" | prepend: site.url }}">About</a>
+                <a class="nav-link {{ page.menu-about }}" href="{{ "about" | prepend: site.url }}">About</a>
             </li>
         </ul>
     </nav>
-    <img src="{{ "assets/img/snowdrop-logo.png" | relative_url }}" width="200" height="100"/>
+    <img src="{{ "assets/img/snowdrop-logo.png" | prepend: site.url }}" width="200" height="100"/>
 </div>

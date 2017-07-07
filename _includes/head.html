@@ -6,14 +6,14 @@
   <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
   <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
 
-  <link rel="shortcut icon" src="{{ "assets/img/snowdrop_icon_16px.ico" | relative_url }}">
+  <link rel="shortcut icon" src="{{ "assets/img/snowdrop_icon_16px.ico" | prepend: site.url }}">
 
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="{{ "assets/bootstrap.min.css" | relative_url }}">
+  <link rel="stylesheet" href="{{ "assets/bootstrap.min.css" | prepend: site.url }}">
   <!-- Custom styles for this template -->
-  <link rel="stylesheet" href="{{ "assets/narrow-jumbotron.css" | relative_url }}">
+  <link rel="stylesheet" href="{{ "assets/narrow-jumbotron.css" | prepend: site.url }}">
 
-  <link rel="stylesheet" href="{{ "assets/main.css" | relative_url }}">
+  <link rel="stylesheet" href="{{ "assets/main.css" | prepend: site.url }}">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }}" href="{{ "/feed.xml" | relative_url }}">
   

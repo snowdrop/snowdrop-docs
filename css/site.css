@@ -1,0 +1,20 @@
+
+/* Customize container */
+@media (min-width: 48em) {
+    .container {
+        max-width: 60rem;
+    }
+}
+
+
+.nav-pills .nav-link.active {
+    background-color: #21a559;
+}
+
+a {
+    color: #21a559;
+}
+
+.btn-success {
+    background-color: #21a559;
+}

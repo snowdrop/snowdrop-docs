@@ -34,7 +34,7 @@ body {
 /* Customize container */
 @media (min-width: 48em) {
   .container {
-    max-width: 60rem;
+    max-width: 46rem;
   }
 }
 .container-narrow > hr {
@@ -76,16 +76,4 @@ body {
   .jumbotron {
     border-bottom: 0;
   }
-}
-
-.nav-pills .nav-link.active {
-  background-color: #21a559;
-}
-
-a {
-  color: #21a559;
-}
-
-.btn-success {
-  background-color: #21a559;
 }

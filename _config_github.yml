@@ -43,5 +43,4 @@ exclude:
   - README.md
   - Gemfile
   - deploy.sh
-  - generate_site.sh
   - .gitignore

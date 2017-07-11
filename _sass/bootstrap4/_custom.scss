@@ -1,0 +1,103 @@
+// Bootstrap overrides
+//
+// Copy variables from `_variables.scss` to this file to override default values
+// without modifying source files.
+
+// Red
+// $bgdefault: #e74c3c;
+// $bghighlight: #c0392b;
+// $coldefault: #ecf0f1;
+// $colhover: #ffbbbc;
+
+// $container-max-width: 54rem;
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 1080px,
+  xl: 1140px
+) !default;
+
+// Green
+//$bgdefault: #2ecc71;
+//$bghighlight: #27ae60;
+//$coldefault: #ecf0f1;
+//$colhover: #d1ffed;
+
+// Purple
+// $bgdefault      : #9b59b6;
+// $bghighlight    : #8e44ad;
+// $coldefault     : #ecf0f1;
+// $colhover       : #ecdbff;
+
+// Orange
+// $bgdefault      : #e67e22;
+// $bghighlight    : #d35400;
+// $coldefault     : #ecf0f1;
+// $colhover       : #ffe6d1;
+
+// --- Style ---
+// .navbar-default {
+//   background-color: $bgdefault;
+//   border-color: $bghighlight;
+//   .navbar-brand {
+//     color: $coldefault;
+//     &:hover, &:focus { color: $colhover; }
+//   }
+//   .navbar-nav {
+//     > li {
+//       > a {
+//         color: $coldefault;
+//         &:hover, &:focus { color: $colhover; }
+//       }
+//     }
+//     .active {
+//       > a, > a:hover, > a:focus {
+//         color: $colhover;
+//         background-color: $bghighlight;
+//       }
+//     }
+//     .open {
+//       > a, > a:hover, > a:focus {
+//         color: $colhover;
+//         background-color: $bghighlight;
+//         .caret {
+//           border-top-color: $colhover;
+//           border-bottom-color: $colhover;
+//         }
+//       }
+//     }
+//     > .dropdown {
+//       > a {
+//         .caret {
+//           border-top-color: $coldefault;
+//           border-bottom-color: $coldefault;
+//         }
+//         &:hover, &:focus {
+//           .caret {
+//             border-top-color: $colhover;
+//             border-bottom-color: $colhover;
+//           }
+//         }
+//       }
+//     }
+//   }
+//   .navbar-toggle {
+//     border-color: $bghighlight;
+//     &:hover, &:focus {
+//       background-color: $bghighlight;
+//     }
+//     .icon-bar {
+//       background-color: $coldefault;
+//     }
+//   }
+// }
+//
+// @media (max-width: 767px) {
+//   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+//     color: $coldefault;
+//     &:hover, &:focus {
+//       color: $colhover;
+//       background-color: $bghighlight;
+//     }
+//   }
+// }

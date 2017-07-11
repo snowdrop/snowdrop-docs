@@ -2,3 +2,19 @@
 //
 // Copy variables from `_variables.scss` to this file to override default values
 // without modifying source files.
+
+/*$snowdrop-color:  #426532;*/
+$snowdrop-color: #21a559;
+
+$white:           #fff !default;
+/*$blue:            #0275d8 !default;*/
+$blue: #9cd8ae !default;
+
+$brand-primary:             $blue !default;
+
+$brand-success:                  $snowdrop-color !default;
+$btn-success-color:              $white !default;
+$btn-success-bg:                 $brand-success !default;
+$btn-success-border:             $btn-success-bg !default;
+
+$link-color:                     $brand-primary !default;

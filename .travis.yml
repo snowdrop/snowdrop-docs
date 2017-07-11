@@ -1,6 +1,6 @@
 language: ruby
 rvm:
-- 2.3.1
+- 2.2
 sudo: false
 # Instructions : https://simpleit.rocks/automated-deployment-of-jekyll-websites-to-github-pages-with-a-git-push-to-github/
 before_script:

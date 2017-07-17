@@ -3,4 +3,4 @@
 :page-menu-about: active
 
 Snowdrop project aims to support Spring Technology deployed on Google Kubernetes or Red Hat OpenShift Platform to
-provide guides, patterns, documetation, tooling in order to improve the developer experience !
+provide guides, patterns, documentation, tooling in order to improve the developer experience !

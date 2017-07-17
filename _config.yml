@@ -27,10 +27,19 @@ sass:
   sass_dir: _sass
   style: compressed
 
+# assets:
+#   compress:
+#     css: false # TODO - To be investigated
+#     # js: true
+#   sources:
+#     - _assets/js
+#   features:
+#     liquid: false
+
 plugins:
   - jekyll-feed
   - jekyll-asciidoc
-  # TODO - jekyll-assets
+  - jekyll-assets
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: " en" }}">
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
 {% include head.html %}
 <body>
 <div class="container">
@@ -11,6 +11,9 @@
         <p>&copy; Red Hat 2017</p>
     </footer>
 </div>
+<!-- jekyll-asset generates this error when processing https://github.com/jekyll/jekyll-assets/issues/392
+     {% js main %}
+-->
 {% include scripts.html %}
 </body>
 </html>

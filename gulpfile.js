@@ -9,6 +9,7 @@ var concat = require('gulp-concat');
 var es = require('event-stream');
 var glob = require('glob');
 var gulp = require('gulp');
+var minify = require('gulp-minify');
 var gutil = require('gulp-util');
 var rename = require('gulp-rename');
 var runSequence = require('run-sequence');

@@ -56,4 +56,5 @@ plugins:
 exclude:
   - README.md
   - Gemfile
+  - node_modules
   - .gitignore

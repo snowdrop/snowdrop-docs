@@ -8,7 +8,7 @@
 
 ++++
 <div class="jumbotron jumbotron-fluid">
-    <h1 class="display-4">Create your Cloud Native Spring Boot application in 3 steps</h1>
+    <h1 class="display-4">Create your Cloud Native Spring Boot application</h1>
     <figure>
       <img src="assets/images/3-steps.png" width="750"></img>
     </figure>

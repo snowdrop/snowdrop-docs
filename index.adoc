@@ -12,7 +12,7 @@
     <figure>
       <img src="assets/images/3-steps.png" height="350"></img>
     </figure>
-    <p class="lead">By clicking on the button, you will access to the Prpject generator</p>
+    <p class="lead">By clicking on the <b>Start</b> button, you will access to the Project generator</p>
     <p><a class="btn btn-lg btn-success" href="https://launch.openshift.io/wizard" role="button">Start</a></p>
 </div>
 ++++

@@ -2,5 +2,8 @@
 :page-permalink: /about/
 :page-menu-about: active
 
-Snowdrop project aims to support Spring Technology deployed on Google Kubernetes or Red Hat OpenShift Platform to
-provide guides, patterns, documentation, tooling in order to improve the developer experience !
+Snowdrop project aims to help developer or architects to design Spring boot applications to be build or deploy on the Google Kubernetes platform
+or Red Hat OpenShift.
+
+To figure out how such project should be elabirated, we provide you guides, documentation, best practices like also tools
+in order to improve your developer experience around cloud-native application.

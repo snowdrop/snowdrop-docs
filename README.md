@@ -32,6 +32,6 @@ git push origin gh-pages
 ## CI Build & Deployment
 
 The site is build and deployed under gh-pages branch by Travis automatically every time you push a commit to git
-Travis uses the following bash script `./deploy.sh`. During the build/deployment process, jekyll to build the site will use
-this yaml config file `_config_github.yml`
+Travis uses the following bash script `./deploy.sh`. During the build/deployment process, jekyll, to build the site, will use
+the yaml config file `_config_github.yml`
 

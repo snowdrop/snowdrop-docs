@@ -1,11 +1,18 @@
 :page-layout: default
 :page-menu-index: active
 
+////
+<p class="lead">By clicking on the <b>start</b> button, you will be able to select a use case</p>
+    <p class="lead">, Spring Boot version to generate an opinionated maven project.</p>
+////
+
 ++++
 <div class="jumbotron jumbotron-fluid">
-    <h1 class="display-4">Design your Spring Boot Cloud-native application on OpenShift in 3 steps</h1>
-    <p class="lead">By clicking on the <b>start</b> button, you will be able to select a use case</p>
-    <p class="lead">, Spring Boot version to generate an opinionated maven project.</p>
+    <h1 class="display-4">Create your Spring Boot Cloud-native application in 3 steps</h1>
+    <figure>
+      <img src="assets/images/3-steps.png" height="350"></img>
+    </figure>
+    <p class="lead">By clicking on the button, you will access to the Prpject generator</p>
     <p><a class="btn btn-lg btn-success" href="https://launch.openshift.io/wizard" role="button">Start</a></p>
 </div>
 ++++

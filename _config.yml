@@ -58,5 +58,7 @@ exclude:
   - README.md
   - Gemfile
   - node_modules
+  - gulpfile.js
   - .gitignore
-  - .deploy.sh
+  - deploy.sh
+  - test.sh

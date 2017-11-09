@@ -22,6 +22,14 @@ version: 0.2.0
 baseurl: "/"
 url: "https://snowdrop.github.io/site"
 
+asciidoc:
+  processor: asciidoctor
+  ext: adoc
+
+asciidoctor:
+  attributes:
+    - source-highlighter=coderay
+
 plugins:
   - jekyll-feed
   - jekyll-asciidoc

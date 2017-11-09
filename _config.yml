@@ -33,9 +33,7 @@ asciidoc:
 
 asciidoctor:
   attributes:
-#    idprefix: _
-#    source-highlighter: rouge
-#    pygments-css: style
+    - source-highlighter=coderay
 
 # assets:
 #   compress:

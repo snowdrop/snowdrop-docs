@@ -27,6 +27,16 @@ sass:
   sass_dir: _sass
   style: compressed
 
+asciidoc:
+  processor: asciidoctor
+  ext: adoc
+
+asciidoctor:
+  attributes:
+    idprefix: _
+    source-highlighter: pygments
+    pygments-css: style
+
 # assets:
 #   compress:
 #     css: false # TODO - To be investigated

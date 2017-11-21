@@ -1,45 +1,65 @@
-<!-- TODO:
- - should really use bootstrap cards
- - review layout to avoid to use rows / columns
--->
-
-<div class="row">
-    <div class="col-sm">
-        <a href="{{ site.url }}{{ site.baseurl }}/guides/http-api" class="rhoar">HTTP API</a>
-        <p>Mission to expose a REST Greeting endpoint using SpringBoot and Apache Tomcat in embedded mode</p>
-    </div>
-    <div class="col-sm">
-        <a href="https://github.com/snowdrop/spring-boot-http-secured-booster" class="rhoar">Secured HTTP API</a>
-        <p>Mission to expose a REST Greeting endpoint using SpringBoot & Secured by Red Hat SSO</p>
-    </div>
-    <div class="col-sm">
-        <a href="https://github.com/snowdrop/spring-boot-crud-booster" class="rhoar">JPA</a>
-        <p>Mission to play with Spring Boot & JPA</p>
+<div class="card" style="width: 30%; margin: 1em;">
+    <h4 class="card-header rhoar">HTTP API</h4>
+    <div class="card-body" style="padding: .1em;">
+        <p class="card-text">Mission to expose a REST Greeting endpoint using SpringBoot and Apache Tomcat in embedded mode</p>
+        <a href="https://github.com/snowdrop/spring-boot-http-secured-booster" class="card-link">Get the code</a>
+        <a href="#" class="card-link">Documentation</a>
     </div>
 </div>
-<div class="row">
-    <div class="col-sm">
-        <a href="https://github.com/snowdrop/spring-boot-configmap-booster" class="rhoar">Externalized Configuration</a>
-        <p>Quickstart to expose a REST Greeting endpoint using Spring Boot where the message is
+<div class="card" style="width: 30%; margin: 1em;">
+    <h4 class="card-header rhoar">Secured HTTP API</h4>
+    <div class="card-body" style="padding: .1em;">
+        <p class="card-text">Mission to expose a REST Greeting endpoint using SpringBoot & Secured by Red Hat SSO</p>
+        <a href="https://github.com/snowdrop/spring-boot-http-secured-booster" class="card-link">Get the code</a>
+        <a href="#" class="card-link">Documentation</a>
+    </div>
+</div>
+<div class="card" style="width: 30%; margin: 1em;">
+    <h4 class="card-header rhoar">JPA</h4>
+    <div class="card-body" style="padding: .1em;">
+        <p class="card-text">Mission to play with Spring Boot & JPA</p>
+        <a href="https://github.com/snowdrop/spring-boot-crud-booster" class="card-link">Get the code</a>
+        <a href="#" class="card-link">Documentation</a>
+    </div>
+</div>
+<div class="card" style="width: 30%; margin: 1em;">
+    <h4 class="card-header rhoar">Externalized Configuration</h4>
+    <div class="card-body" style="padding: .1em;">
+        <p class="card-text">Quickstart to expose a REST Greeting endpoint using Spring Boot where the message is
             defined as a Kubernetes ConfigMap property</p>
-    </div>
-    <div class="col-sm">
-        <a href="https://github.com/snowdrop/spring-boot-health-check-booster" class="rhoar">Health Check</a>
-        <p>Quickstart to demonstrate OpenShift health probes working with Spring Boot Actuator</p>
-    </div>
-    <div class="col-sm">
-        <a href="https://github.com/snowdrop/spring-boot-circuit-breaker-booster" class="rhoar">Circuit
-            Breaker</a>
-        <p>Service implementing Hystrix Circuit Breaker</p>
+        <a href="https://github.com/snowdrop/spring-boot-configmap-booster" class="card-link">Get the code</a>
+        <a href="#" class="card-link">Documentation</a>
     </div>
 </div>
-<div class="row">
-    <div class="col-sm">
-        <a href="{{ site.url }}{{ site.baseurl }}/guides/war-jsp">WAR</a>
-        <p>WAR Spring Boot Application with JSP page and using JSTL</p>
+<div class="card" style="width: 30%; margin: 1em;">
+    <h4 class="card-header rhoar">Health Check</h4>
+    <div class="card-body" style="padding: .1em;">
+        <p class="card-text">Quickstart to demonstrate OpenShift health probes working with Spring Boot Actuator</p>
+        <a href="https://github.com/snowdrop/spring-boot-health-check-booster" class="card-link">Get the code</a>
+        <a href="#" class="card-link">Documentation</a>
     </div>
-    <div class="col-sm">
-        <a href="https://github.com/snowdrop/spring-boot-blank-booster">Blank</a>
-        <p>Blank Spring Boot mission</p>
+</div>
+<div class="card" style="width: 30%; margin: 1em;">
+    <h4 class="card-header rhoar">Circuit Breaker</h4>
+    <div class="card-body" style="padding: .1em;">
+        <p class="card-text">Service implementing Hystrix Circuit Breaker</p>
+        <a href="https://github.com/snowdrop/spring-boot-circuit-breaker-booster" class="card-link">Get the code</a>
+        <a href="#" class="card-link">Documentation</a>
+    </div>
+</div>
+<div class="card" style="width: 30%; margin: 1em;">
+    <h4 class="card-header">Deploy as a WAR</h4>
+    <div class="card-body" style="padding: .1em;">
+        <p class="card-text">WAR Spring Boot Application with JSP page and using JSTL</p>
+        <a href="{{ site.url }}{{ site.baseurl }}/guides/war-jsp" class="card-link">Get the code</a>
+        <a href="#" class="card-link">Documentation</a>
+    </div>
+</div>
+<div class="card" style="width: 30%; margin: 1em;">
+    <h4 class="card-header">Archetype</h4>
+    <div class="card-body" style="padding: .1em;">
+        <p class="card-text">Blank Spring Boot mission</p>
+        <a href="https://github.com/snowdrop/spring-boot-blank-booster" class="card-link">Get the code</a>
+        <a href="#" class="card-link">Documentation</a>
     </div>
 </div>

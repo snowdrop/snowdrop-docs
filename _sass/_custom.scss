@@ -5,8 +5,11 @@
 
 /*$snowdrop-color:  #426532;*/
 $snowdrop-color: #21a559;
+$snowdrop-complementary-color: #FF9B81;
+$shadow-complementary-color: darken($snowdrop-complementary-color, 5%);
 
 $white:           #fff !default;
+$white-shadow: darken($white, 30%);
 /*$blue:            #0275d8 !default;*/
 $blue: #9cd8ae !default;
 

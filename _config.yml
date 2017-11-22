@@ -47,7 +47,6 @@ asciidoctor:
 plugins:
   - jekyll-feed
   - jekyll-asciidoc
-  - jekyll-assets
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list

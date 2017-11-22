@@ -12,5 +12,4 @@ gem 'uglifier'
 group :jekyll_plugins do
    gem 'jekyll-feed', '~> 0.6'
    gem 'jekyll-asciidoc'
-   gem 'jekyll-assets'
 end

@@ -21,14 +21,39 @@ a {
   content: "RHOAR";
   border-radius: 3px;
   padding: 1px;
-  margin-right: .3em;
+  margin-right: 5px;
   color: $white;
-  text-shadow: 1px 1px 2px $black;
-  box-shadow: 1px 2px 2px $shadow-complementary-color;
+  box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.4);
   background-color: $snowdrop-complementary-color;
   text-decoration: none;
+  font-size: x-small;
+  vertical-align: super;
 }
 
 .btn-success {
   background-color: $snowdrop-color;
+}
+
+.card {
+  width: 30%;
+  box-shadow: 2px 2px 3px $white-shadow;
+}
+
+.card-body {
+  padding: .2em;
+}
+
+.card-header {
+  font-weight: bold;
+  padding: .3em;
+  color: $snowdrop-complementary-color;
+}
+
+.card-footer {
+  margin-top: 1em;
+  padding: .2em;
+}
+
+i.fa {
+  margin-right: .3em;
 }

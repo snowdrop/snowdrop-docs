@@ -34,6 +34,7 @@ asciidoc:
 asciidoctor:
   attributes:
     - source-highlighter=coderay
+    - allow-uri-read=true
 
 # assets:
 #   compress:

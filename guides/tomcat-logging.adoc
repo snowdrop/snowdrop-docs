@@ -1,0 +1,5 @@
+:page-layout: default
+:page-title: Configuration for Tomcat access login to OpenShift console
+:page-permalink: /guides/tomcat-logging
+
+include::https://raw.githubusercontent.com/snowdrop/spring-boot-tomcat-logging-booster/master/README.adoc[]

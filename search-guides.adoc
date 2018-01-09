@@ -7,4 +7,4 @@
 Whatever you're building, these guides are designed to get you productive as quickly as possible –
 using the latest Spring project releases and techniques as recommended by the Snowdrop team.
 Have a suggestion for a new guide? Let us know! Alternatively, you can create your own using our
-link:booster archetype[/guides/booster-archetype].
+link:/guides/booster-archetype[booster archetype].

@@ -37,6 +37,21 @@ Manual instrumentation has the advantage that no extra dependencies need to be p
 
 Automatic instrumentation means that the developer need not worry about passing the necessary tracing HTTP headers in every service call, since the library that performs the instrumentation takes care of such operations. It does mean however that an extra library needs to be packaged with the application to have tracing working properly.
 
+==== Info dump
+
+https://github.com/snowdrop/cloud-native-frontend
+https://github.com/snowdrop/cloud-native-backend
+https://github.com/opentracing-contrib/java-spring-cloud
+
+[source,xml]
+----
+<dependency>
+    <groupId>io.opentracing.contrib</groupId>
+    <artifactId>opentracing-spring-cloud-starter-jaeger</artifactId>
+    <version>0.1.13</version>
+</dependency>
+----
+
 '''
 
 28th of May 2018 by Developer

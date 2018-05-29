@@ -10,6 +10,8 @@ Lorum ipsum dolor ipset this site is real and it continues to grow.
 
 Lorum ipsum dolor ipset this site is real and it continues to grow.
 
+Formating info is available https://asciidoctor.org/docs/asciidoc-syntax-quick-reference/#horizontal-rules-and-page-breaks[here]
+
 '''
 
 === New site is live!
@@ -18,3 +20,5 @@ Lorum ipsum dolor ipset this site is real and it continues to grow.
 Welcome to Snowdrop! We're glad you're here. Lorum ipsum dolor ipset this site is real and it continues to grow.
 
 I have no idea how this is going to look. Let's try it out!
+
+'''

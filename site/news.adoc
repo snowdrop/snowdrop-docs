@@ -40,7 +40,9 @@ Automatic instrumentation means that the developer need not worry about passing 
 ==== Info dump
 
 https://github.com/snowdrop/cloud-native-frontend
+
 https://github.com/snowdrop/cloud-native-backend
+
 https://github.com/opentracing-contrib/java-spring-cloud
 
 [source,xml]

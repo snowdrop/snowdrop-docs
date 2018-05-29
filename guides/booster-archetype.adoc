@@ -1,5 +1,0 @@
-:page-layout: default
-:page-title: Spring Boot booster archetype
-:page-permalink: /guides/booster-archetype
-
-include::https://raw.githubusercontent.com/snowdrop/booster-archetype/master/README.adoc[]

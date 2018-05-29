@@ -1,0 +1,7 @@
+== Snowdrop Documentation
+
+This repository contains documentation for the https://github.com/snowdrop project modules and website.
+
+=== Site
+
+Website documentation is loaded directly from raw.github.com, so updates made to `master` branch here will update in real-time as soon as users refresh their browser or next visit the Snowdrop site.

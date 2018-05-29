@@ -1,5 +1,17 @@
 == News & Updates
 
+=== Blog publication
+28th of May 2018 by Developer
+
+**Tags** : Spring Boot, Cloud Native Development
+
+**Description** : Lorum ipsum dolor ipset this site is real and it continues to grow.
+Lorum ipsum dolor ipset this site is real and it continues to grow.
+
+Lorum ipsum dolor ipset this site is real and it continues to grow.
+
+'''
+
 === New site is live!
 /Snowdrop Developer - 2018-05-22/
 

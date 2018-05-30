@@ -13,7 +13,7 @@ In a microservice topology, where an incoming HTTP call to the cluster could end
 
 Distributed tracing gives developers and operators the ability to gain insights on the potentially complex interactions between microservices by painting a picture of what they look like in a graph form.
 
-In it's most basic form, distributed tracing is implemented by having each microservice send special metadata to a collector. 
+In it's most basic form, distributed tracing is implemented by having each microservice send special metadata to a collector (like link:https://www.jaegertracing.io[Jaeger], link:https://zipkin.io/[Zipkin]). 
 The metadata usually consists of information (start time, end time, component) about the requests and operations performed when handling a external request.
 For the collector to be able to construct a graph from the services / operations involved in handling a request, the calls that correspond to the handling of a single HTTP request need to have a piece of information that is unique to them.
 Such uniqueness is accomplished by having the first microservice that handles the request create a request id and all subsequent microservices preserve that id in the metadata they send to the collector.
@@ -36,6 +36,30 @@ The reason each application in the cluster needs to be instrumented for Distribu
 Manual instrumentation has the advantage that no extra dependencies need to be packaged with the code in order to get proper instrumentation to work. However it places the burden passing the necessary HTTP headers squarely on the developers shoulders. This can potentially make the code that performs service to service HTTP calls look ugly while more importantly incurring a high probability of such manual instrumentation being forgotten when a developer implements it, or tracing-specific bugs being introduced.
 
 Automatic instrumentation means that the developer need not worry about passing the necessary tracing HTTP headers in every service call, since the library that performs the instrumentation takes care of such operations. It does mean however that an extra library needs to be packaged with the application to have tracing working properly.
+
+==== Getting started
+
+The first thing that needs to be done is to stand up a tracing collector locally. In this guide we will be using Jaeger which can be started very easily in dev mode using the following command (make sure you have docker installed)
+
+[source,bash]
+----
+
+docker run -d -e \
+  COLLECTOR_ZIPKIN_HTTP_PORT=9411 \
+  -p 5775:5775/udp \
+  -p 6831:6831/udp \
+  -p 6832:6832/udp \
+  -p 5778:5778 \
+  -p 16686:16686 \
+  -p 14268:14268 \
+  -p 9411:9411 \
+  jaegertracing/all-in-one:latest
+
+---
+
+Of the ports mentioned in the previous command, two are of particular interest, port `14268` which will be used to collect the traces from our microservices and port `16686` which is where we can view Jaeger's UI. 
+By navigate to `http://localhost:16686` you'll see that there are no traces yet available.
+
 
 ==== Info dump
 

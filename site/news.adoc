@@ -99,13 +99,23 @@ Open link:http://localhost:8090[] and you'll see an image like the following:
 image::images/frontend.jpg[]
 
 Behind the scenes, frontend application made a call to the backend application.
-We can see that information captured in the traces sent to Jaeger
+Such is a fact is easily verified by looking at the Jaeger UI and observing that two services have been added, `clound-native-frontend` and `cloud-native-backed`
 
 image::images/sb-services.jpg[]
 
+If we click `Find Traces` in the UI then a couple traces will appear:
+
 image::images/traces-overview.jpg[]
 
+One of the traces involves the frontend service only and is produced because the browser is accessing the `index` page of the frontend service.
+The second trace is produced when the browser calls the `all` endpoint of the frontend service. That service in turn calls the backend service.
+A very clear picture of this interation can be seen in the following image.
+
 image::images/all-details.jpg[]
+
+=== In depth analysis
+
+In this section we will go over some of the details of what happened
 
 '''
 

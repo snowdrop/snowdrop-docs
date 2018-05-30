@@ -47,7 +47,7 @@ Automatic instrumentation means that the developer need not worry about passing 
 
 ==== OpenTracing
 
-link:http://opentracing.io[OpenTracing makes it easy for developers to add (or switch) tracing implementations with a trivial configuration change.
+link:http://opentracing.io[OpenTracing] makes it easy for developers to add (or switch) tracing implementations with a trivial configuration change.
 OpenTracing also offers a lingua franca for OSS instrumentation and platform-specific tracing helper libraries.
 
 In the context of this blog post, OpenTracing provides the automatic instrumentation necessary for the Spring Boot applications we will showcase.

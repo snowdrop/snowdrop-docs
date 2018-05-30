@@ -13,7 +13,7 @@ In a microservice topology, where an incoming HTTP call to the cluster could end
 
 Distributed tracing gives developers and operators the ability to gain insights on the potentially complex interactions between microservices by painting a picture of what they look like in a graph form.
 
-In it's most basic form, distributed tracing is implemented by having each microservice send special metadata to a collector (like link:https://www.jaegertracing.io[Jaeger], link:https://zipkin.io/[Zipkin]). 
+In it's most basic form, distributed tracing is implemented by having each microservice send special metadata to a collector (like link:https://www.jaegertracing.io[Jaeger] or link:https://zipkin.io/[Zipkin]).
 The metadata usually consists of information (start time, end time, component) about the requests and operations performed when handling a external request.
 For the collector to be able to construct a graph from the services / operations involved in handling a request, the calls that correspond to the handling of a single HTTP request need to have a piece of information that is unique to them.
 Such uniqueness is accomplished by having the first microservice that handles the request create a request id and all subsequent microservices preserve that id in the metadata they send to the collector.
@@ -98,8 +98,8 @@ Open link:http://localhost:8090[] and you'll see an image like the following:
 
 image::images/frontend.jpg[]
 
-Behind the scenes, frontend application made a call to the backend application.
-Such is a fact is easily verified by looking at the Jaeger UI and observing that two services have been added, `clound-native-frontend` and `cloud-native-backed`
+Behind the scenes the frontend application made a call to the backend application.
+Such a fact is easily verified by looking at the Jaeger UI and observing that two services have been added, `clound-native-frontend` and `cloud-native-backed`
 
 image::images/sb-services.jpg[]
 
@@ -113,9 +113,23 @@ A very clear picture of this interation can be seen in the following image.
 
 image::images/all-details.jpg[]
 
-=== In depth analysis
+==== Extra information
 
-In this section we will go over some of the details of what happened
+In this section we will go over some of the details of what happened.
+
+By including the opentracing Jaeger dependency in both applications, we ensure that all incoming and outgoing HTTP calls to and from these applications
+are properly instrumented. That means that the correct metadata is created and propagated for every HTTP call and that all the metadata ends up in our collector (Jaeger).
+
+Furthermore by accepting the default link:https://github.com/opentracing-contrib/java-spring-cloud/tree/release-0.1.13/opentracing-spring-cloud-starter-jaeger#configuration-options[configuration], we ensure that all metadata collected
+is sent to Jaeger at `localhost:6831`.
+
+In case you were wondering where the names `clound-native-frontend` and `cloud-native-backed` that show up in the Jaeger UI came from, we simply
+specified then in each application using the `spring.application.name` property.
+
+==== Conclusion
+
+In this blog post we saw how powerful the Spring Boot + Opentracing combination really is. It allowed us to enable Distributed Tracing features in our Spring Boot application
+will almost zero effort.
 
 '''
 

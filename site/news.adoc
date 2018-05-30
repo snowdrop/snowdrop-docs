@@ -39,6 +39,8 @@ Automatic instrumentation means that the developer need not worry about passing 
 
 ==== Getting started
 
+===== Start Jaeger
+
 The first thing that needs to be done is to stand up a tracing collector locally. In this guide we will be using Jaeger which can be started very easily in dev mode using the following command (make sure you have docker installed)
 
 [source,bash]
@@ -55,19 +57,17 @@ docker run -d -e \
   jaegertracing/all-in-one:latest
 ----
 
-Of the ports mentioned in the previous command, two are of particular interest, port `14268` which will be used to collect the traces from our microservices and port `16686` which is where we can view Jaeger's UI. 
+Of the ports mentioned in the previous command, two are of particular interest, port `6831` which will be used to collect the traces from our microservices and port `16686` which is where we can view Jaeger's UI.
 By navigating to link:http://localhost:16686[] you'll see that there are no traces yet available, as is depicted in the following image.
 
 image::images/dt-no-service.jpg[]
 
+===== Run the sample applications
 
-==== Info dump
-
-https://github.com/snowdrop/cloud-native-frontend
-
-https://github.com/snowdrop/cloud-native-backend
-
-https://github.com/opentracing-contrib/java-spring-cloud
+We will be using two sample applications, a link:https://github.com/snowdrop/cloud-native-frontend[frontend] application and a
+link:https://github.com/snowdrop/cloud-native-backend[backend] application.
+Both application are simple Spring Boot web applications that utilize the OpenTracing's Jaeger link:https://github.com/opentracing-contrib/java-spring-cloud/tree/release-0.1.13/opentracing-spring-cloud-starter-jaeger[autoconfiguration].
+by having a Maven dependency in their `pom.xml`
 
 [source,xml]
 ----
@@ -77,6 +77,35 @@ https://github.com/opentracing-contrib/java-spring-cloud
     <version>0.1.13</version>
 </dependency>
 ----
+
+Simply adding the dependency enables the complete instrumentation of the applications to collect traces and send them to Jaeger (using UDP port `6831` of `localhost`)
+
+Run the backend application using:
+
+[source,bash]
+----
+mvn clean spring-boot:run -Dspring.profiles.active=local -Ph2
+----
+
+and the frontend using:
+
+[source,bash]
+----
+mvn clean spring-boot:run
+----
+
+Open link:http://localhost:8090[] and you'll see an image like the following:
+
+image::images/frontend.jpg[]
+
+Behind the scenes, frontend application made a call to the backend application.
+We can see that information captured in the traces sent to Jaeger
+
+image::images/sb-services.jpg[]
+
+image::images/traces-overview.jpg[]
+
+image::images/all-details.jpg[]
 
 '''
 

@@ -58,7 +58,9 @@ docker run -d -e \
 ---
 
 Of the ports mentioned in the previous command, two are of particular interest, port `14268` which will be used to collect the traces from our microservices and port `16686` which is where we can view Jaeger's UI. 
-By navigate to `http://localhost:16686` you'll see that there are no traces yet available.
+By navigate to `http://localhost:16686` you'll see that there are no traces yet available, as is depicted in the following image.
+
+image::images/dt-no-service.jpg
 
 
 ==== Info dump

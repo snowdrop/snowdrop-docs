@@ -9,7 +9,7 @@
 
 ==== Introduction
 
-In a microservice topology, where an incoming HTTP call to the cluster could end up calling a host of other services, getting insights on the interactions of the individual services and performing debugging becomes complicated.
+In a microservice topology, where an incoming HTTP call could end up calling a host of other services, getting insights on the interactions of the individual services and performing debugging becomes complicated.
 
 Distributed tracing gives developers and operators the ability to gain insights on the potentially complex interactions between microservices by painting a picture of what they look like in a graph form.
 
@@ -20,7 +20,7 @@ Such uniqueness is accomplished by having the first microservice that handles th
 
 ==== General Distributed Tracing prerequisites
 
-The microservices deployed to the cluster need to be properly instrumented.
+The microservices deployed to the container platform need to be properly instrumented.
 
 At the very least, instrumentation consists of propagating the proper HTTP headers when making requests between microservices. There are two options here:
 
@@ -28,7 +28,15 @@ At the very least, instrumentation consists of propagating the proper HTTP heade
 
 * Use a library to automatically perform the instrumentation
 
-The reason each application in the cluster needs to be instrumented for Distributed Tracing, is that in order to properly determine the relation between services (which service called which - or more formally what the nodes of the call DAG are), special metadata needs to propagated through each HTTP call, from the beginning of the life cycle of an incoming to request to the moment that the request is served to the external client.
+The reason each application in needs to be instrumented for Distributed Tracing, is that in order to properly determine the relation between services (which service called which - or more formally what the nodes of the call DAG are), special metadata needs to propagated through each HTTP call, from the beginning of the life cycle of an incoming to request to the moment that the request is served to the external client.
+
+
+Another consideration worth noting, is how the collected metadata reaches the collector. There are a couple of options here:
+
+* Each instrumented microservice communicates with the collector directly
+
+* Instrumented microservices only communicate with a designated agent (which could be a sidecar in container platforms that support them like Kubernetes and Openshift). The agent is
+then responsible for the communication with the actual collector
 
 
 ===== Manual vs Automatic instrumentation
@@ -36,6 +44,16 @@ The reason each application in the cluster needs to be instrumented for Distribu
 Manual instrumentation has the advantage that no extra dependencies need to be packaged with the code in order to get proper instrumentation to work. However it places the burden passing the necessary HTTP headers squarely on the developers shoulders. This can potentially make the code that performs service to service HTTP calls look ugly while more importantly incurring a high probability of such manual instrumentation being forgotten when a developer implements it, or tracing-specific bugs being introduced.
 
 Automatic instrumentation means that the developer need not worry about passing the necessary tracing HTTP headers in every service call, since the library that performs the instrumentation takes care of such operations. It does mean however that an extra library needs to be packaged with the application to have tracing working properly.
+
+==== OpenTracing
+
+link:http://opentracing.io[OpenTracing makes it easy for developers to add (or switch) tracing implementations with a trivial configuration change.
+OpenTracing also offers a lingua franca for OSS instrumentation and platform-specific tracing helper libraries.
+
+In the context of this blog post, OpenTracing provides the automatic instrumentation necessary for the Spring Boot applications we will showcase.
+
+The main advantage of using OpenTracing over other libraries, is that OpenTracing is not tied to any specific collector, thus allowing developers to
+choose between various options like Jaeger or Zipkin.
 
 ==== Getting started
 

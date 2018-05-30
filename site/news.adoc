@@ -43,7 +43,6 @@ The first thing that needs to be done is to stand up a tracing collector locally
 
 [source,bash]
 ----
-
 docker run -d -e \
   COLLECTOR_ZIPKIN_HTTP_PORT=9411 \
   -p 5775:5775/udp \
@@ -54,8 +53,7 @@ docker run -d -e \
   -p 14268:14268 \
   -p 9411:9411 \
   jaegertracing/all-in-one:latest
-
----
+----
 
 Of the ports mentioned in the previous command, two are of particular interest, port `14268` which will be used to collect the traces from our microservices and port `16686` which is where we can view Jaeger's UI. 
 By navigate to `http://localhost:16686` you'll see that there are no traces yet available, as is depicted in the following image.

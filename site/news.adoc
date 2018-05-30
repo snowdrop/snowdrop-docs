@@ -58,7 +58,7 @@ choose between various options like Jaeger or Zipkin.
 ==== Getting started
 
 This blog post will explore how we can instrument microservices running locally. In a future blog post we'll explore more options for instrumented microservices inside Openshift.
-We'll just note here, there will be no code changes necessary, just simple configuration updates.
+We'll just note here, there will be no code changes necessary when we move the microservices to there production environment, just simple configuration updates.
 
 ===== Start Jaeger
 

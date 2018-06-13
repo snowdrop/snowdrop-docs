@@ -81,7 +81,7 @@ docker run -d -e \
 Of the ports mentioned in the previous command, two are of particular interest, port `6831` which will be used to collect the traces from our microservices and port `16686` which is where we can view Jaeger's UI.
 By navigating to link:http://localhost:16686[] you'll see that there are no traces yet available, as is depicted in the following image.
 
-image::images/dt-no-service.jpg[]
+image::https://github.com/snowdrop/snowdrop-docs/raw/geo/site/images/dt-no-service.jpg[]
 
 ===== Run the sample applications
 
@@ -117,22 +117,22 @@ mvn clean spring-boot:run
 
 Open link:http://localhost:8090[] and you'll see an image like the following:
 
-image::images/frontend.jpg[]
+image::https://github.com/snowdrop/snowdrop-docs/raw/geo/site/images/frontend.jpg[]
 
 Behind the scenes the frontend application made a call to the backend application.
 Such a fact is easily verified by looking at the Jaeger UI and observing that two services have been added, `clound-native-frontend` and `cloud-native-backed`
 
-image::images/sb-services.jpg[]
+image::https://github.com/snowdrop/snowdrop-docs/raw/geo/site/images/sb-services.jpg[]
 
 If we click `Find Traces` in the UI then a couple traces will appear:
 
-image::images/traces-overview.jpg[]
+image::https://github.com/snowdrop/snowdrop-docs/raw/geo/site/images/traces-overview.jpg[]
 
 One of the traces involves the frontend service only and is produced because the browser is accessing the `index` page of the frontend service.
 The second trace is produced when the browser calls the `all` endpoint of the frontend service. That service in turn calls the backend service.
 A very clear picture of this interation can be seen in the following image.
 
-image::images/all-details.jpg[]
+image::https://github.com/snowdrop/snowdrop-docs/raw/geo/site/images/all-details.jpg[]
 
 ==== Extra information
 

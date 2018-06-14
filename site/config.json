@@ -4,10 +4,10 @@
   },
   "news" : [
     {
-      "type":"blog",
-      "tags": "jaeger, zipkin, distributed tracing, spring boot, openshift",
       "title":"Get started with Spring Boot & OpenTracing",
       "description":"Getting started with Spring Boot applications instrumented with OpenTracing in order to get tracing insights with minimal developer effort.",
+      "published": "2018-06-14",
+      "tags": "jaeger, zipkin, distributed tracing, spring boot, openshift",
       "url":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/news/2018-06-09-distributed-tracing.adoc"
     }
   ],

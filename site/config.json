@@ -76,7 +76,7 @@
     {
       "type":"guide",
       "title":"Deploy as a WAR",
-      "url":"https://raw.githubusercontent.com/snowdrop/site/master/guides/war-jsp.adoc",
+      "url":"https://raw.githubusercontent.com/snowdrop-docs/master/site/guides/war-jsp.adoc",
       "documentation": "https://github.com/snowdrop/spring-boot-mvc-jsp",
       "description":"Learn how to deplay a Spring Boot Application (with JSP page and using JSTL) as a WAR file."
     }

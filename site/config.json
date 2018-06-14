@@ -2,9 +2,15 @@
   "documentation": {
     "url":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/documentation.adoc"
   },
-  "news" : {
-    "url":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/news.adoc"
-  },
+  "news" : [
+    {
+      "type":"blog",
+      "tags": "jaeger, zipkin, distributed tracing, spring boot, openshift",
+      "title":"Get started with Spring Boot & OpenTracing",
+      "description":"Getting started with Spring Boot applications instrumented with OpenTracing in order to get tracing insights with minimal developer effort.",
+      "url":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/news/2018-06-09-distributed-tracing.adoc"
+    }
+  ],
   "guides": [
     {
       "type":"booster",

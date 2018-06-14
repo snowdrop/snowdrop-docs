@@ -2,7 +2,7 @@
   "documentation": {
     "url":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/documentation.adoc"
   },
-  "news" : [
+  "news": [
     {
       "title":"Get started with Spring Boot & OpenTracing",
       "description":"Getting started with Spring Boot applications instrumented with OpenTracing in order to get tracing insights with minimal developer effort.",

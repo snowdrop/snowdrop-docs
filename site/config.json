@@ -8,7 +8,7 @@
       "description":"Getting started with Spring Boot applications instrumented with OpenTracing in order to get tracing insights with minimal developer effort.",
       "published": "2018-06-14",
       "author": "Georgios Andrianakis",
-      "tags": "jaeger, zipkin, distributed tracing, spring boot, openshift",
+      "tags": "distributed tracing, spring boot, openshift",
       "url":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/news/2018-06-09-distributed-tracing.adoc"
     }
   ],
@@ -19,7 +19,7 @@
       "url":"artifactId=cache&groupId=me.snowdrop.booster&mission=cache&runtime=spring-boot&runtimeVersion=current-community",
       "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-cache-spring-boot",
       "description":"Use application caching to improve server response time",
-      "tags": "spring boot, booster, caching",
+      "tags": "caching",
       "versions": []
     },
     {
@@ -28,7 +28,7 @@
       "url":"artifactId=circuit-breaker&groupId=me.snowdrop.booster&mission=circuit-breaker&runtime=spring-boot&runtimeVersion=current-community",
       "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-circuit-breaker-spring-boot",
       "description":"Report the failure of a service, then limit access to the failed service until it becomes available to handle requests",
-      "tags": "spring boot, booster, circuit breaker",
+      "tags": "circuit breaker",
       "versions": []
     },
     {
@@ -37,7 +37,7 @@
       "url":"artifactId=externalized-config&groupId=me.snowdrop.booster&mission=configmap&runtime=spring-boot&runtimeVersion=current-community",
       "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-configmap-spring-boot",
       "description":"Use a ConfigMap to externalize configuration and keep passwords/api keys safe. (Requires OpenShift)",
-      "tags": "spring boot, booster, configuration",
+      "tags": "configuration",
       "versions": []
     },
     {
@@ -46,7 +46,7 @@
       "url":"artifactId=health-check&groupId=me.snowdrop.booster&mission=health-check&runtime=spring-boot&runtimeVersion=current-community",
       "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-health-check-spring-boot",
       "description":"Monitor an application's uptime, and ability to service requests",
-      "tags": "spring boot, booster, health check",
+      "tags": "health check",
       "versions": []
     },
     {
@@ -54,7 +54,7 @@
       "title":"Istio - Circuit Breaker",
       "url":"artifactId=istio-circuit-breaker&groupId=me.snowdrop.booster&mission=istio-circuit-breaker&runtime=spring-boot&runtimeVersion=current-community",
       "description":"Limiting access to a degraded service until it becomes available to handle requests. This helps prevent cascading failures in other services that depend on the failed services for functionality.",
-      "tags": "spring boot, booster, circuit breaker, istio",
+      "tags": "circuit breaker, istio",
       "versions": []
     },
     {
@@ -62,7 +62,7 @@
       "title":"Istio - Distributed Tracing",
       "url":"artifactId=istio-distributed-tracing&groupId=me.snowdrop.booster&mission=istio-distributed-tracing&runtime=spring-boot&runtimeVersion=current-community",
       "description":"Integrated distributed tracing allows following requests through an application running on an Istio-enabled cluster.",
-      "tags": "spring boot, booster, distributed tracing, istio",
+      "tags": "distributed tracing, istio",
       "versions": []
     },
     {
@@ -70,7 +70,7 @@
       "title":"Istio - Security",
       "url":"artifactId=istio-security&groupId=me.snowdrop.booster&mission=istio-security&runtime=spring-boot&runtimeVersion=current-community",
       "description":"Secure communication between microservices with Mutual TLS, and allow or deny access to others services using ACL.",
-      "tags": "spring boot, booster, istio, security, authorization",
+      "tags": "istio, security, authorization",
       "versions": []
     },
     {
@@ -78,7 +78,7 @@
       "title":"Istio - Routing",
       "url":"artifactId=istio-routing&groupId=me.snowdrop.booster&mission=istio-routing&runtime=spring-boot&runtimeVersion=current-community",
       "description":"Route traffic to/from services, including load balancing traffic to different versions of the same service. Set up A/B tests, canary deployments, or deployments during a release.",
-      "tags": "spring boot, booster, istio, routing",
+      "tags": "istio, routing",
       "versions": []
     },
     {
@@ -86,7 +86,7 @@
       "title":"Deploy as a WAR",
       "url":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/war-jsp.adoc",
       "documentation": "https://github.com/snowdrop/spring-boot-mvc-jsp",
-      "tags": "spring boot, deployment",
+      "tags": "deployment",
       "description":"Learn how to deplay a Spring Boot Application (with JSP page and using JSTL) as a WAR file."
     }
   ]

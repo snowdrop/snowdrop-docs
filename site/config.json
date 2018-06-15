@@ -19,7 +19,7 @@
       "url":"artifactId=cache&groupId=me.snowdrop.booster&mission=cache&runtime=spring-boot&runtimeVersion=current-community",
       "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-cache-spring-boot",
       "description":"Use application caching to improve server response time",
-      "tags": "caching",
+      "tags": "basic, caching",
       "versions": []
     },
     {
@@ -86,7 +86,7 @@
       "title":"Deploy as a WAR",
       "url":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/war-jsp.adoc",
       "documentation": "https://github.com/snowdrop/spring-boot-mvc-jsp",
-      "tags": "deployment",
+      "tags": "basic, deployment",
       "description":"Learn how to deplay a Spring Boot Application (with JSP page and using JSTL) as a WAR file."
     }
   ]

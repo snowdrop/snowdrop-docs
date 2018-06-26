@@ -12,6 +12,16 @@
       "url":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/news/2018-06-09-distributed-tracing.adoc"
     }
   ],
+  "builds": [
+    { "repo": "spring-boot-bom" },
+    { "repo": "spring-boot-http-booster" },
+    { "repo": "spring-boot-http-secured-booster" },
+    { "repo": "spring-boot-configmap-booster" },
+    { "repo": "spring-boot-health-check-booster" },
+    { "repo": "spring-boot-crud-booster" },
+    { "repo": "spring-boot-circuit-breaker-booster" },
+    { "repo": "spring-boot-cache-booster" }
+  ],
   "guides": [
     {
       "type":"booster",

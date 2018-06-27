@@ -71,7 +71,7 @@
     {
       "type":"guide",
       "title":"Distributed Tracing - OpenTracing",
-      "url": "https://github.com/snowdrop/spring-boot-opentracing-booster/blob/master/README.adoc",
+      "url": "https://raw.githubusercontent.com/snowdrop/spring-boot-opentracing-booster/master/README.adoc",
       "documentation":"https://github.com/snowdrop/spring-boot-opentracing-booster/",
       "description":"Configure and deploy a Spring Boot app instrumented using Opentracing.",
       "tags": "http, tracing, instrumentation",
@@ -138,7 +138,7 @@
     {
       "type":"guide",
       "title":"Spring Data - Infinispan",
-      "url":"https://github.com/snowdrop/spring-boot-spring-data-booster/blob/master/README.adoc",
+      "url":"https://raw.githubusercontent.com/snowdrop/spring-boot-spring-data-booster/master/README.adoc",
       "documentation": "https://github.com/snowdrop/spring-boot-spring-data-booster/",
       "tags": "basic, deployment",
       "description":"Configure and deploy a Spring Boot app using Snowdrop’s Spring Data support with Infinispan"

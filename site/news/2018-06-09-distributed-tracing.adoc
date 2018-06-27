@@ -142,19 +142,3 @@ specified then in each application using the `spring.application.name` property.
 
 In this blog post we saw how powerful the Spring Boot + Opentracing combination really is. It allowed us to enable Distributed Tracing features in our Spring Boot application
 will almost zero effort.
-
-'''
-
-28th of May 2018 by Developer
-
-**Tags** : Spring Boot, Cloud Native Development
-
-**Description** : Lorum ipsum dolor ipset this site is real and it continues to grow.
-Lorum ipsum dolor ipset this site is real and it continues to grow.
-
-Lorum ipsum dolor ipset this site is real and it continues to grow.
-
-Formating info is available https://asciidoctor.org/docs/asciidoc-syntax-quick-reference/#horizontal-rules-and-page-breaks[here]
-
-'''
-

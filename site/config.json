@@ -69,10 +69,10 @@
       "versions": []
     },
     {
-      "type":"booster",
+      "type":"guide",
       "title":"Distributed Tracing - OpenTracing",
-      "url":"artifactId=opentracing&groupId=me.snowdrop.booster&mission=opentracing&runtime=spring-boot&runtimeVersion=current-community",
-      "documentation": "https://github.com/snowdrop/spring-boot-opentracing-booster/blob/master/README.adoc",
+      "url": "https://github.com/snowdrop/spring-boot-opentracing-booster/blob/master/README.adoc",
+      "documentation":"https://github.com/snowdrop/spring-boot-opentracing-booster/",
       "description":"Configure and deploy a Spring Boot app instrumented using Opentracing.",
       "tags": "http, tracing, instrumentation",
       "versions": []
@@ -134,6 +134,14 @@
       "documentation": "https://github.com/snowdrop/spring-boot-mvc-jsp",
       "tags": "basic, deployment",
       "description":"Learn how to deplay a Spring Boot Application (with JSP page and using JSTL) as a WAR file."
+    },
+    {
+      "type":"guide",
+      "title":"Spring Data - Infinispan",
+      "url":"https://github.com/snowdrop/spring-boot-spring-data-booster/blob/master/README.adoc",
+      "documentation": "https://github.com/snowdrop/spring-boot-spring-data-booster/",
+      "tags": "basic, deployment",
+      "description":"Configure and deploy a Spring Boot app using Snowdrop’s Spring Data support with Infinispan"
     }
   ]
 }

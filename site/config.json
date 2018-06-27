@@ -43,6 +43,42 @@
     },
     {
       "type":"booster",
+      "title":"REST HTTP",
+      "url":"artifactId=http-rest&groupId=me.snowdrop.booster&mission=rest-http&runtime=spring-boot&runtimeVersion=current-community",
+      "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-rest-http-spring-boot",
+      "description":"Expose business operations via a REST endpoint over HTTP",
+      "tags": "http, database, rest",
+      "versions": []
+    },
+    {
+      "type":"booster",
+      "title":"REST HTTP - CRUD",
+      "url":"artifactId=http-rest-crud&groupId=me.snowdrop.booster&mission=crud&runtime=spring-boot&runtimeVersion=current-community",
+      "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-crud-spring-boot",
+      "description":"Expose a REST endpoint with CRUD operations on fruits database (PostgreSQL).",
+      "tags": "http, crud, database, rest",
+      "versions": []
+    },
+    {
+      "type":"booster",
+      "title":"REST HTTP - Secured",
+      "url":"artifactId=rest-http-secured&groupId=me.snowdrop.booster&mission=rest-http-secured&runtime=spring-boot&runtimeVersion=current-community",
+      "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-rest-http-secured-spring-boot",
+      "description":"Secure a REST endpoint using Red Hat SSO.",
+      "tags": "http, rest, security",
+      "versions": []
+    },
+    {
+      "type":"booster",
+      "title":"Distributed Tracing - OpenTracing",
+      "url":"artifactId=opentracing&groupId=me.snowdrop.booster&mission=opentracing&runtime=spring-boot&runtimeVersion=current-community",
+      "documentation": "https://github.com/snowdrop/spring-boot-opentracing-booster/blob/master/README.adoc",
+      "description":"Configure and deploy a Spring Boot app instrumented using Opentracing.",
+      "tags": "http, tracing, instrumentation",
+      "versions": []
+    },
+    {
+      "type":"booster",
       "title":"Externalized Configuration",
       "url":"artifactId=externalized-config&groupId=me.snowdrop.booster&mission=configmap&runtime=spring-boot&runtimeVersion=current-community",
       "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-configmap-spring-boot",

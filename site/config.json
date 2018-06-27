@@ -67,7 +67,7 @@
       "description":"Secure a REST endpoint using Red Hat SSO.",
       "tags": "http, rest, security",
       "versions": []
-    },
+    }, 
     {
       "type":"guide",
       "title":"Distributed Tracing - OpenTracing",

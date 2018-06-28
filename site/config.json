@@ -67,7 +67,7 @@
       "description":"Secure a REST endpoint using Red Hat SSO.",
       "tags": "http, rest, security",
       "versions": []
-    }, 
+    },
     {
       "type":"guide",
       "title":"Distributed Tracing - OpenTracing",
@@ -130,10 +130,11 @@
     {
       "type":"guide",
       "title":"Deploy as a WAR",
+      "description":"Learn how to deplay a Spring Boot Application (with JSP page and using JSTL) as a WAR file.",
       "url":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/war-jsp.adoc",
       "documentation": "https://github.com/snowdrop/spring-boot-mvc-jsp",
-      "tags": "basic, deployment",
-      "description":"Learn how to deplay a Spring Boot Application (with JSP page and using JSTL) as a WAR file."
+      "prerequisites": "build, setup",
+      "tags": "basic, deployment"
     },
     {
       "type":"guide",
@@ -142,6 +143,33 @@
       "documentation": "https://github.com/snowdrop/spring-boot-spring-data-booster/",
       "tags": "basic, deployment",
       "description":"Configure and deploy a Spring Boot app using Snowdrop’s Spring Data support with Infinispan"
+    },
+    {
+      "type":"guide",
+      "title":"Build via Docker",
+      "description":"Learn how to build a Spring Boot Application using Docker.",
+      "url":"",
+      "documentation": "",
+      "prerequisites": "",
+      "tags": "build, setup"
+    },
+    {
+      "type":"guide",
+      "title":"Build from Kubernetes",
+      "description":"Learn how to build a Spring Boot Application using Kubernetes.",
+      "url":"",
+      "documentation": "",
+      "prerequisites": "",
+      "tags": "build, setup"
+    },
+    {
+      "type":"guide",
+      "title":"Build from Openshift",
+      "description":"Learn how to build a Spring Boot Application using Openshift.",
+      "url":"",
+      "documentation": "",
+      "prerequisites": "",
+      "tags": "build, setup"
     }
   ]
 }

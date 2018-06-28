@@ -133,7 +133,7 @@
       "description":"Learn how to deplay a Spring Boot Application (with JSP page and using JSTL) as a WAR file.",
       "url":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/war-jsp.adoc",
       "documentation": "https://github.com/snowdrop/spring-boot-mvc-jsp",
-      "prerequisites": "build, setup",
+      "prerequisites": "build, setup, -local",
       "tags": "basic, deployment"
     },
     {
@@ -146,30 +146,39 @@
     },
     {
       "type":"guide",
-      "title":"Build via Docker",
+      "title":"Build using Docker",
       "description":"Learn how to build a Spring Boot Application using Docker.",
       "url":"",
       "documentation": "",
       "prerequisites": "",
-      "tags": "build, setup"
+      "tags": "build, cloud native"
     },
     {
       "type":"guide",
-      "title":"Build from Kubernetes",
+      "title":"Build using Kubernetes",
       "description":"Learn how to build a Spring Boot Application using Kubernetes.",
       "url":"",
       "documentation": "",
       "prerequisites": "",
-      "tags": "build, setup"
+      "tags": "build, cloud native"
     },
     {
       "type":"guide",
-      "title":"Build from Openshift",
+      "title":"Build using Openshift",
       "description":"Learn how to build a Spring Boot Application using Openshift.",
       "url":"",
       "documentation": "",
       "prerequisites": "",
-      "tags": "build, setup"
+      "tags": "build, cloud native"
+    },
+    {
+      "type":"guide",
+      "title":"Build using Maven",
+      "description":"Learn how to build a Spring Boot Application using Maven.",
+      "url":"",
+      "documentation": "",
+      "prerequisites": "",
+      "tags": "build, local"
     }
   ]
 }

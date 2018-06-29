@@ -1,6 +1,15 @@
 {
-  "documentation": {
-    "url":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/documentation.adoc"
+  "defaults": {
+    "booster": {
+      "urls": {
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/booster-content-default.adoc",
+      },
+    },
+    "guide": {
+      "urls": {
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guide-content-default.adoc",
+      },
+    }
   },
   "news": [
     {
@@ -22,7 +31,7 @@
     { "repo": "spring-boot-circuit-breaker-booster" },
     { "repo": "spring-boot-cache-booster" }
   ],
-  "guides": [ 
+  "guides": [
     {
       "type":"booster",
       "title":"Application Caching",
@@ -117,7 +126,7 @@
       "description":"Limiting access to a degraded service until it becomes available to handle requests. This helps prevent cascading failures in other services that depend on the failed services for functionality.",
       "urls": {
         "booster":"artifactId=istio-circuit-breaker&groupId=me.snowdrop.booster&mission=istio-circuit-breaker&runtime=spring-boot&runtimeVersion=current-community",
-        "guide":"https://raw.githubusercontent.com/snowdrop/spring-boot-istio-circuit-breaker-booster/master/README.adoc"
+        "content":"https://raw.githubusercontent.com/snowdrop/spring-boot-istio-circuit-breaker-booster/master/README.adoc"
       },
       "tags": "circuit breaker, istio",
       "versions": []
@@ -128,7 +137,7 @@
       "description":"Integrated distributed tracing allows following requests through an application running on an Istio-enabled cluster.",
       "urls": {
         "booster":"artifactId=istio-distributed-tracing&groupId=me.snowdrop.booster&mission=istio-distributed-tracing&runtime=spring-boot&runtimeVersion=current-community",
-        "guide": "https://raw.githubusercontent.com/snowdrop/spring-boot-istio-distributed-tracing-booster/master/README.adoc"
+        "content": "https://raw.githubusercontent.com/snowdrop/spring-boot-istio-distributed-tracing-booster/master/README.adoc"
       },
       "tags": "distributed tracing, istio",
       "versions": []
@@ -139,7 +148,7 @@
       "description":"Secure communication between microservices with Mutual TLS, and allow or deny access to others services using ACL.",
       "urls": {
         "booster":"artifactId=istio-security&groupId=me.snowdrop.booster&mission=istio-security&runtime=spring-boot&runtimeVersion=current-community",
-        "guide":"https://raw.githubusercontent.com/snowdrop/spring-boot-istio-security-booster/master/README.adoc"
+        "content":"https://raw.githubusercontent.com/snowdrop/spring-boot-istio-security-booster/master/README.adoc"
       },
       "tags": "istio, security, authorization",
       "versions": []
@@ -150,7 +159,7 @@
       "description":"Route traffic to/from services, including load balancing traffic to different versions of the same service. Set up A/B tests, canary deployments, or deployments during a release.",
       "urls": {
         "booster":"artifactId=istio-routing&groupId=me.snowdrop.booster&mission=istio-routing&runtime=spring-boot&runtimeVersion=current-community",
-        "guide":"https://raw.githubusercontent.com/snowdrop/spring-boot-istio-routing-booster/master/README.adoc"
+        "content":"https://raw.githubusercontent.com/snowdrop/spring-boot-istio-routing-booster/master/README.adoc"
       },
       "tags": "istio, routing",
       "versions": []
@@ -160,7 +169,7 @@
       "title":"Deploy as a WAR",
       "description":"Learn how to deplay a Spring Boot Application (with JSP page and using JSTL) as a WAR file.",
       "urls": {
-        "guide":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/war-jsp.adoc",
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/war-jsp.adoc",
         "source": "https://github.com/snowdrop/spring-boot-mvc-jsp"
       },
       "prerequisites": "create, start",
@@ -171,7 +180,7 @@
       "type":"guide",
       "title":"Spring Data - Infinispan",
       "urls": {
-        "guide":"https://raw.githubusercontent.com/snowdrop/spring-boot-spring-data-booster/master/README.adoc",
+        "content":"https://raw.githubusercontent.com/snowdrop/spring-boot-spring-data-booster/master/README.adoc",
         "source": "https://github.com/snowdrop/spring-boot-spring-data-booster/"
       },
       "tags": "basic, deployment",
@@ -182,7 +191,7 @@
       "title":"Set up your Cloud Native Dev. Environment",
       "description":"Get started with Cloud Native development on your own machine.",
       "urls": {
-        "guide":"",
+        "content":"",
         "documentation": ""
       },
       "prerequisites": "",
@@ -194,7 +203,7 @@
       "title":"Create your first Snowdrop App",
       "description":"Learn how to build a Spring Boot Application using Snowdrop.",
       "urls": {
-        "guide":"",
+        "content":"",
         "documentation": ""
       },
       "prerequisites": "",
@@ -206,7 +215,7 @@
       "title":"Build using Docker",
       "description":"Learn how to build a Spring Boot Application using Docker.",
       "urls": {
-        "guide":"",
+        "content":"",
         "documentation": ""
       },
       "prerequisites": "",
@@ -217,7 +226,7 @@
       "title":"Build using Kubernetes",
       "description":"Learn how to build a Spring Boot Application using Kubernetes.",
       "urls": {
-        "guide":"",
+        "content":"",
         "documentation": ""
       },
       "prerequisites": "",
@@ -228,7 +237,7 @@
       "title":"Build using Openshift",
       "description":"Learn how to build a Spring Boot Application using Openshift.",
       "urls": {
-        "guide":"",
+        "content":"",
         "documentation": ""
       },
       "prerequisites": "",
@@ -239,7 +248,7 @@
       "title":"Build using Maven",
       "description":"Learn how to build a Spring Boot Application using Maven.",
       "urls": {
-        "guide":"",
+        "content":"",
         "documentation": ""
       },
       "prerequisites": "",

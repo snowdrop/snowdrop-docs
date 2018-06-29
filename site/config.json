@@ -1,16 +1,4 @@
 {
-  "defaults": {
-    "booster": {
-      "urls": {
-        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/booster-content-default.adoc",
-      },
-    },
-    "guide": {
-      "urls": {
-        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guide-content-default.adoc",
-      },
-    }
-  },
   "news": [
     {
       "title":"Get started with Spring Boot & OpenTracing",
@@ -31,6 +19,18 @@
     { "repo": "spring-boot-circuit-breaker-booster" },
     { "repo": "spring-boot-cache-booster" }
   ],
+  "defaults": {
+    "booster": {
+      "urls": {
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/booster-content-default.adoc",
+      },
+    },
+    "guide": {
+      "urls": {
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guide-content-default.adoc",
+      },
+    }
+  },
   "guides": [
     {
       "type":"booster",

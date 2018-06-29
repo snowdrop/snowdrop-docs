@@ -18,7 +18,7 @@
     { "repo": "spring-boot-crud-booster" },
     { "repo": "spring-boot-circuit-breaker-booster" },
     { "repo": "spring-boot-cache-booster" }
-  ], 
+  ],
   "defaults": {
     "booster": {
       "urls": {
@@ -172,7 +172,7 @@
         "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/war-jsp.adoc",
         "source": "https://github.com/snowdrop/spring-boot-mvc-jsp"
       },
-      "prerequisites": "create, start",
+      "prerequisites": "create, setup",
       "enablements": "build, setup, -local",
       "tags": "basic, deployment"
     },

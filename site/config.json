@@ -26,53 +26,65 @@
     {
       "type":"booster",
       "title":"Application Caching",
-      "url":"artifactId=cache&groupId=me.snowdrop.booster&mission=cache&runtime=spring-boot&runtimeVersion=current-community",
-      "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-cache-spring-boot",
       "description":"Use application caching to improve server response time",
+      "urls": {
+        "booster": "artifactId=cache&groupId=me.snowdrop.booster&mission=cache&runtime=spring-boot&runtimeVersion=current-community",
+        "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-cache-spring-boot"
+      },
       "tags": "basic, caching",
       "versions": []
     },
     {
       "type":"booster",
       "title":"Circuit Breaker",
-      "url":"artifactId=circuit-breaker&groupId=me.snowdrop.booster&mission=circuit-breaker&runtime=spring-boot&runtimeVersion=current-community",
-      "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-circuit-breaker-spring-boot",
       "description":"Report the failure of a service, then limit access to the failed service until it becomes available to handle requests",
+      "urls": {
+        "booster":"artifactId=circuit-breaker&groupId=me.snowdrop.booster&mission=circuit-breaker&runtime=spring-boot&runtimeVersion=current-community",
+        "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-circuit-breaker-spring-boot",
+      },
       "tags": "circuit breaker",
       "versions": []
     },
     {
       "type":"booster",
       "title":"REST HTTP",
-      "url":"artifactId=http-rest&groupId=me.snowdrop.booster&mission=rest-http&runtime=spring-boot&runtimeVersion=current-community",
-      "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-rest-http-spring-boot",
       "description":"Expose business operations via a REST endpoint over HTTP",
+      "urls": {
+        "booster":"artifactId=http-rest&groupId=me.snowdrop.booster&mission=rest-http&runtime=spring-boot&runtimeVersion=current-community",
+        "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-rest-http-spring-boot",
+      },
       "tags": "http, database, rest",
       "versions": []
     },
     {
       "type":"booster",
       "title":"REST HTTP - CRUD",
-      "url":"artifactId=http-rest-crud&groupId=me.snowdrop.booster&mission=crud&runtime=spring-boot&runtimeVersion=current-community",
-      "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-crud-spring-boot",
       "description":"Expose a REST endpoint with CRUD operations on fruits database (PostgreSQL).",
+      "urls": {
+        "booster":"artifactId=http-rest-crud&groupId=me.snowdrop.booster&mission=crud&runtime=spring-boot&runtimeVersion=current-community",
+        "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-crud-spring-boot",
+      },
       "tags": "http, crud, database, rest",
       "versions": []
     },
     {
       "type":"booster",
       "title":"REST HTTP - Secured",
-      "url":"artifactId=rest-http-secured&groupId=me.snowdrop.booster&mission=rest-http-secured&runtime=spring-boot&runtimeVersion=current-community",
-      "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-rest-http-secured-spring-boot",
       "description":"Secure a REST endpoint using Red Hat SSO.",
+      "urls": {
+        "booster":"artifactId=rest-http-secured&groupId=me.snowdrop.booster&mission=rest-http-secured&runtime=spring-boot&runtimeVersion=current-community",
+        "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-rest-http-secured-spring-boot",
+      },
       "tags": "http, rest, security",
       "versions": []
     },
     {
       "type":"guide",
       "title":"Distributed Tracing - OpenTracing",
-      "url": "https://raw.githubusercontent.com/snowdrop/spring-boot-opentracing-booster/master/README.adoc",
-      "documentation":"https://github.com/snowdrop/spring-boot-opentracing-booster/",
+      "urls": {
+        "booster": "https://raw.githubusercontent.com/snowdrop/spring-boot-opentracing-booster/master/README.adoc",
+        "documentation":"https://github.com/snowdrop/spring-boot-opentracing-booster/",
+      },
       "description":"Configure and deploy a Spring Boot app instrumented using Opentracing.",
       "tags": "http, tracing, instrumentation",
       "versions": []
@@ -80,50 +92,66 @@
     {
       "type":"booster",
       "title":"Externalized Configuration",
-      "url":"artifactId=externalized-config&groupId=me.snowdrop.booster&mission=configmap&runtime=spring-boot&runtimeVersion=current-community",
-      "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-configmap-spring-boot",
       "description":"Use a ConfigMap to externalize configuration and keep passwords/api keys safe. (Requires OpenShift)",
+      "urls": {
+        "booster":"artifactId=externalized-config&groupId=me.snowdrop.booster&mission=configmap&runtime=spring-boot&runtimeVersion=current-community",
+        "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-configmap-spring-boot",
+      },
       "tags": "configuration",
       "versions": []
     },
     {
       "type":"booster",
       "title":"Health Check",
-      "url":"artifactId=health-check&groupId=me.snowdrop.booster&mission=health-check&runtime=spring-boot&runtimeVersion=current-community",
-      "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-health-check-spring-boot",
       "description":"Monitor an application's uptime, and ability to service requests",
+      "urls": {
+        "booster":"artifactId=health-check&groupId=me.snowdrop.booster&mission=health-check&runtime=spring-boot&runtimeVersion=current-community",
+        "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-health-check-spring-boot",
+      },
       "tags": "health check",
       "versions": []
     },
     {
       "type":"booster",
       "title":"Istio - Circuit Breaker",
-      "url":"artifactId=istio-circuit-breaker&groupId=me.snowdrop.booster&mission=istio-circuit-breaker&runtime=spring-boot&runtimeVersion=current-community",
       "description":"Limiting access to a degraded service until it becomes available to handle requests. This helps prevent cascading failures in other services that depend on the failed services for functionality.",
+      "urls": {
+        "booster":"artifactId=istio-circuit-breaker&groupId=me.snowdrop.booster&mission=istio-circuit-breaker&runtime=spring-boot&runtimeVersion=current-community",
+        "guide":"https://raw.githubusercontent.com/snowdrop/spring-boot-istio-circuit-breaker-booster/master/README.adoc"
+      },
       "tags": "circuit breaker, istio",
       "versions": []
     },
     {
       "type":"booster",
       "title":"Istio - Distributed Tracing",
-      "url":"artifactId=istio-distributed-tracing&groupId=me.snowdrop.booster&mission=istio-distributed-tracing&runtime=spring-boot&runtimeVersion=current-community",
       "description":"Integrated distributed tracing allows following requests through an application running on an Istio-enabled cluster.",
+      "urls": {
+        "booster":"artifactId=istio-distributed-tracing&groupId=me.snowdrop.booster&mission=istio-distributed-tracing&runtime=spring-boot&runtimeVersion=current-community",
+        "guide": "https://raw.githubusercontent.com/snowdrop/spring-boot-istio-distributed-tracing-booster/master/README.adoc"
+      },
       "tags": "distributed tracing, istio",
       "versions": []
     },
     {
       "type":"booster",
       "title":"Istio - Security",
-      "url":"artifactId=istio-security&groupId=me.snowdrop.booster&mission=istio-security&runtime=spring-boot&runtimeVersion=current-community",
       "description":"Secure communication between microservices with Mutual TLS, and allow or deny access to others services using ACL.",
+      "urls": {
+        "booster":"artifactId=istio-security&groupId=me.snowdrop.booster&mission=istio-security&runtime=spring-boot&runtimeVersion=current-community",
+        "guide":"https://raw.githubusercontent.com/snowdrop/spring-boot-istio-security-booster/master/README.adoc"
+      },
       "tags": "istio, security, authorization",
       "versions": []
     },
     {
       "type":"booster",
       "title":"Istio - Routing",
-      "url":"artifactId=istio-routing&groupId=me.snowdrop.booster&mission=istio-routing&runtime=spring-boot&runtimeVersion=current-community",
       "description":"Route traffic to/from services, including load balancing traffic to different versions of the same service. Set up A/B tests, canary deployments, or deployments during a release.",
+      "urls": {
+        "booster":"artifactId=istio-routing&groupId=me.snowdrop.booster&mission=istio-routing&runtime=spring-boot&runtimeVersion=current-community",
+        "guide":"https://raw.githubusercontent.com/snowdrop/spring-boot-istio-routing-booster/master/README.adoc"
+      },
       "tags": "istio, routing",
       "versions": []
     },
@@ -131,25 +159,56 @@
       "type":"guide",
       "title":"Deploy as a WAR",
       "description":"Learn how to deplay a Spring Boot Application (with JSP page and using JSTL) as a WAR file.",
-      "url":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/war-jsp.adoc",
-      "documentation": "https://github.com/snowdrop/spring-boot-mvc-jsp",
-      "prerequisites": "build, setup, -local",
+      "urls": {
+        "guide":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/war-jsp.adoc",
+        "source": "https://github.com/snowdrop/spring-boot-mvc-jsp",
+      },
+      "prerequisites": "create, start",
+      "enablements": "build, setup, -local",
       "tags": "basic, deployment"
     },
     {
       "type":"guide",
       "title":"Spring Data - Infinispan",
-      "url":"https://raw.githubusercontent.com/snowdrop/spring-boot-spring-data-booster/master/README.adoc",
-      "documentation": "https://github.com/snowdrop/spring-boot-spring-data-booster/",
+      "urls": {
+        "guide":"https://raw.githubusercontent.com/snowdrop/spring-boot-spring-data-booster/master/README.adoc",
+        "source": "https://github.com/snowdrop/spring-boot-spring-data-booster/",
+      },
       "tags": "basic, deployment",
       "description":"Configure and deploy a Spring Boot app using Snowdrop’s Spring Data support with Infinispan"
     },
     {
       "type":"guide",
+      "title":"Set up your Cloud Native Dev. Environment",
+      "description":"Get started with Cloud Native development on your own machine.",
+      "urls": {
+        "guide":"",
+        "documentation": "",
+      },
+      "prerequisites": "",
+      "enablements": "basic, create",
+      "tags": "basic, setup"
+    },
+    {
+      "type":"guide",
+      "title":"Create your first Snowdrop App",
+      "description":"Learn how to build a Spring Boot Application using Snowdrop.",
+      "urls": {
+        "guide":"",
+        "documentation": "",
+      },
+      "prerequisites": "",
+      "enablements": "basic, build",
+      "tags": "create, start"
+    },
+    {
+      "type":"guide",
       "title":"Build using Docker",
       "description":"Learn how to build a Spring Boot Application using Docker.",
-      "url":"",
-      "documentation": "",
+      "urls": {
+        "guide":"",
+        "documentation": "",
+      },
       "prerequisites": "",
       "tags": "build, cloud native"
     },
@@ -157,8 +216,10 @@
       "type":"guide",
       "title":"Build using Kubernetes",
       "description":"Learn how to build a Spring Boot Application using Kubernetes.",
-      "url":"",
-      "documentation": "",
+      "urls": {
+        "guide":"",
+        "documentation": "",
+      },
       "prerequisites": "",
       "tags": "build, cloud native"
     },
@@ -166,8 +227,10 @@
       "type":"guide",
       "title":"Build using Openshift",
       "description":"Learn how to build a Spring Boot Application using Openshift.",
-      "url":"",
-      "documentation": "",
+      "urls": {
+        "guide":"",
+        "documentation": "",
+      },
       "prerequisites": "",
       "tags": "build, cloud native"
     },
@@ -175,8 +238,10 @@
       "type":"guide",
       "title":"Build using Maven",
       "description":"Learn how to build a Spring Boot Application using Maven.",
-      "url":"",
-      "documentation": "",
+      "urls": {
+        "guide":"",
+        "documentation": "",
+      },
       "prerequisites": "",
       "tags": "build, local"
     }

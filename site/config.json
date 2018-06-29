@@ -22,7 +22,7 @@
     { "repo": "spring-boot-circuit-breaker-booster" },
     { "repo": "spring-boot-cache-booster" }
   ],
-  "guides": [
+  "guides": [ 
     {
       "type":"booster",
       "title":"Application Caching",

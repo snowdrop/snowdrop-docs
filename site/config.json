@@ -22,13 +22,13 @@
   "defaults": {
     "booster": {
       "urls": {
-        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/booster-content-default.adoc",
-      },
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/booster-content-default.adoc"
+      }
     },
     "guide": {
       "urls": {
-        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guide-content-default.adoc",
-      },
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guide-content-default.adoc"
+      }
     }
   },
   "guides": [

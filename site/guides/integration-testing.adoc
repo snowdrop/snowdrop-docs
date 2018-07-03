@@ -52,7 +52,7 @@ It thus essentially provides the same type of experience as a developer of Sprin
 === link:http://arquillian.org/arquillian-cube/[Arquillian Cube]
 
 Arquillian Cube is an Arquillian extension (of which no prior knowledge is necessary for the purposes of this guide) that can be used to manager Docker containers from Java tests. +
-Although the Docker capabilities of Arquillian are no doubt impressive, we will only be using the links:http://arquillian.org/arquillian-cube/#_kubernetes[Arquillian Cube Kubernetes] module.
+Although the Docker capabilities of Arquillian are no doubt impressive, we will only be using the link:http://arquillian.org/arquillian-cube/#_kubernetes[Arquillian Cube Kubernetes] module.
 This module provides all necessary constructs needed to write tests against applications that are (or will be) deployed to Kubernetes or Openshift.
 
 Just like FMP, Arquillian also provides a host of sensible defaults that can easily be changed to meet the needs of each particular testing scenario.

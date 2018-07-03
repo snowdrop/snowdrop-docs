@@ -1,0 +1,61 @@
+:page-layout: default
+:page-title: integration-testing
+:page-permalink: /guides/integration-testing
+
+= Understand how to develop integration tests for your cloud native Spring Boot applications
+
+== Introduction
+
+An integral part of the lifecycle of any piece of production grade software is proper application of testing methodologies. +
+Of the various types of tests that can be created, integration tests can often be some of the most difficult to write,
+not only because of the various real-world systems that need to be up and running (such as the PaaS, a database, other microservices etc), but also because the tooling just isn't on par
+with the tooling that exists for unit tests or tests that interact primarily with framework the application is written in (like the Spring Testing Framework).
+
+Cloud native application are no exception. If anything the large number of interactions such applications may
+potentially have with other systems in the PaaS environment makes integration testing all the more necessary.
+
+This guide provides an in depth analysis of how to create and configure your tests in order to properly test you
+Spring Boot application on Kubernetes or Openshift.
+We will so how to utilize the Fabric Maven Plugin and Arquillian Cube and the Maven Failsafe plugin to
+test the following:
+
+* a simple web application that contains no dependencies on other services,
+* a typical appication that needs a database to function and
+* a multi-module maven project that needs a cache server to be running in order to properly function
+
+The guide will focus mostly on the configuration that is needed to get all the different components to work together properly and less on the actual implementation of the test methods (although a few tips will be given).
+
+== Tools that will be used
+
+=== link:https://maven.apache.org/[Maven]
+
+It goes without saying that having a powerful build tool that can orchestrate the lifecycle of development time activities is an absolute must.
+By properly utilizing Maven's features we can create a build configuration that is easy to understand and extend. +
+Furthermore having the whole manage the build and test lifecycle makes it trivial to introduce proper CI for the project (since any CI system just needs to invoke the appropriate Maven commands)
+
+=== link:https://maven.apache.org/surefire/maven-failsafe-plugin/index.html[Maven Failsafe plugin]
+
+The Maven plugin that is typically used for running integration tests is the Maven Failsafe plugin.
+The objective of this plugin is to run tests against the final artifact that is the result of the build phase of a Maven module (which in the case of Spring Boot is the link:https://docs.spring.io/spring-boot/docs/current/reference/html/executable-jar.html[uber-jar]). +
+For that reason, the plugin is usually configured to run in the `verify` phase of the link:https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference[Maven lifecycle], which is exactly what we will be doing.
+
+=== link:https://maven.fabric8.io[Fabric8 Maven Plugin]
+
+The Fabric8 Maven Plugin (*FMP* from now on) is a Maven plugin that allows Java applications to be deployed easily to Kubernetes or Openshift.
+The plugin effectively allows the developer to deploy their application to Kubernetes or Openshift by issuing a single command, thus freeing the developer of the burden
+of having to build a docker image, create resource files etc and triggering a deployment
+
+FMP provides auto-configuration out of the box (for example it can automatically determine that the application is a Spring Boot application and thus provide proper Kubernetes Health Check endpoints), but crucially allows
+a lot of things to be overridden if needed. +
+It thus essentially provides the same type of experience as a developer of Spring Boot applications is used to - a lot of intelligent and sensible defaults, while ceding control if needed
+
+=== link:http://arquillian.org/arquillian-cube/[Arquillian Cube]
+
+Arquillian Cube is an Arquillian extension (of which no prior knowledge is necessary for the purposes of this guide) that can be used to manager Docker containers from Java tests. +
+Although the Docker capabilities of Arquillian are no doubt impressive, we will only be using the links:http://arquillian.org/arquillian-cube/#_kubernetes[Arquillian Cube Kubernetes] module.
+This module provides all necessary constructs needed to write tests against applications that are (or will be) deployed to Kubernetes or Openshift.
+
+Just like FMP, Arquillian also provides a host of sensible defaults that can easily be changed to meet the needs of each particular testing scenario.
+
+
+

@@ -57,5 +57,124 @@ This module provides all necessary constructs needed to write tests against appl
 
 Just like FMP, Arquillian also provides a host of sensible defaults that can easily be changed to meet the needs of each particular testing scenario.
 
+== Testing a simple web application
+
+Our first task will be to test a simple Spring Boot application that contains it's integration test in the same Maven module as the application source. +
+The application we will showcase can be found at link:https://github.com/snowdrop/spring-boot-http-booster[here].
+
+=== Connect to Openshift cluster
+
+The first order of business is to obtain a running Openshift cluster. If you have access to such a cluster, then simply login to it
+using:
+
+[source,bash]
+----
+oc login ...
+----
+
+Should you not be lucky enough to have an Openshift cluster available, you'll be delighted to know that it's very easy to run such a cluster on your local machine either using link:https://docs.openshift.org/latest/minishift/getting-started/installing.html[Minishift]
+or the command
+
+[source,bash]
+----
+oc cluster up
+----
+
+which is part of the link:https://docs.openshift.com/online/cli_reference/get_started_cli.html[Openshift CLI]
+
+=== Test an already running application
+
+At this point of the guide (having not explained how FMP works) we will deploy the application onto Openshift outside of Arquillian. +
+This helps us slowly progress our understanding of the process.
 
 
+==== Deploy application on Openshift
+
+Such a task can easily be achieved by utilizing Openshift's Templates, which is specified link:https://raw.githubusercontent.com/snowdrop/spring-boot-http-booster/master/.openshiftio/application.yaml[here] for the demo application.
+by executing the following command:
+
+[source,bash]
+----
+oc create -f .openshiftio/application.yaml
+oc new-app --template=spring-boot-rest-http -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-http-booster.git -p SOURCE_REPOSITORY_REF=master
+----
+
+
+After the application has been deployed, it will `spring-boot-rest-http` as it's link:https://docs.openshift.com/container-platform/3.9/architecture/networking/routes.html[Route]. +
+*Route* is the Openshift construct that allows application running inside the cluster to be accessed using a URL from outside the cluster and therefore is the perfect touch point
+for our integration tests to interact with.
+
+Later on we show how this `Route` can be automatically generated for the application by FMP
+
+[NOTE]
+====
+In cases where tests are meant to run inside an Openshift cluster, no Route is necessary since the application under test can be reached using the service name.
+However we use `Route` here since it doesn't limit us to running tests inside a cluster, meaning that the tests can run locally or in any CI environment
+====
+
+
+==== Maven Dependencies Configuration
+
+The first order of business is to specify the add Arquillian to the dependencies of the project. The best way to do that is to import the Arquillian BOM to Maven's
+`dependencyManagement` section like so:
+
+[source,xml]
+----
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.jboss.arquillian</groupId>
+        <artifactId>arquillian-bom</artifactId>
+        <version>1.4.0.Final</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+----
+
+Adding the appropriate dependencies then becomes a matter of adding the following configuration:
+
+[source,xml]
+----
+  <dependencies>
+    <dependency>
+      <groupId>org.jboss.arquillian.junit</groupId>
+      <artifactId>arquillian-junit-standalone</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.arquillian.cube</groupId>
+      <artifactId>arquillian-cube-openshift</artifactId>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>io.undertow</groupId>
+          <artifactId>undertow-core</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency
+   <dependencies>
+----
+
+The dependencies above provide add the minimum number of arquillian dependencies needed to interact will the application when it's deployed on Openshift.
+
+==== Arquillian Configuration
+
+Next comes adding the arquillian configuration file which will provide the default configuration values for Arquillian.
+
+.src/test/resources/arquillian.xml
+----
+<arquillian xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://jboss.org/schema/arquillian"
+            xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+  <extension qualifier="openshift"> <!-- Needed in order to force Arquillian to use Openshift -->
+    <property name="namespace.use.current">true</property> <!-- Use the Openshift project instead of creating a testing one -->
+    <property name="env.init.enabled">false</property> <!-- This means that Arquillian will not attempt to deploy any Openshift resources. Much more on this later -->
+    <property name="enableImageStreamDetection">false</property> <!-- We don't need to enable Image Stream detection since we are going to be initializing the environment -->
+    <property name="app.name">spring-boot-rest-http</property> <!-- A custom property that is set to specify the Openshift Route of the application. Will be used later in the test code -->
+  </extension>
+
+</arquillian>
+----

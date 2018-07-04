@@ -116,6 +116,35 @@ In cases where tests are meant to run inside an Openshift cluster, no `Route` is
 However we use `Route` here since it doesn't limit us to running tests inside a cluster, meaning that the tests can run locally or in any CI environment
 ====
 
+===== Note on Openshift Deployment
+
+Although we won't go into details about how the application actually gets deployed to Openshift when the command above are invoked, we will however provide a high-level overview of the process.
+
+Essentially Openshift uses a process called S2I (Source to Image) that checks out the application code from Github, recognizes the application as a Java Maven application,
+uses Maven to build the project's artifact (the Spring Boot uber--jar), creates Docker image inside Openshift's registry
+and finally uses it to deploy the application (more details can be found link:https://docs.openshift.org/3.9/using_images/s2i_images/java.html[here])
+
+For this approach to work, Maven needs to be configured to produce a Spring Boot uber-jar (in the same way as is needed to run the application locally).
+The relevant Maven configuration is the typical Spring Boot uber-jar configuration like so:
+
+[source,xml]
+----
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration/>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+----
+
+Just as a reminder we note here that this configured results in the production of two jar files when the Maven `package` phase is executed. Openshift is able to correctly use the uber-jar
+since the `spring-boot-maven-plugin` takes care to change the suffix of the non uber jar
 
 ==== Maven Dependencies Configuration
 
@@ -316,3 +345,51 @@ we could use the following command:
 ----
 mvn clean verify -Popenshift-it -Dnamespace.cleanup.enabled=true
 ----
+
+==== Note on failsafe classpath and interaction with Spring Boot applications
+
+The test code shown above does not use the source code of the project in any way. +
+If that source were to be used in the test code for example to reuse some domain model then test would fail.
+
+The failure would occur as a result of the combination of how the failsafe plugin sets up the classpath for the tests and how
+Spring Boot lays out the source classes inside the uber jar. Essentially the failsafe plugin places the uber-jar on the classpath and is unable to locate any of the source
+files inside the uber-jar because Spring Boot places them in a custom location (see link:https://github.com/spring-projects/spring-boot/issues/6254#issuecomment-229599865[this] for all the details).
+
+The solution in such cases is to make the failsafe plugin use the non uber-jar which contains the application classes in there standard locations. +
+The failsafe configuration that would be used would then be:
+
+[source, xml]
+----
+  <profiles>
+    <profile>
+      <id>openshift-it</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <version>2.20</version>
+            <configuration>
+              <systemPropertyVariables>
+                <app.name>${project.artifactId}</app.name>
+              </systemPropertyVariables>
+            </configuration>
+            <classesDirectory> #<1>
+              ${project.build.directory}/${project.build.finalName}.${project.packaging}.original
+            </classesDirectory>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>integration-test</goal>
+                  <goal>verify</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  <profiles>
+----
+
+<1> Force the failsafe plugin to use the non uber-jar as the classes directory. The value of the property matches the name of the non uber jar produced by the `spring-boot-maven-plugin`

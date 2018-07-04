@@ -177,23 +177,23 @@ The profiles section of `pom.xml` will now be:
 ----
   <profiles>
     <profile>
-      <id>openshift-it</id>  (1)
+      <id>openshift-it</id>  #<1>
       <build>
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-failsafe-plugin</artifactId> (2)
+            <artifactId>maven-failsafe-plugin</artifactId> #<2>
             <version>2.20</version>
             <configuration>
               <systemPropertyVariables>
-                <app.name>${project.artifactId}</app.name> (3)
+                <app.name>${project.artifactId}</app.name> #<3>
               </systemPropertyVariables>
             </configuration>
             <executions>
               <execution>
                 <goals>
                   <goal>integration-test</goal>
-                  <goal>verify</goal>           (4)
+                  <goal>verify</goal>           #<4>
                 </goals>
               </execution>
             </executions>
@@ -204,16 +204,15 @@ The profiles section of `pom.xml` will now be:
   <profiles>
 ----
 
-(1). The `openshift-it` profile is declared
+<1> The `openshift-it` profile is declared
 
-(2). The failsafe plugin is made part of the project's build when the `openshift-it` profile is enabled
+<2> The failsafe plugin is made part of the project's build when the `openshift-it` profile is enabled
 
-(3). We add a system property named `app.name` that will be available to any piece of code running as part of the failsafe plugin's lifecycle.
-
+<3> We add a system property named `app.name` that will be available to any piece of code running as part of the failsafe plugin's lifecycle. +
 The value of this property is set to the project's artifactId and will be used later in the test code to allow Arquillian to access the application. +
 For that reason it is crucial that the value of the `app.name` property matches exactly the name of the `Route` used for the application under test.
 
-(4). We configure two goals for the failsafe plugin, the `integration-test` and `verify` goals. By configuring these goals, the maven surefile plugin will automatically
+<4> We configure two goals for the failsafe plugin, the `integration-test` and `verify` goals. By configuring these goals, the maven surefile plugin will automatically
 participate in the corresponding Maven default lifecycle phases. See link:https://maven.apache.org/surefire/maven-failsafe-plugin/plugin-info.html[this] part of the failsafe documentation for more details.
 
 The `integration-test` goal is responsible for actually running the integration tests while `verify` is used in order to make sure that all tests passed (and fail the build if they don't)
@@ -265,15 +264,15 @@ With the necessary configuration performed and out of our way, we can now turn o
 [source, java]
 ----
 
-@RunWith(Arquillian.class) (1)
-public class OpenShiftIT {  (2)
+@RunWith(Arquillian.class) #<1>
+public class OpenShiftIT {  #<2>
 
-    @AwaitRoute(path = "/health") (3)
+    @AwaitRoute(path = "/health") #<3>
     @RouteURL("${app.name}")
     private URL baseURL;
 
     @Test
-    public void simplestTest() {   (4)
+    public void simplestTest() {   #<4>
         given()
           .baseUri(baseURL + "api/greeting")
           .get()
@@ -283,30 +282,26 @@ public class OpenShiftIT {  (2)
 }
 ----
 
-(1). We use the `Arquillian` JUnit Runner to give Arquillian control over the lifecycle of the test
+<1> We use the `Arquillian` JUnit Runner to give Arquillian control over the lifecycle of the test
 
-(2). The name of the class ends with `IT`, thus indicating to the failsafe plugin that it's an integration test
+<2> The name of the class ends with `IT`, thus indicating to the failsafe plugin that it's an integration test
 
-(3). By using
-
+<3> By using
 [source, java]
 ----
     @AwaitRoute(path = "/health")
     @RouteURL("${app.name}")
     private URL baseURL;
 ----
-
 we are instructing Arquillian to wait (which is the purpose of `AwaitRoute`) until a `Route` named `spring-boot-rest-http` (which is the value we configured for the `app.name` property in `arquillian.xml`)
 becomes available. Moreover Arquillian will use the `health` endpoint of said `Route`, waiting until getting an HTTP 200 response.
-
 [NOTE]
 ====
 The application includes a `/health` endpoint because it includes the Spring Boot Actuator
 ====
-
 When the application becomes available, Arquillian will set the value of `baseURL` to the URL that is used to access the application from outside the cluster.
 
-(4). In this case the test is extremely simple, only testing that the `api/greeting` endpoint responds with HTTP 200
+<4> In this case the test is extremely simple, only testing that the `api/greeting` endpoint responds with HTTP 200
 
 [NOTE]
 ====

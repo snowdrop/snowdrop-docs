@@ -425,12 +425,12 @@ will handle the entire build-deploy-test lifecycle.
 
 ==== Overview
 
-The next steps give a bird's eye view of parts that come in to play:
+The next steps give a bird's eye view of the parts that come in to play:
 
 * FMP generates Openshift resources
 * Maven compiles the source classes
 * The spring-boot-maven-plugin creates an uber-jar containing the output of the previous two processes
-* FMP creates an `ImageStream` on Openshift using the uber-jar
+* FMP applies an `ImageStream` on Openshift using the uber-jar as the input to the binary S2I build
 * Failsafe uses the uber-jar as part of the classpath it provides the tests with
 * Arquillian searches for Openshift resources on the test classpath.
 * The Openshift resources produced by FMP are found and the application is deployed
@@ -439,12 +439,12 @@ The next steps give a bird's eye view of parts that come in to play:
 ==== FMP configuration
 
 First of all we need to make sure that FMP goals are not executed by accident as part of the default lifecycle since they affect the Openshift cluster's state.
-For that reason all of the FMP configuration will reside inside the `openshift` profile, meaning that the profile we need
+For that reason all of the FMP configuration will reside inside the `openshift` profile, meaning that the profile will need
 to be enabled explicitly for any of the FMP goals to be executed.
 
 [NOTE]
 ====
-The reason we introduce a new profile and avoif reusing the `openshift-it` profile is that we might want
+The reason we introduce a new profile and avoid reusing the `openshift-it` profile is that we might want
 to execute FMP's goals independently of the integration testing process
 ====
 
@@ -507,16 +507,16 @@ in order to launch the application before Arquillian starts the actual tests.
 As should be evident from the previous section, by the time Arquillian launches (as part of the `integration-test` phase of the default Maven lifecycle),
 FMP has taken care of two things:
 
-* An `ImageStream` has been created on Openshift that contains the Docker image built from the application's uber-jar
-* A YAML file containing all the Openshift resources necessary to launch the application is present in `target/classes/META-INF/fabric8/openshift.yml`
+* An `ImageStream` has been applied on Openshift that contains the Docker image built from the application's uber-jar
+* A YAML file containing all the Openshift resources necessary to launch the application has been created at `target/classes/META-INF/fabric8/openshift.yml`
 
 The aforementioned `openshift.yml` file has also been copied to the Spring Boot uber-jar (with the `META-INF` directory structure preserved).
 This is important since as was described earlier in the guide, the uber-jar is part of the test classpath created by the failsafe plugin.
 
-When Arquillian is launched and has been configured to have `env.init.enabled` set to `true`, it dutifully looks for `META-INF/fabric8/openshift.yml`
+When Arquillian is launched, if it has been configured to have `env.init.enabled` set to `true`, it dutifully looks for `META-INF/fabric8/openshift.yml`
 inside it's classpath. Once the file is found, it used to deploy the application to Openshift.
 
-The rest of what Arquillian does is the same as the one described in the section about testing an already running application.
+The rest of what Arquillian does is the same as described in the section about testing an already running application.
 
 Just for reference, the Arquillian configuration we use in this case is:
 

@@ -218,8 +218,9 @@ public class OpenShiftIT {
 }
 ----
 
-1. We use the `Arquillian` JUnit Runner to give Arquillian control over the lifecycle of the test
-2. By using
+(1). We use the `Arquillian` JUnit Runner to give Arquillian control over the lifecycle of the test
+
+(2). By using
 
 [source, java]
 ----
@@ -238,6 +239,5 @@ The application includes a `/health` endpoint because it includes the Spring Boo
 
 When the application is available, Arquillian will set the value of `baseURL` to the URL where the application is accessible from outside the cluster.
 
-
-3. The test starts when Arquillian has verified that the Route is accessible and responds correctly. +
+(3). The test starts when Arquillian has verified that the Route is accessible and responds correctly. +
 In this case the test is extremely simple, only testing that the `api/greeting` endpoint responds with HTTP 200

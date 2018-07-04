@@ -286,19 +286,9 @@ public class OpenShiftIT {  #<2>
 
 <2> The name of the class ends with `IT`, thus indicating to the failsafe plugin that it's an integration test
 
-<3> By using
-[source, java]
-----
-    @AwaitRoute(path = "/health")
-    @RouteURL("${app.name}")
-    private URL baseURL;
-----
-we are instructing Arquillian to wait (which is the purpose of `AwaitRoute`) until a `Route` named `spring-boot-rest-http` (which is the value we configured for the `app.name` property in `arquillian.xml`)
-becomes available. Moreover Arquillian will use the `health` endpoint of said `Route`, waiting until getting an HTTP 200 response.
-[NOTE]
-====
-The application includes a `/health` endpoint because it includes the Spring Boot Actuator
-====
+<3> We are instructing Arquillian to wait (which is the purpose of `AwaitRoute`) until a `Route` named `spring-boot-rest-http` (which is the value we configured for the `app.name` property in `arquillian.xml`)
+becomes available. Moreover Arquillian will use the `health` endpoint of said `Route`, waiting until getting an HTTP 200 response. +
+The application includes a `/health` endpoint because it includes the Spring Boot Actuator. +
 When the application becomes available, Arquillian will set the value of `baseURL` to the URL that is used to access the application from outside the cluster.
 
 <4> In this case the test is extremely simple, only testing that the `api/greeting` endpoint responds with HTTP 200

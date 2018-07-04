@@ -504,14 +504,6 @@ mvn fr.jcgay.maven.plugins:buildplan-maven-plugin:list-phase -Popenshift,openshi
 Now that we have a firm grasp on how and when FMP creates the necessary Openshift resources, we will close the loop and describe how these resources are used
 in order to launch the application before Arquillian starts the actual tests.
 
-Before doing so however, we will jump the gun a bit and post the final Maven command that needs to be executed to go from zero to deploying the application and
-running the tests against it.
-
-[source,bash]
-----
-mvn clean verify -Popenshift,openshift-it
-----
-
 As should be evident from the previous section, by the time Arquillian launches (as part of the `integration-test` phase of the default Maven lifecycle),
 FMP has taken care of two things:
 

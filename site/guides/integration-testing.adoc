@@ -7,30 +7,32 @@
 == Introduction
 
 An integral part of the lifecycle of any piece of production grade software is proper application of testing methodologies. +
-Of the various types of tests that can be created, integration tests can often be some of the most difficult to write,
-not only because of the various real-world systems that need to be up and running (such as the PaaS, a database, other microservices etc), but also because the tooling just isn't on par
-with the tooling that exists for unit tests or tests that interact primarily with framework the application is written in (like the Spring Testing Framework).
+Of the various types of tests that can be created, integration tests can often be some of the most difficult to create,
+not only because of the various real-world systems that need to be up and running (such as the PaaS, a database, other microservices etc), but also because
+the tooling isn't as well known as the tooling that exists for unit tests or tests that interact primarily with the framework the application is written in
+(think of the Spring Testing Framework here).
 
 Cloud native application are no exception. If anything the large number of interactions such applications may
 potentially have with other systems in the PaaS environment makes integration testing all the more necessary.
 
-This guide provides an in depth analysis of how to create and configure your tests in order to properly test you
-Spring Boot application on Kubernetes or Openshift.
-We will so how to utilize the Fabric Maven Plugin and Arquillian Cube and the Maven Failsafe plugin to
+This guide provides an in depth analysis of how to create and configure your integration tests in order to properly test your
+Spring Boot application that is meant to run on Kubernetes or Openshift.
+The guide will show how to utilize Maven Failsafe Plugin, Fabric Maven Plugin and Arquillian Cube to
 test the following:
 
-* a simple web application that contains no dependencies on other services,
-* a typical appication that needs a database to function and
-* a multi-module maven project that needs a cache server to be running in order to properly function
+* a simple web application that contains no dependencies on other services
+* a typical application that needs a database
+* a multi-module maven project that needs a cache server to be running
 
-The guide will focus mostly on the configuration that is needed to get all the different components to work together properly and less on the actual implementation of the test methods (although a few tips will be given).
+The guide will focus mostly on the configuration that is needed to get all the different components to work together properly
+and less on the actual implementation of the test methods (although some simple code will be shown).
 
 == Tools that will be used
 
 === link:https://maven.apache.org/[Maven]
 
-It goes without saying that having a powerful build tool that can orchestrate the lifecycle of development time activities is an absolute must.
-By properly utilizing Maven's features we can create a build configuration that is easy to understand and extend. +
+It goes without saying that having a powerful build tool that can orchestrate the build-test lifecycle is an absolute must.
+  By properly utilizing Maven's features we can create a build configuration that is easy to understand and extend while also giving us the all important property of build repeatability. +
 Furthermore having the whole manage the build and test lifecycle makes it trivial to introduce proper CI for the project (since any CI system just needs to invoke the appropriate Maven commands)
 
 === link:https://maven.apache.org/surefire/maven-failsafe-plugin/index.html[Maven Failsafe plugin]
@@ -43,26 +45,27 @@ For that reason, the plugin is usually configured to run in the `verify` phase o
 
 The Fabric8 Maven Plugin (*FMP* from now on) is a Maven plugin that allows Java applications to be deployed easily to Kubernetes or Openshift.
 The plugin effectively allows the developer to deploy their application to Kubernetes or Openshift by issuing a single command, thus freeing the developer of the burden
-of having to build a docker image, create resource files etc and triggering a deployment
+of having to build a docker image, create resource files etc and triggering a deployment.
 
-FMP provides auto-configuration out of the box (for example it can automatically determine that the application is a Spring Boot application and thus provide proper Kubernetes Health Check endpoints), but crucially allows
-a lot of things to be overridden if needed. +
-It thus essentially provides the same type of experience as a developer of Spring Boot applications is used to - a lot of intelligent and sensible defaults, while ceding control if needed
+FMP provides auto-configuration based on sensible defaults for all things related to build-deploy to Kubernetes / Openshift lifecycle. +
+For example it can automatically determine that the application is a Spring Boot application and thus provide proper Kubernetes Health Check endpoints.
+Of course it gives the ability to override those defaults when the developer needs more control. +
+It thus essentially provides the same type of experience as a developer of Spring Boot applications is used to - a lot of intelligent and sensible defaults, while ceding control when needed.
 
 === link:http://arquillian.org/arquillian-cube/[Arquillian Cube]
 
-Arquillian Cube is an Arquillian extension (of which no prior knowledge is necessary for the purposes of this guide) that can be used to manager Docker containers from Java tests. +
+Arquillian Cube is an link:http://arquillian.org/[Arquillian] extension (of which no prior knowledge is necessary for the purposes of this guide) that can be used to manager Docker containers from Java tests. +
 Although the Docker capabilities of Arquillian are no doubt impressive, we will only be using the link:http://arquillian.org/arquillian-cube/#_kubernetes[Arquillian Cube Kubernetes] module.
 This module provides all necessary constructs needed to write tests against applications that are (or will be) deployed to Kubernetes or Openshift.
 
-Just like FMP, Arquillian also provides a host of sensible defaults that can easily be changed to meet the needs of each particular testing scenario.
+As it the case with FMP, Arquillian also provides a host of sensible defaults that can easily be changed to meet the needs of each particular testing scenario.
 
 == Testing a simple web application
 
 Our first task will be to test a simple Spring Boot application that contains it's integration test in the same Maven module as the application source. +
 The application we will showcase can be found at link:https://github.com/snowdrop/spring-boot-http-booster[here].
 
-For the purposes of this part of the guide, we just need to know that the application responds to an `api/greeting` HTTP GET endpoint.
+For the purposes of this part of the guide, we just need to know that the application is a Spring Boot application that responds to an `api/greeting` HTTP GET endpoint.
 
 === Connect to Openshift cluster
 
@@ -86,13 +89,13 @@ which is part of the link:https://docs.openshift.com/online/cli_reference/get_st
 
 === Test an already running application
 
-At this point of the guide (having not explained how FMP works) we will deploy the application onto Openshift outside of Arquillian. +
-This helps us slowly progress our understanding of the process.
+At this point of the guide (having not explained how FMP works) we will deploy the application onto Openshift prior to running the tests. +
+This helps us advance our understanding of the entire integration testing process gradually, without having to present all details up front.
 
 
 ==== Deployment of the application on Openshift
 
-Such a task can easily be achieved by utilizing Openshift's Templates, which is specified link:https://raw.githubusercontent.com/snowdrop/spring-boot-http-booster/master/.openshiftio/application.yaml[here] for the demo application.
+Such a task can easily be achieved by utilizing Openshift's Template feature. For the demo application, the Template has already been created and is present link:https://raw.githubusercontent.com/snowdrop/spring-boot-http-booster/master/.openshiftio/application.yaml[here].
 by executing the following command:
 
 [source,bash]
@@ -101,23 +104,22 @@ oc create -f .openshiftio/application.yaml
 oc new-app --template=spring-boot-rest-http -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-http-booster.git -p SOURCE_REPOSITORY_REF=master
 ----
 
+Without going into all the details of the template, it suffices to mention that the Template contains all necessary Openshift Resources that are necessary to deploy the application, i.e. a `Service`, a `Deployment`, a `Route` etc.
 
-After the application has been deployed, it will `spring-boot-rest-http` as it's link:https://docs.openshift.com/container-platform/3.9/architecture/networking/routes.html[Route]. +
+After the application has been deployed, it will have a link:https://docs.openshift.com/container-platform/3.9/architecture/networking/routes.html[Route] named `spring-boot-rest-http`. +
 *Route* is the Openshift construct that allows application running inside the cluster to be accessed using a URL from outside the cluster and therefore is the perfect touch point
-for our integration tests to interact with.
-
-Later on we show how this `Route` can be automatically generated for the application by FMP
+for our integration tests to interact with the application.
 
 [NOTE]
 ====
-In cases where tests are meant to run inside an Openshift cluster, no Route is necessary since the application under test can be reached using the service name.
+In cases where tests are meant to run inside an Openshift cluster, no `Route` is necessary since the application under test can be reached using it's service name.
 However we use `Route` here since it doesn't limit us to running tests inside a cluster, meaning that the tests can run locally or in any CI environment
 ====
 
 
 ==== Maven Dependencies Configuration
 
-The first order of business is to specify the add Arquillian to the dependencies of the project. The best way to do that is to import the Arquillian BOM to Maven's
+The first order of business is to add Arquillian to the dependencies of the project. The best way to do that is to import the Arquillian BOM to Maven's
 `dependencyManagement` section like so:
 
 [source,xml]
@@ -208,17 +210,17 @@ The profiles section of `pom.xml` will now be:
 
 (3). We add a system property named `app.name` that will be available to any piece of code running as part of the failsafe plugin's lifecycle.
 
-The value of this property is set to the project's artifactId and will be used later in the test code to help Arquillian know which application it is testing. +
+The value of this property is set to the project's artifactId and will be used later in the test code to allow Arquillian to access the application. +
 For that reason it is crucial that the value of the `app.name` property matches exactly the name of the `Route` used for the application under test.
 
-(4). We configure two goals for the failsafe plugin, the `integration-test` and `verify` goal. By configuring these goals, the maven surefile plugin will automatically
-participate in the corresponding Maven default lifecycle phases. See link:https://maven.apache.org/surefire/maven-failsafe-plugin/plugin-info.html[this] part of the failsafe documentation for more details
+(4). We configure two goals for the failsafe plugin, the `integration-test` and `verify` goals. By configuring these goals, the maven surefile plugin will automatically
+participate in the corresponding Maven default lifecycle phases. See link:https://maven.apache.org/surefire/maven-failsafe-plugin/plugin-info.html[this] part of the failsafe documentation for more details.
 
 The `integration-test` goal is responsible for actually running the integration tests while `verify` is used in order to make sure that all tests passed (and fail the build if they don't)
 
 [NOTE]
 ====
-It's also worth noting that we haven't specified which tests are actually integration tests. Omiting such link:https://maven.apache.org/surefire/maven-failsafe-plugin/examples/inclusion-exclusion.html[configuration]
+It's also worth noting that we haven't specified which tests are considered integration tests. Omitting such link:https://maven.apache.org/surefire/maven-failsafe-plugin/examples/inclusion-exclusion.html[configuration]
 means that we are relying on failsafe's default behavior, which is to include all tests that satisfy any of the following patterns:
 
 * `"****/IT*.java"`
@@ -228,7 +230,7 @@ means that we are relying on failsafe's default behavior, which is to include al
 
 ==== Arquillian Configuration
 
-Next comes adding the arquillian configuration file which will configure Arquillian to interact with the Openshift environment in the proper way.
+Next comes adding the arquillian configuration file which will configure Arquillian to interact with the Openshift environment in the desired way.
 
 .src/test/resources/arquillian.xml
 ----
@@ -250,15 +252,15 @@ The meaning of each bit of the aforementioned  configuration is the following:
 
 * The `openshift` qualifier is needed to tell Arquillian to enable it's Openshift features
 * Setting `namespace.use.current` to `true` means that Arquillian will use the current Openshift project (as is returned for example by `oc project -q`) instead of creating a testing one
-* Setting `env.init.enabled` to `false` ensures that no Openshift resources will be created by the test (since we expect everything to already be deployed when the test runs)
-* Having `enableImageStreamDetection` set to `false`ensures that Arquillian won't perform any search for ImageStream resources on the classpath
+* Setting `env.init.enabled` to `false` ensures that no Openshift resources will be created by the test (since we expect everything to already be deployed before the test runs)
+* Having `enableImageStreamDetection` set to `false` ensures that Arquillian will not perform any search for link:https://docs.openshift.com/container-platform/3.9/dev_guide/managing_images.html[ImageStream] resources on the classpath
 * By setting `namespace.cleanup.enabled` to `false` we ensure that Arquillian will not tear down the application when the tests are done
 
 The full extent of the configuration available can be seen link:http://arquillian.org/arquillian-cube/#_kubernetes_configuration_parameters[here] and link:http://arquillian.org/arquillian-cube/#_openshift_configuration_parameters[here]
 
 ==== Test code
 
-With the necessary configuration out of our way, we can now turn our attention to writing the actual test code. We will post the test code and then proceed to explain the important parts
+With the necessary configuration performed and out of our way, we can now turn our attention to writing the actual test code. We will post the test code and then proceed to explain the important parts
 
 [source, java]
 ----
@@ -295,17 +297,21 @@ public class OpenShiftIT {  (2)
 ----
 
 we are instructing Arquillian to wait (which is the purpose of `AwaitRoute`) until a `Route` named `spring-boot-rest-http` (which is the value we configured for the `app.name` property in `arquillian.xml`)
-becomes available. Moreover Arquillian will inspect the `health` endpoint of said `Route` for a valid HTTP response, waiting until getting one.
+becomes available. Moreover Arquillian will use the `health` endpoint of said `Route`, waiting until getting an HTTP 200 response.
 
 [NOTE]
 ====
 The application includes a `/health` endpoint because it includes the Spring Boot Actuator
 ====
 
-When the application is available, Arquillian will set the value of `baseURL` to the URL where the application is accessible from outside the cluster.
+When the application becomes available, Arquillian will set the value of `baseURL` to the URL that is used to access the application from outside the cluster.
 
-(4). The test starts when Arquillian has verified that the Route is accessible and responds correctly. +
-In this case the test is extremely simple, only testing that the `api/greeting` endpoint responds with HTTP 200
+(4). In this case the test is extremely simple, only testing that the `api/greeting` endpoint responds with HTTP 200
+
+[NOTE]
+====
+The HTTP interactions are performed and results verified using the excellent link:http://rest-assured.io/[RestAssured] library
+====
 
 ==== Test execution
 

@@ -161,6 +161,71 @@ Adding the appropriate dependencies then becomes a matter of adding the followin
 
 The dependencies above provide add the minimum number of arquillian dependencies needed to interact will the application when it's deployed on Openshift.
 
+==== Maven failsafe plugin configuration
+
+Making sure that the integration tests only run in a proper environment is very important. We don't want developers inadvertently launching the integration tests
+by accident only to have them fail because there is no Openshift cluster available and thus creating the false impression that the build is broken.
+
+For that reason we introduce a Maven profile named `openshift-it` which will contain the failsafe plugin configuration needed to run the tests. +
+This means that the integration tests will only run when `-Popenshift-it` is present on Maven's command-line invocation.
+
+The profiles section of `pom.xml` will now be:
+
+[source, xml]
+----
+  <profiles>
+    <profile>
+      <id>openshift-it</id>  (1)
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId> (2)
+            <version>2.20</version>
+            <configuration>
+              <systemPropertyVariables>
+                <app.name>${project.artifactId}</app.name> (3)
+              </systemPropertyVariables>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>integration-test</goal>
+                  <goal>verify</goal>           (4)
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  <profiles>
+----
+
+(1). The `openshift-it` profile is declared
+
+(2). The failsafe plugin is made part of the project's build when the `openshift-it` profile is enabled
+
+(3). We add a system property named `app.name` that will be available to any piece of code running as part of the failsafe plugin's lifecycle.
+
+The value of this property is set to the project's artifactId and will be used later in the test code to help Arquillian know which application it is testing. +
+For that reason it is crucial that the value of the `app.name` property matches exactly the name of the `Route` used for the application under test.
+
+(4). We configure two goals for the failsafe plugin, the `integration-test` and `verify` goal. By configuring these goals, the maven surefile plugin will automatically
+participate in the corresponding Maven default lifecycle phases.
+
+The `integration-test` goal is responsible for actually running the integration tests while `verify` is used in order to make sure that all tests passed (and fail the build if they don't)
+
+[NOTE]
+====
+It's also worth noting that we haven't specified which tests are actually integration tests. Omiting such link:https://maven.apache.org/surefire/maven-failsafe-plugin/examples/inclusion-exclusion.html[configuration]
+means that we are relying on failsafe's default behavior, which is to include all tests that satisfy any of the following patterns:
+
+* `"****/IT*.java"`
+* `"**/*IT.java"`
+* `"**/*ITCase.java"`
+====
+
 ==== Arquillian Configuration
 
 Next comes adding the arquillian configuration file which will configure Arquillian to interact with the Openshift environment in the proper way.
@@ -176,7 +241,6 @@ Next comes adding the arquillian configuration file which will configure Arquill
     <property name="env.init.enabled">false</property>
     <property name="enableImageStreamDetection">false</property>
     <property name="namespace.cleanup.enabled">false</property>
-    <property name="app.name">spring-boot-rest-http</property>
   </extension>
 
 </arquillian>
@@ -189,7 +253,6 @@ The meaning of each bit of the aforementioned  configuration is the following:
 * Setting `env.init.enabled` to `false` ensures that no Openshift resources will be created by the test (since we expect everything to already be deployed when the test runs)
 * Having `enableImageStreamDetection` set to `false`ensures that Arquillian won't perform any search for ImageStream resources on the classpath
 * By setting `namespace.cleanup.enabled` to `false` we ensure that Arquillian will not tear down the application when the tests are done
-* `app.name` is a custom property that is set to specify the Openshift Route of the application. Will be used later in the test code
 
 The full extent of the configuration available can be seen link:http://arquillian.org/arquillian-cube/#_kubernetes_configuration_parameters[here] and link:http://arquillian.org/arquillian-cube/#_openshift_configuration_parameters[here]
 
@@ -201,14 +264,14 @@ With the necessary configuration out of our way, we can now turn our attention t
 ----
 
 @RunWith(Arquillian.class) (1)
-public class OpenShiftIT {
+public class OpenShiftIT {  (2)
 
-    @AwaitRoute(path = "/health") (2)
+    @AwaitRoute(path = "/health") (3)
     @RouteURL("${app.name}")
     private URL baseURL;
 
     @Test
-    public void simplestTest() {   (3)
+    public void simplestTest() {   (4)
         given()
           .baseUri(baseURL + "api/greeting")
           .get()
@@ -220,7 +283,9 @@ public class OpenShiftIT {
 
 (1). We use the `Arquillian` JUnit Runner to give Arquillian control over the lifecycle of the test
 
-(2). By using
+(2). The name of the class ends with `IT`, thus indicating to the failsafe plugin that it's an integration test
+
+(3). By using
 
 [source, java]
 ----
@@ -239,5 +304,5 @@ The application includes a `/health` endpoint because it includes the Spring Boo
 
 When the application is available, Arquillian will set the value of `baseURL` to the URL where the application is accessible from outside the cluster.
 
-(3). The test starts when Arquillian has verified that the Route is accessible and responds correctly. +
+(4). The test starts when Arquillian has verified that the Route is accessible and responds correctly. +
 In this case the test is extremely simple, only testing that the `api/greeting` endpoint responds with HTTP 200

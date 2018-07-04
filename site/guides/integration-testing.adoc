@@ -212,7 +212,7 @@ The value of this property is set to the project's artifactId and will be used l
 For that reason it is crucial that the value of the `app.name` property matches exactly the name of the `Route` used for the application under test.
 
 (4). We configure two goals for the failsafe plugin, the `integration-test` and `verify` goal. By configuring these goals, the maven surefile plugin will automatically
-participate in the corresponding Maven default lifecycle phases.
+participate in the corresponding Maven default lifecycle phases. See link:https://maven.apache.org/surefire/maven-failsafe-plugin/plugin-info.html[this] part of the failsafe documentation for more details
 
 The `integration-test` goal is responsible for actually running the integration tests while `verify` is used in order to make sure that all tests passed (and fail the build if they don't)
 

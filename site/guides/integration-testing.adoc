@@ -544,3 +544,11 @@ Just for reference, the Arquillian configuration we use in this case is:
 </arquillian>
 ----
 
+
+== Testing an application that uses a database
+
+TODO
+
+== Testing a multi-module maven project that uses a Cache server
+
+TODO

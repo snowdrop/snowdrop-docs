@@ -256,7 +256,7 @@ The meaning of each bit of the aforementioned  configuration is the following:
 
 The full extent of the configuration available can be seen link:http://arquillian.org/arquillian-cube/#_kubernetes_configuration_parameters[here] and link:http://arquillian.org/arquillian-cube/#_openshift_configuration_parameters[here]
 
-=== Test code
+==== Test code
 
 With the necessary configuration out of our way, we can now turn our attention to writing the actual test code. We will post the test code and then proceed to explain the important parts
 
@@ -306,3 +306,22 @@ When the application is available, Arquillian will set the value of `baseURL` to
 
 (4). The test starts when Arquillian has verified that the Route is accessible and responds correctly. +
 In this case the test is extremely simple, only testing that the `api/greeting` endpoint responds with HTTP 200
+
+==== Executing the test
+
+The integration test can now be executed from maven like so:
+
+[source,bash]
+
+----
+mvn clean verify -Popenshift-it
+----
+
+It should be noted that Arquillian's configuration can be overridden on the command line. For example if we needed to tear down the application after the tests execute,
+we could use the following command:
+
+[source,bash]
+
+----
+mvn clean verify -Popenshift-it -Dnamespace.cleanup.enabled=true
+----

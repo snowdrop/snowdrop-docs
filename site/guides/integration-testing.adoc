@@ -234,7 +234,7 @@ becomes available. Moreover Arquillian will inspect the `health` endpoint of sai
 [NOTE]
 ====
 The application includes a `/health` endpoint because it includes the Spring Boot Actuator
-===
+====
 
 When the application is available, Arquillian will set the value of `baseURL` to the URL where the application is accessible from outside the cluster.
 

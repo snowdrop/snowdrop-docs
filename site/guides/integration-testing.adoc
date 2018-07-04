@@ -62,6 +62,8 @@ Just like FMP, Arquillian also provides a host of sensible defaults that can eas
 Our first task will be to test a simple Spring Boot application that contains it's integration test in the same Maven module as the application source. +
 The application we will showcase can be found at link:https://github.com/snowdrop/spring-boot-http-booster[here].
 
+For the purposes of this part of the guide, we just need to know that the application responds to an `api/greeting` HTTP GET endpoint.
+
 === Connect to Openshift cluster
 
 The first order of business is to obtain a running Openshift cluster. If you have access to such a cluster, then simply login to it
@@ -161,7 +163,7 @@ The dependencies above provide add the minimum number of arquillian dependencies
 
 ==== Arquillian Configuration
 
-Next comes adding the arquillian configuration file which will provide the default configuration values for Arquillian.
+Next comes adding the arquillian configuration file which will configure Arquillian to interact with the Openshift environment in the proper way.
 
 .src/test/resources/arquillian.xml
 ----
@@ -169,12 +171,73 @@ Next comes adding the arquillian configuration file which will provide the defau
             xmlns="http://jboss.org/schema/arquillian"
             xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 
-  <extension qualifier="openshift"> <!-- Needed in order to force Arquillian to use Openshift -->
-    <property name="namespace.use.current">true</property> <!-- Use the Openshift project instead of creating a testing one -->
-    <property name="env.init.enabled">false</property> <!-- This means that Arquillian will not attempt to deploy any Openshift resources. Much more on this later -->
-    <property name="enableImageStreamDetection">false</property> <!-- We don't need to enable Image Stream detection since we are going to be initializing the environment -->
-    <property name="app.name">spring-boot-rest-http</property> <!-- A custom property that is set to specify the Openshift Route of the application. Will be used later in the test code -->
+  <extension qualifier="openshift">
+    <property name="namespace.use.current">true</property>
+    <property name="env.init.enabled">false</property>
+    <property name="enableImageStreamDetection">false</property>
+    <property name="namespace.cleanup.enabled">false</property>
+    <property name="app.name">spring-boot-rest-http</property>
   </extension>
 
 </arquillian>
 ----
+
+The meaning of each bit of the aforementioned  configuration is the following:
+
+* The `openshift` qualifier is needed to tell Arquillian to enable it's Openshift features
+* Setting `namespace.use.current` to `true` means that Arquillian will use the current Openshift project (as is returned for example by `oc project -q`) instead of creating a testing one
+* Setting `env.init.enabled` to `false` ensures that no Openshift resources will be created by the test (since we expect everything to already be deployed when the test runs)
+* Having `enableImageStreamDetection` set to `false`ensures that Arquillian won't perform any search for ImageStream resources on the classpath
+* By setting `namespace.cleanup.enabled` to `false` we ensure that Arquillian will not tear down the application when the tests are done
+* `app.name` is a custom property that is set to specify the Openshift Route of the application. Will be used later in the test code
+
+The full extent of the configuration available can be seen link:http://arquillian.org/arquillian-cube/#_kubernetes_configuration_parameters[here] and link:http://arquillian.org/arquillian-cube/#_openshift_configuration_parameters[here]
+
+=== Test code
+
+With the necessary configuration out of our way, we can now turn our attention to writing the actual test code. We will post the test code and then proceed to explain the important parts
+
+[source, java]
+----
+
+@RunWith(Arquillian.class) (1)
+public class OpenShiftIT {
+
+    @AwaitRoute(path = "/health") (2)
+    @RouteURL("${app.name}")
+    private URL baseURL;
+
+    @Test
+    public void simplestTest() {   (3)
+        given()
+          .baseUri(baseURL + "api/greeting")
+          .get()
+          .then()
+          .statusCode(200);
+    }
+}
+----
+
+1. We use the `Arquillian` JUnit Runner to give Arquillian control over the lifecycle of the test
+2. By using
+
+[source, java]
+----
+    @AwaitRoute(path = "/health")
+    @RouteURL("${app.name}")
+    private URL baseURL;
+----
+
+we are instructing Arquillian to wait (which is the purpose of `AwaitRoute`) until a `Route` named `spring-boot-rest-http` (which is the value we configured for the `app.name` property in `arquillian.xml`)
+becomes available. Moreover Arquillian will inspect the `health` endpoint of said `Route` for a valid HTTP response, waiting until getting one.
+
+[NOTE]
+====
+The application includes a `/health` endpoint because it includes the Spring Boot Actuator
+===
+
+When the application is available, Arquillian will set the value of `baseURL` to the URL where the application is accessible from outside the cluster.
+
+
+3. The test starts when Arquillian has verified that the Route is accessible and responds correctly. +
+In this case the test is extremely simple, only testing that the `api/greeting` endpoint responds with HTTP 200

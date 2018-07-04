@@ -4,8 +4,6 @@
 
 = Understand how to develop integration tests for your cloud native Spring Boot applications
 
-== Introduction
-
 An integral part of the lifecycle of any piece of production grade software is proper application of testing methodologies. +
 Of the various types of tests that can be created, integration tests can often be some of the most difficult to create,
 not only because of the various real-world systems that need to be up and running (such as the PaaS, a database, other microservices etc), but also because
@@ -26,6 +24,19 @@ test the following:
 
 The guide will focus mostly on the configuration that is needed to get all the different components to work together properly
 and less on the actual implementation of the test methods (although some simple code will be shown).
+
+== What you'll need
+
+* Java 8
+* Access to an OpenShift cluster whether locally via https://www.openshift.org/minishift/[minishift] or using the different
+  flavors of https://www.openshift.com/products[OpenShift products]
+
+== Knowledge prerequisites
+
+* Intermediate knowledge of Maven
+* Working knowledge of Openshift
+* Working knowledge of the Fabric Maven Plugin
+* Working knowledge of Spring Boot
 
 == Tools that will be used
 
@@ -393,3 +404,143 @@ The failsafe configuration that would be used would then be:
 ----
 
 <1> Force the failsafe plugin to use the non uber-jar as the classes directory. The value of the property matches the name of the non uber jar produced by the `spring-boot-maven-plugin`
+
+=== Deploy application as part of the integration test process
+
+Up until now we have been operating under the assumption that the tests would be executed against an application that was running before Maven was invoked. +
+Although such a scenario is useful in some cases, it would also be great for CI purposes if the application could be deployed to Openshift from source
+as part of the Maven build.
+
+In this section we will describe in depth how we can configure Maven in order to provide the developer with a single command that utilizes features provided by FMP and Arquillian
+to launch and test the application.
+
+The end result is that executing a command like
+
+[source,bash]
+----
+mvn clean verify -Popenshift,openshift-it
+----
+
+will handle the entire build-deploy-test lifecycle.
+
+==== Overview
+
+The next steps give a bird's eye view of parts that come in to play:
+
+* FMP generates Openshift resources
+* Maven compiles the source classes
+* The spring-boot-maven-plugin creates an uber-jar containing the output of the previous two processes
+* FMP creates an `ImageStream` on Openshift using the uber-jar
+* Failsafe uses the uber-jar as part of the classpath it provides the tests with
+* Arquillian searches for Openshift resources on the test classpath.
+* The Openshift resources produced by FMP are found and the application is deployed
+* Arquillian initiates the tests once the application has been successfully deployed
+
+==== FMP configuration
+
+First of all we need to make sure that FMP goals are not executed by accident as part of the default lifecycle since they affect the Openshift cluster's state.
+For that reason all of the FMP configuration will reside inside the `openshift` profile, meaning that the profile we need
+to be enabled explicitly for any of the FMP goals to be executed.
+
+[NOTE]
+====
+The reason we introduce a new profile and avoif reusing the `openshift-it` profile is that we might want
+to execute FMP's goals independently of the integration testing process
+====
+
+For the purposes of this guide, we don't need to perform any specific configuration of FMP, we can just accept the defaults
+and configure it (inside the `profiles` section) like so:
+
+[source,xml]
+----
+    <profile>
+      <id>openshift</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>io.fabric8</groupId>
+            <artifactId>fabric8-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>fmp</id>
+                <goals>
+                  <goal>resource</goal>
+                  <goal>build</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+----
+
+The two FMP goals that we specify are `resource` and `build`.
+
+link:https://maven.fabric8.io/#fabric8:resource[resource] is automatically attached to the `process-resources` phase of the default Maven lifecycle
+and it's purpose is to create the Openshift resources (as files on the file system) that are needed to deploy the application. +
+These resources include the `Service`, `DeploymentConfig` and `Route` which are all necessary to make the application available outside the cluster. +
+
+It's worth noting that the produced Openshift resources are placed inside `target/classes/META-INF/fabric8` and the specific file that will be used later
+by Arquillian is `target/classes/META-INF/fabric8/openshift.yml`. +
+Having the files under `target/classes` means that when Maven packages the application and creates the final artifact (the Spring Boot uber-jar),
+the all too important `META-INF/fabric8/openshift.yml` file will be present inside it.
+
+link:https://maven.fabric8.io/#fabric8:build[build] is automatically attached to the `pre-integration-test` phase of the default Maven lifecycle
+and takes care of applying the `BuildConfiguration` and `ImageStream` resources to the cluster that are necessary to deploy the application later on.
+
+[NOTE]
+====
+A great way to see the plugins that are attached to each lifecycle is by executing the following command
+[source,bash]
+----
+mvn fr.jcgay.maven.plugins:buildplan-maven-plugin:list-phase -Popenshift,openshift-it
+----
+====
+
+
+==== How FMP resources are used before the tests are run
+
+Now that we have a firm grasp on how and when FMP creates the necessary Openshift resources, we will close the loop and describe how these resources are used
+in order to launch the application before Arquillian starts the actual tests.
+
+Before doing so however, we will jump the gun a bit and post the final Maven command that needs to be executed to go from zero to deploying the application and
+running the tests against it.
+
+[source,bash]
+----
+mvn clean verify -Popenshift,openshift-it
+----
+
+As should be evident from the previous section, by the time Arquillian launches (as part of the `integration-test` phase of the default Maven lifecycle),
+FMP has taken care of two things:
+
+* An `ImageStream` has been created on Openshift that contains the Docker image built from the application's uber-jar
+* A YAML file containing all the Openshift resources necessary to launch the application is present in `target/classes/META-INF/fabric8/openshift.yml`
+
+The aforementioned `openshift.yml` file has also been copied to the Spring Boot uber-jar (with the `META-INF` directory structure preserved).
+This is important since as was described earlier in the guide, the uber-jar is part of the test classpath created by the failsafe plugin.
+
+When Arquillian is launched and has been configured to have `env.init.enabled` set to `true`, it dutifully looks for `META-INF/fabric8/openshift.yml`
+inside it's classpath. Once the file is found, it used to deploy the application to Openshift.
+
+The rest of what Arquillian does is the same as the one described in the section about testing an already running application.
+
+Just for reference, the Arquillian configuration we use in this case is:
+
+.src/test/resources/arquillian.xml
+----
+<arquillian xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://jboss.org/schema/arquillian"
+            xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+  <extension qualifier="openshift">
+    <property name="namespace.use.current">true</property>
+    <property name="env.init.enabled">true</property>
+    <property name="enableImageStreamDetection">false</property>
+    <property name="namespace.cleanup.enabled">false</property>
+  </extension>
+
+</arquillian>
+----
+

@@ -90,7 +90,7 @@ At this point of the guide (having not explained how FMP works) we will deploy t
 This helps us slowly progress our understanding of the process.
 
 
-==== Deploy application on Openshift
+==== Deployment of the application on Openshift
 
 Such a task can easily be achieved by utilizing Openshift's Templates, which is specified link:https://raw.githubusercontent.com/snowdrop/spring-boot-http-booster/master/.openshiftio/application.yaml[here] for the demo application.
 by executing the following command:
@@ -307,7 +307,7 @@ When the application is available, Arquillian will set the value of `baseURL` to
 (4). The test starts when Arquillian has verified that the Route is accessible and responds correctly. +
 In this case the test is extremely simple, only testing that the `api/greeting` endpoint responds with HTTP 200
 
-==== Executing the test
+==== Test execution
 
 The integration test can now be executed from maven like so:
 

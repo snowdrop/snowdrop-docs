@@ -530,7 +530,6 @@ Just for reference, the Arquillian configuration we use in this case is:
     <property name="namespace.use.current">true</property>
     <property name="env.init.enabled">true</property>
     <property name="enableImageStreamDetection">false</property>
-    <property name="namespace.cleanup.enabled">false</property>
   </extension>
 
 </arquillian>
@@ -539,7 +538,173 @@ Just for reference, the Arquillian configuration we use in this case is:
 
 == Testing an application that uses a database
 
-TODO
+In this section we will introduce some extra complexity into the integration testing scenario by using a
+link:https://github.com/snowdrop/spring-boot-crud-booster[demo application] that requires a database to be present.
+
+We will show how easy it is for Arquillian to take care of the deployment of a database as well as part of the test setup.
+
+=== Configuring Arquillian to additionally setup the database
+
+As has been noted before, Arquillian offers a ton of flexibility in order to be able to address a host of different
+integration testing scenarios. +
+In this section we will see just how a very simple configuration change to the configuration we have been using so far,
+suffices to get a database running on the Openshift cluster.
+
+First of all we need to add an Openshift file that describes the database we want to deploy:
+
+.src/test/resources/database.yml
+----
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: my-database
+    name: my-database
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+    - annotations:
+        openshift.io/imported-from: openshift/postgresql-92-centos7
+      from:
+        kind: DockerImage
+        name: openshift/postgresql-92-centos7
+      generation: null
+      importPolicy: {}
+      name: latest
+      referencePolicy:
+        type: ""
+  status:
+    dockerImageRepository: ""
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: my-database
+    name: my-database
+  spec:
+    replicas: 1
+    selector:
+      app: my-database
+      deploymentconfig: my-database
+    strategy:
+      resources: {}
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: my-database
+          deploymentconfig: my-database
+      spec:
+        containers:
+        - env:
+          - name: POSTGRESQL_DATABASE
+            value: my_data
+          - name: POSTGRESQL_PASSWORD
+            value: secret
+          - name: POSTGRESQL_USER
+            value: luke
+          image: openshift/postgresql-92-centos7
+          name: my-database
+          ports:
+          - containerPort: 5432
+            protocol: TCP
+          resources: {}
+          volumeMounts:
+          - mountPath: /var/lib/pgsql/data
+            name: my-database-volume-1
+        volumes:
+        - emptyDir: {}
+          name: my-database-volume-1
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - my-database
+        from:
+          kind: ImageStreamTag
+          name: my-database:latest
+      type: ImageChange
+  status:
+    availableReplicas: 0
+    latestVersion: 0
+    observedGeneration: 0
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: my-database
+    name: my-database
+  spec:
+    ports:
+    - name: 5432-tcp
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+    selector:
+      app: my-database
+      deploymentconfig: my-database
+  status:
+    loadBalancer: {}
+kind: List
+metadata: {}
+----
+
+To make arquillian deploy the database as part of the environment creation process, all we need to do is configure the `env.dependencies` property.
+The final `arquillian.xml` configuration file looks like:
+
+.src/test/resources/arquillian.xml
+----
+<arquillian xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://jboss.org/schema/arquillian"
+            xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+  <extension qualifier="openshift">
+    <property name="namespace.use.current">true</property>
+    <property name="env.init.enabled">true</property>
+    <property name="enableImageStreamDetection">false</property>
+    <property name="namespace.cleanup.enabled">false</property>
+    <property name="env.dependencies">file://${basedir}/target/test-classes/database.yml</property> #<1>
+  </extension>
+
+</arquillian>
+----
+
+<1> The `env.dependencies` is a comma-separated list of URLs to more environment dependencies.
+
+The only tricky thing about the value of `env.dependencies` is that it uses a Maven variable which means that we need to make sure that
+test resources have been configured to have the Maven variables substituted. +
+That can easily be achieved by adding the following inside the `build` section:
+
+[source,xml]
+----
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <filtering>true</filtering>
+      </testResource>
+    </testResources>
+----
+
+See link:https://maven.apache.org/plugins/maven-resources-plugin/examples/filter.html[this] part of the Maven documentation for more details.
 
 == Testing a multi-module maven project that uses a Cache server
 

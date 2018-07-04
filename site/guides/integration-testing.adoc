@@ -706,6 +706,15 @@ That can easily be achieved by adding the following inside the `build` section:
 
 See link:https://maven.apache.org/plugins/maven-resources-plugin/examples/filter.html[this] part of the Maven documentation for more details.
 
+=== Running the tests
+
+The command to run the integration tests does not change. It's:
+
+[source,bash]
+----
+mvn verify -Popenshift,openshift-it
+----
+
 == Testing a multi-module maven project that uses a Cache server
 
 TODO

@@ -254,6 +254,32 @@ The profiles section of `pom.xml` will now be:
 The value of this property is set to the project's `artifactId` as defined in its POM file and will be used later in the test code to allow Arquillian to access the application. +
 For that reason it is crucial that the value of the `app.name` property matches exactly the name of the `Route` used for the application under test.
 
+At this point it's imperative to note that when use the FMP defaults, all the generated Openshift resources use `project.artifactId` as their name. That is why
+we specified `project.artifactId` as the value for `app.name`. +
+Had we configured FMP to generate a Route using different name, say `myapp-route`, then we would also have to configure `app.name` with the value of  `app.route`
+
+[NOTE]
+====
+Although providing details for changing FMP defaults is out of the scope of this guide, we will nonetheless mention a simple way of configuring the generated Route's name.
+
+We can add link:https://maven.fabric8.io/#resource-fragments[resource fragments] that FMP will use to override the defaults it uses. A resource fragment for `Route` could be:
+
+.src/main/fabric8/route.yml
+----
+apiVersion: v1
+kind: Route
+metadata:
+  name: myapp-route
+spec:
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: ${project.artifactId}
+----
+====
+
+
 <4> We configure two goals for the failsafe plugin, the `integration-test` and `verify` goals. By configuring these goals, the Maven surefile plugin will automatically
 participate in the corresponding Maven default lifecycle phases. See link:https://maven.apache.org/surefire/maven-failsafe-plugin/plugin-info.html[this] part of the failsafe documentation for more details.
 

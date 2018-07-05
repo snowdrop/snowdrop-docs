@@ -1,8 +1,8 @@
-=== Snowdrop site: How to add or configure guides
+== Snowdrop site: How to add or configure guides
 
 Configuring guides and other metadata for the Snowdrop website requires http://git-scm.com/download[Git] and a text editor. It also helps to have an asciidoc preview tool such as https://chrome.google.com/webstore/detail/asciidoctorjs-live-previe/iaalpfgpbocpdfblpnhhgllgbdbchmia?hl=en[Asciidoctor.js Live Preview] for Chrome. Guides are written in Asciidoc format.
 
-==== Creating a new guide
+=== Creating a new guide
 
 * Clone the Snowdrop Docs repository: https://github.com/snowdrop/snowdrop-docs
 * Place a new `*.adoc` file in the `site/guides` directory (or host your source asciidoc file on the public internet, you will need its URL later):
@@ -18,10 +18,10 @@ snowdrop-docs/site/guides/
 * Do not re-build/re-deploy the Snowdrop website. Changes are publicly visible as soon as files are updated on GitHub.
 * Changes may take several minutes to become visible on the Snowdrop website, as GitHub sometimes caches raw documents for a period of time.
 
-==== Configuring existing guides
+=== Configuring existing guides
 Similar to creating a new guide, all existing guides and their metadata can be updated simply by editing the asciidoc source in-place (e.g. pushing changes to Git), or updating the metadata contained within the Snowdrop site https://github.com/snowdrop/snowdrop-docs/blob/master/site/config.json[config.json]. All changes pushed become live immediately. No rebuild of the site is necessary.
 
-==== Guide configuration syntax
+=== Guide configuration syntax
 You can find the guides configuration array in the https://github.com/snowdrop/snowdrop-docs/blob/master/site/config.json[site config file]. It is recommended to use an existing entry as a template for new guides.
 
 .config.json

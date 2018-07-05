@@ -133,9 +133,11 @@ However we use a `Route` here since it doesn't limit us to running tests inside 
 
 Although we won't go into details about how the application actually gets deployed to OpenShift when the command above are invoked, we will however provide a high-level overview of the process.
 
-Essentially OpenShift uses a process called S2I (Source to Image) that checks out the application code from Github, recognizes the application as a Java Maven application,
-uses Maven to build the project's artifact (the Spring Boot uber-jar), creates a Docker image inside OpenShift's registry
-and finally uses it to deploy the application (more details can be found link:https://docs.openshift.org/latest/using_images/s2i_images/java.html[here])
+OpenShift uses a process called S2I (Source to Image).
+Although there are a lot ways S2I can be configured (as can be found link:https://docs.openshift.org/latest/using_images/s2i_images/java.html[here]),
+the template uses a conceptually simple mechanism that checks out the application's source code from Github,
+recognizes the application as a Java Maven application, uses Maven to create the project's artifact (the Spring Boot uber-jar) inside a dedicated (so called builder) Pod,
+creates a Docker image inside OpenShift's registry and finally uses it to deploy the application.
 
 For this approach to work, Maven needs to be configured to produce a Spring Boot uber-jar (in the same way as is needed to run the application locally).
 The relevant Maven configuration is the typical Spring Boot uber-jar configuration like so:

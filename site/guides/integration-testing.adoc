@@ -169,7 +169,7 @@ since the `spring-boot-maven-plugin` takes care to change the suffix of the non 
 
 ==== Maven Dependencies Configuration
 
-The first order of business is to add Arquillian to the dependencies of the project. The best way to do that is to import the Arquillian BOM to Maven's
+The first order of business is to add Arquillian to the dependencies of the project. The best way to do that is to import the propert Arquillian BOMs to Maven's
 `dependencyManagement` section like so:
 
 [source,xml]
@@ -180,6 +180,13 @@ The first order of business is to add Arquillian to the dependencies of the proj
         <groupId>org.jboss.arquillian</groupId>
         <artifactId>arquillian-bom</artifactId>
         <version>1.4.0.Final</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.arquillian.cube</groupId>
+        <artifactId>arquillian-cube-bom</artifactId>
+        <version>1.16.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

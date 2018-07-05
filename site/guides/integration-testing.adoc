@@ -823,7 +823,7 @@ Therefore in the `pom.xml` file of the `tests` module we add the following FMP c
 Because of the way we execute the maven command (`mvn clean verify -Popenshift,openshift-it`) the configuration in the `openshift-it` profile of the module
 overrides the configuration in the `openshift` profile of the parent pom.
 
-<2> Using FMP's link:https://maven.fabric8.io/#profiles-predefined[aggregate] profile make's it search for OpenShift resource files inside
+<2> Using FMP's link:https://maven.fabric8.io/#profiles-predefined[aggregate] profile makes it search for OpenShift resource files inside
 the jars that are available via the dependencies of the module or the dependencies of the plugin itself. Any such resources files will be
 aggregated into a single file and placed in the standard `target/classes/META-INF/fabric/openshift.yml` location we have seen in previous sections. +
 It's important to note that FMP will not attempt to generate any other OpenShift resources when this profile is enabled.
@@ -835,7 +835,7 @@ and create an "uber" resources file containing resources of both modules as expl
 ====
 Had we added the `name-service` and `greeting-service` modules to the dependencies of the `tests` module itself instead of FMP,
 the end result from an FMP's perspective would have been the same.
-However the `tests` itself has not code dependencies on the other modules therefore is cleaner to add the dependencies to FMP where they
+However the `tests` itself has no actual code dependencies on the other modules therefore it is cleaner to add the dependencies to FMP where they
 are actually needed
 ====
 

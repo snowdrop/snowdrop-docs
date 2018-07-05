@@ -756,6 +756,9 @@ That can easily be achieved by adding the following inside the `build` section:
 
 See link:https://maven.apache.org/plugins/maven-resources-plugin/examples/filter.html[this] part of the Maven documentation for more details.
 
+It is also worth noting that the `database.yml` file ends up in `test-target` because we added it to `src/test/resources` which is the default location Maven
+uses for resources files used by the test code.
+
 === Running the tests
 
 The command to run the integration tests does not change. It's:

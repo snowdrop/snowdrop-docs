@@ -355,8 +355,8 @@ public class OpenShiftIT {  #<2>
     @Test
     public void simplestTest() {   #<4>
         given()
-          .baseUri(baseURL + "api/greeting")
-          .get()
+          .baseUri(baseURL)
+          .get("/api/greeting")
           .then()
           .statusCode(200);
     }

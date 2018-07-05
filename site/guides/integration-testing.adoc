@@ -438,7 +438,7 @@ The failsafe configuration that would be used would then be:
   <profiles>
 ----
 
-<1> Force the failsafe plugin to use the non uber-jar as the classes directory. The value of the property matches the name of the non uber-jar produced by the `spring-boot-maven-plugin`
+<1> Force the failsafe plugin to use the non uber-jar as the classes directory. The value of the property matches the name of the original jar produced before the `spring-boot-maven-plugin` repackages it to create the uber-jar
 
 [NOTE]
 ====

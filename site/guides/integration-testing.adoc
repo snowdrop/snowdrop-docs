@@ -499,7 +499,7 @@ mvn clean fabric8:deploy -Popenshift
 in order to deploy the application into his/her local / dev Openshift environment.
 ====
 
-For the purposes of this guide, we don't need to perform any specific configuration of FMP, we can just accept the defaults
+For the purpose of this guide, we don't need to perform any specific configuration of FMP, we can just accept the defaults
 and configure it (inside the `profiles` section) like so:
 
 [source,xml]
@@ -529,7 +529,7 @@ and configure it (inside the `profiles` section) like so:
 The two FMP goals that we specify are `resource` and `build`.
 
 link:https://maven.fabric8.io/#fabric8:resource[resource] is automatically attached to the `process-resources` phase of the default Maven lifecycle
-and it's purpose is to create the OpenShift resources (as files on the file system) that are needed to deploy the application. +
+and its purpose is to create the OpenShift resources (as files on the file system) that are needed to deploy the application. +
 These resources include the `Service`, `DeploymentConfig` and `Route` which are all necessary to make the application available outside the cluster. +
 
 It's worth noting that the produced OpenShift resources are placed inside `target/classes/META-INF/fabric8` and the specific file that will be used later
@@ -565,7 +565,7 @@ The aforementioned `openshift.yml` file has also been copied to the Spring Boot 
 This is important since as was described earlier in the guide, the uber-jar is part of the test classpath created by the failsafe plugin.
 
 When Arquillian is launched, if it has been configured to have `env.init.enabled` set to `true`, it dutifully looks for `META-INF/fabric8/openshift.yml`
-inside it's classpath. Once the file is found, it used to deploy the application to OpenShift.
+inside its classpath. Once the file is found, it used to deploy the application to OpenShift.
 
 The rest of what Arquillian does is the same as described in the section about testing an already running application.
 
@@ -598,8 +598,7 @@ We will show how easy it is for Arquillian to take care of the deployment of a d
 
 As has been noted before, Arquillian offers a ton of flexibility in order to be able to address a host of different
 integration testing scenarios. +
-In this section we will see just how a very simple configuration change to the configuration we have been using so far,
-suffices to get a database running on the OpenShift cluster.
+In this section we will see just how a very simple configuration change, suffices to get a database running on the OpenShift cluster.
 
 First of all we need to add an OpenShift file that describes the database we want to deploy:
 

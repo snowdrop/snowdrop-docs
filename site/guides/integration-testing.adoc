@@ -580,7 +580,7 @@ This is important since as was described earlier in the guide, the uber-jar is p
 When Arquillian is launched, if it has been configured to have `env.init.enabled` set to `true`, it dutifully looks for `META-INF/fabric8/openshift.yml`
 inside its classpath. Once the file is found, it used to deploy the application to OpenShift.
 
-The rest of what Arquillian does is the same as described in the section about testing an already running application.
+The rest of what Arquillian does is similar as described in the section about testing an already running application.
 
 Just for reference, the Arquillian configuration we use in this case is:
 
@@ -591,13 +591,21 @@ Just for reference, the Arquillian configuration we use in this case is:
             xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 
   <extension qualifier="openshift">
-    <property name="namespace.use.current">true</property>
     <property name="env.init.enabled">true</property>
     <property name="enableImageStreamDetection">false</property>
   </extension>
 
 </arquillian>
 ----
+
+[NOTE]
+====
+Note the absence of `namespace.use.current`. This means that Arquillian will use the default value of `false` for that property
+forcing it to create a testing namespace for the resources it deploys.
+
+Furthermore the absence of `namespace.cleanup.enabled` means that Arquillian will use the default value of `true`, thus cleaning up
+the namespace after the tests have finished
+====
 
 
 == Testing an application that uses a database

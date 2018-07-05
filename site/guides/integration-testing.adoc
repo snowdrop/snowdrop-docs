@@ -14,7 +14,7 @@ Cloud-native applications are no exception. If anything the large number of inte
 potentially have with other systems in the PaaS environment makes integration testing all the more necessary.
 
 This guide provides an in-depth analysis of how to create and configure your integration tests in order to properly test your
-Spring Boot application that is meant to run on Kubernetes or OpenShift.
+Spring Boot application that is meant to run on OpenShift.
 The guide will show how to utilize https://maven.apache.org/surefire/maven-failsafe-plugin/[Maven Failsafe Plugin], https://maven.fabric8.io/[Fabric8 Maven Plugin] and http://arquillian.org/arquillian-cube/[Arquillian Cube] to
 test the following:
 

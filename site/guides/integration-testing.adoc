@@ -898,7 +898,7 @@ are actually needed
 
 ==== Spring Boot plugin
 
-In the same way that FMP was configured in the parent pom in order to be avoid duplicate configuration in the microservices modules, the same is done
+In the same way that FMP was configured in the parent pom in order to avoid duplicate configuration in the microservices modules, the same is done
 with the spring-boot-maven-plugin. +
 The configuration we use is:
 

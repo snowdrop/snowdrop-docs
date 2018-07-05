@@ -100,7 +100,7 @@ which is part of the link:https://docs.openshift.org/latest/cli_reference/index.
 
 === Test an already running application
 
-At this point of the guide (having not explained how FMP works) we will deploy the application onto OpenShift prior to running the tests. +
+At this point of the guide (having not explained how to properly configure FMP) we will deploy the application onto OpenShift prior to running the tests. +
 This helps us advance our understanding of the entire integration testing process gradually, without having to present all details up front.
 
 

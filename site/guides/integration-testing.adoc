@@ -721,7 +721,7 @@ mvn verify -Popenshift,openshift-it
 
 Our final task will be to demonstrate how a multi-module Maven project can be configured in order to have it's integration tests run
 with the same Maven command we are by now no doubt familiar with. +
-The demo application we will be testing consists of two microservices and a Caching server that will all be deployed as part of the integration
+The demo application we will be testing consists of two microservices and a cache server that will all be deployed as part of the integration
 testing process. You can find the demo application link:https://github.com/snowdrop/spring-boot-cache-booster[here].
 
 === Project structure
@@ -962,7 +962,7 @@ items:
 
 === Arquillian configuration
 
-With that caching file in place, the only thing we need to do to make Arquillian use it as part of the environment setup is to add:
+With that cache server Openshift resource file in place, the only thing we need to do to make Arquillian use it as part of the environment setup is to add:
 
 `<property name="env.dependencies">file://${basedir}/target/test-classes/test-cacheserver.yml</property>`
 

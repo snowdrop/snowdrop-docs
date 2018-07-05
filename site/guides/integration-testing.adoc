@@ -333,6 +333,11 @@ This property needs to be set because it default's to `true` and our test setup 
 
 The full extent of the configuration available can be seen link:http://arquillian.org/arquillian-cube/#_kubernetes_configuration_parameters[here] and link:http://arquillian.org/arquillian-cube/#_openshift_configuration_parameters[here]
 
+[NOTE]
+====
+The configuration above is optional and had it not been provided, Arquillian will substituted the properties above with default values
+====
+
 ==== Test code
 
 With the necessary configuration performed and out of our way, we can now turn our attention to writing the actual test code. We will post the test code and then proceed to explain the important parts

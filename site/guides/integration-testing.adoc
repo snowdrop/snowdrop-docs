@@ -254,7 +254,7 @@ The profiles section of `pom.xml` will now be:
 The value of this property is set to the project's `artifactId` as defined in its POM file and will be used later in the test code to allow Arquillian to access the application. +
 For that reason it is crucial that the value of the `app.name` property matches exactly the name of the `Route` used for the application under test.
 
-<4> We configure two goals for the failsafe plugin, the `integration-test` and `verify` goals. By configuring these goals, the maven surefile plugin will automatically
+<4> We configure two goals for the failsafe plugin, the `integration-test` and `verify` goals. By configuring these goals, the Maven surefile plugin will automatically
 participate in the corresponding Maven default lifecycle phases. See link:https://maven.apache.org/surefire/maven-failsafe-plugin/plugin-info.html[this] part of the failsafe documentation for more details.
 
 The `integration-test` goal is responsible for actually running the integration tests while `verify` is used in order to make sure that all tests passed (and fail the build if they don't).
@@ -342,7 +342,7 @@ The HTTP interactions are performed and results verified using the excellent lin
 
 ==== Test execution
 
-The integration test can now be executed from maven like so:
+The integration test can now be executed from Maven like so:
 
 [source,bash]
 
@@ -717,7 +717,7 @@ The command to run the integration tests does not change. It's:
 mvn verify -Popenshift,openshift-it
 ----
 
-== Testing a multi-module maven project that uses a cache server
+== Testing a multi-module Maven project that uses a cache server
 
 Our final task will be to demonstrate how a multi-module Maven project can be configured in order to have it's integration tests run
 with the same Maven command we are by now no doubt familiar with. +

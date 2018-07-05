@@ -1019,7 +1019,10 @@ items:
 
 With that cache server Openshift resource file in place, the only thing we need to do to make Arquillian use it as part of the environment setup is to add:
 
-`<property name="env.dependencies">file://${basedir}/target/test-classes/test-cacheserver.yml</property>`
+[source,xml]
+----
+<property name="env.dependencies">file://${basedir}/target/test-classes/test-cacheserver.yml</property>
+----
 
 The `test-cacheserver.yml` file ends up in `target/test-classes` because we added it to `src/test/resources` which is the default location Maven
 link:https://maven.apache.org/plugins/maven-resources-plugin/[uses] for resources files used by the test code.

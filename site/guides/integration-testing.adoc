@@ -877,7 +877,11 @@ overrides the configuration in the `openshift` profile of the parent pom.
 <2> Using FMP's link:https://maven.fabric8.io/#profiles-predefined[aggregate] profile makes it search for OpenShift resource files inside
 the jars that are available via the dependencies of the module or the dependencies of the plugin itself. Any such resources files will be
 aggregated into a single file and placed in the standard `target/classes/META-INF/fabric/openshift.yml` location we have seen in previous sections. +
-It's important to note that FMP will not attempt to generate any other OpenShift resources when this profile is enabled.
+
+[IMPORTANT]
+====
+Keep in mind that FMP will not attempt to generate any other OpenShift resources when this profile is enabled.
+====
 
 <3> We add the two microservices modules as dependencies of FMP. This is done in order to make FMP pick up the generated OpenShift resources files of each module
 and create an "uber" resources file containing resources of both modules as explained above.

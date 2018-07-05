@@ -719,4 +719,252 @@ mvn verify -Popenshift,openshift-it
 
 == Testing a multi-module maven project that uses a Cache server
 
-TODO
+Our final task will be to demonstrate how a multi-module Maven project can be configured in order to have it's integration tests run
+with the same Maven command we are by now no doubt familiar with. +
+The demo application we will be testing consists of two microservices and a Caching server that will all be deployed as part of the integration
+testing process. You can find the demo application link:https://github.com/snowdrop/spring-boot-cache-booster[here].
+
+=== Project structure
+
+The project is structured as a Maven multi-module project consisting of the following modules:
+
+* `name-service` provides an HTTP endpoint that returns a random name when invoked
+* `greeting-service` is the microservice that users interact with. It uses the result it obtains from the name `name-service` as part of it's response. It also expects a cache server to be present for caching the results of `name-service`
+* The `tests` module is where the integration tests reside
+
+=== Overview
+
+To ensure that integration testing works properly we need to configure the following:
+
+Each one of the `name-service` and `greeting-service` microservices needs to have FMP configured in way that allows it's OpenShift resources to be created on file system
+and it's `BuildConfig` and `ImageStream` applied to the OpenShift cluster. This configuration is very similar to what was done in the previous sections.
+
+FMP for the `tests` module needs to be configured in such a way that allows the aggregation of the OpenShift resources of the two microservice modules into a
+single OpenShift resources file that will then be used by Arquillian.
+
+Arquillian's configuration will be very similar to what was done in the previous section were in addition to the standard OpenShift resources file produced
+by FMP, a resource file containing the definition of the Cache server will also be used.
+
+=== FMP configuration
+
+In order to avoid duplicating FMP configuration in the microservices modules, we add the FMP configuration in the parent pom, thus allowing the
+submodules to inherit it. +
+The configuration is the same as we have seen in the previous sections and looks like:
+
+[source,xml]
+----
+    <profile>
+      <id>openshift</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>io.fabric8</groupId>
+            <artifactId>fabric8-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>fmp</id>
+                <goals>
+                  <goal>resource</goal>
+                  <goal>build</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+----
+
+We do however need to configure FMP explicitly in the `tests` module since that module needs to aggregate the OpenShift resources produced by the
+`resources` goal of FMP of the microservices modules.
+
+Therefore in the `pom.xml` file of the `tests` module we add the following FMP configuration:
+
+[source,xml]
+----
+<profiles>
+    <profile>
+        <id>openshift-it</id> #<1>
+        <build>
+          <plugins>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>fabric8-maven-plugin</artifactId>
+                <executions>
+                  <execution>
+                    <goals>
+                      <goal>resource</goal>
+                    </goals>
+                  </execution>
+                </executions>
+                <configuration>
+                  <profile>aggregate</profile> #<2>
+                </configuration>
+                <dependencies>
+                  <dependency> #<3>
+                    <groupId>io.openshift.booster</groupId>
+                    <artifactId>spring-boot-cache-greeting</artifactId>
+                    <version>${project.version}</version>
+                  </dependency>
+                  <dependency>
+                    <groupId>io.openshift.booster</groupId>
+                    <artifactId>spring-boot-cache-cutename</artifactId>
+                    <version>${project.version}</version>
+                  </dependency>
+                </dependencies>
+            </plugin>
+          </plugins>
+        </build>
+    </profile>
+</profiles>
+----
+
+<1> The `tests` module only has integration test code, so we introduce all the FMP configuration to the `openshift-it` profile instead of the `openshift` profile.
+Because of the way we execute the maven command (`mvn clean verify -Popenshift,openshift-it`) the configuration in the `openshift-it` profile of the module
+overrides the configuration in the `openshift` profile of the parent pom.
+
+<2> Using FMP's link:https://maven.fabric8.io/#profiles-predefined[aggregate] profile make's it search for OpenShift resource files inside
+the jars that are available via the dependencies of the module or the dependencies of the plugin itself. Any such resources files will be
+aggregated into a single file and placed in the standard `target/classes/META-INF/fabric/openshift.yml` location we have seen in previous sections. +
+It's important to note that FMP will not attempt to generate any other OpenShift resources when this profile is enabled.
+
+<3> We add the two microservices modules as dependencies of FMP. This is done in order to make FMP pick up the generated OpenShift resources files of each module
+and create an "uber" resources file containing resources of both modules as explained above.
+
+[NOTE]
+====
+Had we added the `name-service` and `greeting-service` modules to the dependencies of the `tests` module itself instead of FMP,
+the end result from an FMP's perspective would have been the same.
+However the `tests` itself has not code dependencies on the other modules therefore is cleaner to add the dependencies to FMP where they
+are actually needed
+====
+
+=== Other configuration
+
+==== Spring Boot plugin
+
+In the same way that FMP was configured in the parent pom in order to be avoid duplicate configuration in the microservices modules, the same is done
+with the spring-boot-maven-plugin. +
+The configuration we use is:
+
+[source,xml]
+----
+  <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-failsafe-plugin</artifactId>
+    <executions>
+      <execution>
+        <goals>
+          <goal>integration-test</goal>
+          <goal>verify</goal>
+        </goals>
+      </execution>
+    </executions>
+  </plugin>
+----
+
+We need to take care however to disable the plugin in the `tests` module like so:
+
+[source,xml]
+----
+  <plugin>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-maven-plugin</artifactId>
+      <configuration>
+          <skip>true</skip>
+      </configuration>
+  </plugin>
+----
+
+==== Cache server
+
+The cache server is defined as follows
+
+.src/test/resources/test-cacheserver.yml
+----
+apiVersion: v1
+kind: List
+items:
+  - apiVersion: extensions/v1beta1
+    kind: Deployment
+    metadata:
+      name: cache-server
+      labels:
+        app: cache-server
+    spec:
+      replicas: 1
+      strategy:
+        type: Recreate
+      template:
+        metadata:
+          labels:
+            app: cache-server
+        spec:
+          containers:
+            - env:
+              - name: DEFAULT_CACHE_EVICTION_MAX_ENTRIES
+                value: "10"
+              - name: DEFAULT_CACHE_EXPIRATION_LIFESPAN
+                value: "10000"
+              - name: INFINISPAN_CONNECTORS
+                value: hotrod
+              image: registry.access.redhat.com/jboss-datagrid-7/datagrid71-openshift:1.1
+              name: cache-server
+              ports:
+              - containerPort: 8778
+                protocol: TCP
+              - containerPort: 11211
+                protocol: TCP
+              - containerPort: 11222
+                protocol: TCP
+              - containerPort: 11333
+                protocol: TCP
+              - containerPort: 8080
+                protocol: TCP
+              - containerPort: 8443
+                protocol: TCP
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        app: cache-server
+      name: cache-server
+    spec:
+      selector:
+        app: cache-server
+      ports:
+      - name: 8080-tcp
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+      - name: 8443-tcp
+        port: 8443
+        protocol: TCP
+        targetPort: 8443
+      - name: 8778-tcp
+        port: 8778
+        protocol: TCP
+        targetPort: 8778
+      - name: 11211-tcp
+        port: 11211
+        protocol: TCP
+        targetPort: 11211
+      - name: 11222-tcp
+        port: 11222
+        protocol: TCP
+        targetPort: 11222
+      - name: 11333-tcp
+        port: 11333
+        protocol: TCP
+        targetPort: 11333
+      type: ClusterIP
+----
+
+=== Arquillian configuration
+
+With that caching file in place, the only thing we need to do to make Arquillian use it as part of the environment setup is to add:
+
+`<property name="env.dependencies">file://${basedir}/target/test-classes/test-cacheserver.yml</property>`
+
+The rest of the configuration as well as the test itself uses the exact same logic as described in the previous sections
+

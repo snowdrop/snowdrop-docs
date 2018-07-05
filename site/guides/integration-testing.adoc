@@ -493,7 +493,7 @@ and takes care of applying the `BuildConfiguration` and `ImageStream` resources 
 
 [NOTE]
 ====
-A great way to see the plugins that are attached to each lifecycle is by executing the following command
+A great way to see the plugins that are attached to each Maven lifecycle phase is by executing the following command:
 [source,bash]
 ----
 mvn fr.jcgay.maven.plugins:buildplan-maven-plugin:list-phase -Popenshift,openshift-it

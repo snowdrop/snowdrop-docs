@@ -50,7 +50,7 @@ Furthermore having the whole tool manage the build and test lifecycle makes it t
 
 The Maven plugin that is typically used for running integration tests is the Maven Failsafe plugin.
 The objective of this plugin is to run tests against the final artifact that is the result of the build phase of a Maven module (which in the case of Spring Boot is the link:https://docs.spring.io/spring-boot/docs/current/reference/html/executable-jar.html[uber-jar]). +
-For that reason, the plugin is usually configured to run in the `verify` phase of the link:https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference[Maven lifecycle], which is exactly what we will be doing.
+For that reason, the plugin is usually configured to run in the `integration-test` and `verify` phases of the link:https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference[Maven lifecycle], which is exactly what we will be doing.
 
 === link:https://maven.fabric8.io[Fabric8 Maven Plugin]
 

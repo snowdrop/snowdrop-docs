@@ -305,23 +305,21 @@ Next comes adding the Arquillian configuration file which will configure Arquill
             xmlns="http://jboss.org/schema/arquillian"
             xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 
-  <extension qualifier="openshift">
-    <property name="namespace.use.current">true</property>
-    <property name="env.init.enabled">false</property>
-    <property name="enableImageStreamDetection">false</property>
-    <property name="namespace.cleanup.enabled">false</property>
+  <extension qualifier="openshift"> #<1>
+    <property name="namespace.use.current">true</property> #<2>
+    <property name="env.init.enabled">false</property> #<3>
+    <property name="enableImageStreamDetection">false</property> #<4>
+    <property name="namespace.cleanup.enabled">false</property> #<5>
   </extension>
 
 </arquillian>
 ----
 
-The meaning of each bit of the aforementioned  configuration is the following:
-
-* The `openshift` qualifier is needed to tell Arquillian to enable it's OpenShift features
-* Setting `namespace.use.current` to `true` means that Arquillian will use the current OpenShift project (as is returned for example by `oc project -q`) instead of creating a testing one
-* Setting `env.init.enabled` to `false` ensures that no OpenShift resources will be created by the test (since we expect everything to already be deployed before the test runs)
-* Having `enableImageStreamDetection` set to `false` ensures that Arquillian will not perform any search for link:https://docs.openshift.com/container-platform/3.9/dev_guide/managing_images.html[ImageStream] resources on the classpath
-* By setting `namespace.cleanup.enabled` to `false` we ensure that Arquillian will not tear down the application when the tests are done
+<1> The `openshift` qualifier is needed to tell Arquillian to enable it's OpenShift features
+<2> Setting `namespace.use.current` to `true` means that Arquillian will use the current OpenShift project (as is returned for example by `oc project -q`) instead of creating a testing one
+<3> Setting `env.init.enabled` to `false` ensures that no OpenShift resources will be created by the test (since we expect everything to already be deployed before the test runs)
+<4> Having `enableImageStreamDetection` set to `false` ensures that Arquillian will not perform any search for link:https://docs.openshift.com/container-platform/3.9/dev_guide/managing_images.html[ImageStream] resources on the classpath
+<5> By setting `namespace.cleanup.enabled` to `false` we ensure that Arquillian will not tear down the application when the tests are done
 
 The full extent of the configuration available can be seen link:http://arquillian.org/arquillian-cube/#_kubernetes_configuration_parameters[here] and link:http://arquillian.org/arquillian-cube/#_openshift_configuration_parameters[here]
 

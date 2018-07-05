@@ -1021,5 +1021,9 @@ With that cache server Openshift resource file in place, the only thing we need 
 
 `<property name="env.dependencies">file://${basedir}/target/test-classes/test-cacheserver.yml</property>`
 
+The `test-cacheserver.yml` file ends up in `test-target` because we added it to `src/test/resources` which is the default location Maven
+link:https://maven.apache.org/plugins/maven-resources-plugin/[uses] for resources files used by the test code.
+
+
 The rest of the configuration as well as the test itself uses the exact same logic as described in the previous sections
 

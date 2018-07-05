@@ -409,7 +409,7 @@ The failsafe configuration that would be used would then be:
 
 === Deploy application as part of the integration test process
 
-Up until now we have been operating under the assumption that the tests would be executed against an application that was running before Maven was invoked. +
+So far we have been operating under the assumption that the tests would be executed against an application that was running before Maven was invoked. +
 Although such a scenario is useful in some cases, it would also be great for CI purposes if the application could be deployed to OpenShift from source
 as part of the Maven build.
 

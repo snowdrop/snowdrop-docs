@@ -315,7 +315,7 @@ Next comes adding the Arquillian configuration file which will configure Arquill
 </arquillian>
 ----
 
-<1> The `openshift` qualifier is needed to tell Arquillian to enable it's OpenShift features
+<1> The `openshift` qualifier is needed to tell Arquillian to enable its OpenShift features
 <2> Setting `namespace.use.current` to `true` means that Arquillian will use the current OpenShift project (as is returned for example by `oc project -q`) instead of creating a testing one
 <3> Setting `env.init.enabled` to `false` ensures that no OpenShift resources will be created by the test (since we expect everything to already be deployed before the test runs)
 <4> Having `enableImageStreamDetection` set to `false` ensures that Arquillian will not perform any search for link:https://docs.openshift.com/container-platform/3.9/dev_guide/managing_images.html[ImageStream] resources on the classpath

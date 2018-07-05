@@ -717,7 +717,7 @@ The command to run the integration tests does not change. It's:
 mvn verify -Popenshift,openshift-it
 ----
 
-== Testing a multi-module maven project that uses a Cache server
+== Testing a multi-module maven project that uses a cache server
 
 Our final task will be to demonstrate how a multi-module Maven project can be configured in order to have it's integration tests run
 with the same Maven command we are by now no doubt familiar with. +

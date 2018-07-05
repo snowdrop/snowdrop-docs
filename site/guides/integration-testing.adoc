@@ -743,7 +743,7 @@ FMP for the `tests` module needs to be configured in such a way that allows the 
 single OpenShift resources file that will then be used by Arquillian.
 
 Arquillian's configuration will be very similar to what was done in the previous section were in addition to the standard OpenShift resources file produced
-by FMP, a resource file containing the definition of the Cache server will also be used.
+by FMP, a resource file containing the definition of the cache server will also be used.
 
 === FMP configuration
 

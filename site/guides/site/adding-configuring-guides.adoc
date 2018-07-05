@@ -1,0 +1,68 @@
+=== Snowdrop site: How to add or configure guides
+
+Configuring guides and other metadata for the Snowdrop website requires http://git-scm.com/download[Git] and a text editor. It also helps to have an asciidoc preview tool such as https://chrome.google.com/webstore/detail/asciidoctorjs-live-previe/iaalpfgpbocpdfblpnhhgllgbdbchmia?hl=en[Asciidoctor.js Live Preview] for Chrome. Guides are written in Asciidoc format.
+
+==== Creating a new guide
+
+* Clone the Snowdrop Docs repository: https://github.com/snowdrop/snowdrop-docs
+* Place a new `*.adoc` file in the `site/guides` directory (or host your source asciidoc file on the public internet, you will need its URL later):
++
+----
+snowdrop-docs/site/guides/
+    guide-a.adoc
+    guide-b.adoc
+    your-new-guide.adoc
+----
+* Add an entry to the site config.json file: https://github.com/snowdrop/snowdrop-docs/blob/master/site/config.json
+* Once your guide has been configured. Push changes to the `snowdrop-site` repository.
+* Do not re-build/re-deploy the Snowdrop website. Changes are publicly visible as soon as files are updated on GitHub.
+* Changes may take several minutes to become visible on the Snowdrop website, as GitHub sometimes caches raw documents for a period of time.
+
+
+==== Guide configuration syntax
+You can find the guides configuration array in the https://github.com/snowdrop/snowdrop-docs/blob/master/site/config.json[site config file]. It is recommended to use an existing entry as a template for new guides.
+
+.config.json
+[source,json]
+----
+guides: [
+...
+    "prerequisites": "",
+    "tags": "build, cloud native"
+  },
+  ...
+  {
+    "type":"guide", # <1>
+    "title":"Title of your new guide", # <2>
+    "description":"A brief 150 or fewer characters description of the guide's purpose.", # <3>
+    "urls": {
+      "booster": "artifactId=istio-routing&groupId=me.snowdrop.booster&mission=istio-routing&runtime=spring-boot&runtimeVersion=current-community" # <4>
+      "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/your-new-guide.adoc", # <5>
+      "documentation": "/guides/adding-configuring-guides" # <6>
+      "source": "https://github.com/snowdrop/snowdrop-docs" # <7>
+    },
+    "prerequisites": "foo, bar, -hard", # <8>
+    "enablements": "dal, lar, -easy", # <9>
+    "tags": "baz, cab" # <10>
+  },
+  ...
+  {
+    "type":"guide",
+    "title":"Configuring/adding a Guide",
+...
+],
+----
+<1> *The guide type:* Currently the only supported type is "guide".
+<2> *The title of your new guide:* This should be 50 characters or less, or it may be truncated.
+<3> *The description of your new guide:* This should be 150 characters or less, or it may be truncated.
+<4> *Booster URL:* This is only necessary if your guide has a corresponding booster that is downloadable via the Snowdrop launcher.
+<5> *Content URL:* This is the fully qualified URL to the source of your guide's content. This must link to an asciidoc file that is accessible via the public internet.
+<6> *Documentation URL:* This is the path to external documentation (if any) referenced by your guide.
+<7> *Source URL:* This is the path to the source code for your guide, or for the project it describes.
+<8> *Prerequisite tags:* Specify tags of any guides that should be completed as a prerequisite step before beginning *this* guide. Any tags negated/prefixed with "-" the dash, or minus sign will cause matching guides to be excluded.
+<9> *Enablement tags:* Specify tags of any guides that can be completed as a followup, or "next steps", once *this* guide has been completed. Any tags negated/prefixed with "-" the dash, or minus sign will cause matching guides to be excluded.
+<10> *Tags:* Specify tags describing this guide. These are used when matching related content on the site, and also used when calculating prerequisites and enablements of other guides. (Tags cannot be negated.)
+
+==== Configuring existing guides
+
+Similar to creating a new guide, all existing guides and their metadata can be updated simply by editing the asciidoc source in-place (e.g. pushing changes to Git), or updating the metadata contained within the Snowdrop site https://github.com/snowdrop/snowdrop-docs/blob/master/site/config.json[config.json]. All changes pushed become live immediately. No rebuild of the site is necessary.

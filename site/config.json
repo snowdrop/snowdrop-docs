@@ -188,7 +188,7 @@
     },
     {
       "type":"guide",
-      "title":"Set up your Cloud Native Dev. Environment",
+      "title":"Setup a Cloud Native Dev. Environment",
       "description":"Get started with Cloud Native development on your own machine.",
       "urls": {
         "content":"",
@@ -253,6 +253,16 @@
       },
       "prerequisites": "",
       "tags": "build, local"
+    },
+    {
+      "type":"guide",
+      "title":"Adding/configuring Guides",
+      "description":"How to add or configure guides to the Snowdrop website.",
+      "urls": {
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/adding-configuring-guides.adoc",
+        "source": "https://github.com/snowdrop/snowdrop-docs"
+      },
+      "tags": "site, hidden"
     }
   ]
 }

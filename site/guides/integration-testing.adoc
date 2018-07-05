@@ -440,6 +440,14 @@ The failsafe configuration that would be used would then be:
 
 <1> Force the failsafe plugin to use the non uber-jar as the classes directory. The value of the property matches the name of the non uber-jar produced by the `spring-boot-maven-plugin`
 
+[NOTE]
+====
+An link:https://docs.spring.io/spring-boot/docs/1.5.x/maven-plugin/examples/repackage-classifier.html[alternative solution]
+to this problem is to use configure the `spring-boot-maven-plugin` to use a classifier for the uber-jar (thus chaning it's name).
+The result for failsafe's perspective is that it only "sees" the non uber-jar (since it just ignores the non-standard named uber-jar). +
+This solution may or may not affect the way the application is deployed, depending on what that deployment process involves, so your mileage may vary.
+====
+
 === Deploy application as part of the integration test process
 
 So far we have been operating under the assumption that the tests would be executed against an application that was running before Maven was invoked. +

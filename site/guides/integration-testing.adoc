@@ -103,7 +103,7 @@ which is part of the link:https://docs.openshift.org/latest/cli_reference/index.
 At this point of the guide (having not explained how to properly configure FMP) we will deploy the application onto OpenShift prior to running the tests. +
 This helps us advance our understanding of the entire integration testing process gradually, without having to present all details up front.
 
-[NOTE]
+[CAUTION]
 ====
 Beware of doing this in a real life scenario especially if you plan to test against a production cluster. There are definitely valid use cases for running
 integration tests in production, but one should be well aware of the dangers that such cases incur.
@@ -266,7 +266,7 @@ At this point it's imperative to note that when use the FMP defaults, all the ge
 we specified `project.artifactId` as the value for `app.name`. +
 Had we configured FMP to generate a Route using different name, say `myapp-route`, then we would also have to configure `app.name` with the value of  `app.route`
 
-[NOTE]
+[TIP]
 ====
 Although providing details for changing FMP defaults is out of the scope of this guide, we will nonetheless mention a simple way of configuring the generated Route's name.
 
@@ -540,7 +540,7 @@ the all too important `META-INF/fabric8/openshift.yml` file will be present insi
 link:https://maven.fabric8.io/#fabric8:build[build] is automatically attached to the `pre-integration-test` phase of the default Maven lifecycle
 and takes care of applying the `BuildConfiguration` and `ImageStream` resources to the cluster that are necessary to deploy the application later on.
 
-[NOTE]
+[TIP]
 ====
 A great way to see the plugins that are attached to each Maven lifecycle phase is by executing the following command:
 [source,bash]

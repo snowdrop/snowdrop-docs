@@ -488,7 +488,15 @@ to be enabled explicitly for any of the FMP goals to be executed.
 [NOTE]
 ====
 The reason we introduce a new profile and avoid reusing the `openshift-it` profile is that we might want
-to execute FMP's goals independently of the integration testing process
+to execute FMP's goals independently of the integration testing process.
+The most promiment example of such a use case would one were the developer uses
+
+[source,bash]
+----
+mvn clean fabric8:deploy -Popenshift
+----
+
+in order to deploy the application into his/her local / dev Openshift environment.
 ====
 
 For the purposes of this guide, we don't need to perform any specific configuration of FMP, we can just accept the defaults

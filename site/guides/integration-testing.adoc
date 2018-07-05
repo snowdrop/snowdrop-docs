@@ -374,6 +374,13 @@ When the application becomes available, Arquillian will set the value of `baseUR
 The HTTP interactions are performed and results verified using the excellent link:http://rest-assured.io/[RestAssured] library
 ====
 
+[TIP]
+====
+Using a separate Maven profile that explicitly enables integration tests isn't the only way to limit integration tests from running.
+We could have forgone the use of `openshift-it` and instead relied on Arquillian Cube's `@RequiresOpenshift` which will only
+launch the test when an Openshift cluster is accessible. An example can be seen link:http://arquillian.org/arquillian-cube/#_openshift_annotations[here]
+====
+
 ==== Test execution
 
 The integration test can now be executed from Maven like so:

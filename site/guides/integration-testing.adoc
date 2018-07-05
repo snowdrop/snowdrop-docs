@@ -767,7 +767,7 @@ mvn verify -Popenshift,openshift-it
 
 == Testing a multi-module Maven project that uses a cache server
 
-Our final task will be to demonstrate how a multi-module Maven project can be configured in order to have it's integration tests run
+Our final task will be to demonstrate how a multi-module Maven project can be configured in order to have its integration tests run
 with the same Maven command we are by now no doubt familiar with. +
 The demo application we will be testing consists of two microservices and a cache server that will all be deployed as part of the integration
 testing process. You can find the demo application link:https://github.com/snowdrop/spring-boot-cache-booster[here].
@@ -777,15 +777,15 @@ testing process. You can find the demo application link:https://github.com/snowd
 The project is structured as a Maven multi-module project consisting of the following modules:
 
 * `name-service` provides an HTTP endpoint that returns a random name when invoked
-* `greeting-service` is the microservice that users interact with. It uses the result it obtains from the name `name-service` as part of it's response. It also expects a cache server to be present for caching the results of `name-service`
+* `greeting-service` is the microservice that users interact with. It uses the result it obtains from the name `name-service` as part of its response. It also expects a cache server to be present for caching the results of `name-service`
 * The `tests` module is where the integration tests reside
 
 === Overview
 
 To ensure that integration testing works properly we need to configure the following:
 
-Each one of the `name-service` and `greeting-service` microservices needs to have FMP configured in way that allows it's OpenShift resources to be created on file system
-and it's `BuildConfig` and `ImageStream` applied to the OpenShift cluster. This configuration is very similar to what was done in the previous sections.
+Each one of the `name-service` and `greeting-service` microservices needs to have FMP configured in way that allows its OpenShift resources to be created on file system
+and its `BuildConfig` and `ImageStream` applied to the OpenShift cluster. This configuration is very similar to what was done in the previous sections.
 
 FMP for the `tests` module needs to be configured in such a way that allows the aggregation of the OpenShift resources of the two microservice modules into a
 single OpenShift resources file that will then be used by Arquillian.

@@ -365,8 +365,8 @@ The test code shown above does not use the source code of the project in any way
 If that source were to be used in the test code for example to reuse some domain model then test would fail.
 
 The failure would occur as a result of the combination of how the failsafe plugin sets up the classpath for the tests and how
-Spring Boot lays out the source classes inside the uber-jar. Essentially the failsafe plugin places the uber-jar on the classpath and is unable to locate any of the source
-files inside the uber-jar because Spring Boot places them in a custom location (see link:https://github.com/spring-projects/spring-boot/issues/6254#issuecomment-229599865[this] for all the details).
+Spring Boot lays out the application classes inside the uber-jar. Essentially the failsafe plugin places the uber-jar on the classpath and is unable to locate any of the application
+classes inside the uber-jar because Spring Boot places them in a custom location (see link:https://github.com/spring-projects/spring-boot/issues/6254#issuecomment-229599865[this] for all the details).
 
 The solution in such cases is to make the failsafe plugin use the non uber-jar which contains the application classes in there standard locations. +
 The failsafe configuration that would be used would then be:

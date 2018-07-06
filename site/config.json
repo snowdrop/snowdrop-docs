@@ -168,7 +168,7 @@
       "type":"guide",
       "title":"Integration testing with Arquillian Cube and FMP on Openshift",
       "urls": {
-        "content": "https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/integration-testing.adoc",
+        "content": "https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/integration-testing.adoc"
       },
       "description":"Deep dive into how to do integration testing with Arquillian Cube and FMP on Openshift",
       "tags": "testing, arquillian, fmp",

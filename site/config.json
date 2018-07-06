@@ -60,9 +60,9 @@
       "description":"Expose business operations via a REST endpoint over HTTP",
       "urls": {
         "booster":"artifactId=http-rest&groupId=me.snowdrop.booster&mission=rest-http&runtime=spring-boot&runtimeVersion=current-community",
-        "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-rest-http-spring-boot"
+        "documentation": "https://raw.githubusercontent.com/snowdrop/spring-boot-http-booster/master/guide.adoc"
       },
-      "tags": "http, database, rest",
+      "tags": "http, rest, jax-rs, apache cxf",
       "versions": []
     },
     {

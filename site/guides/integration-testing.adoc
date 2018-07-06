@@ -1,0 +1,1053 @@
+:page-layout: default
+:page-title: integration-testing
+:page-permalink: /guides/integration-testing
+
+= Understand how to develop integration tests for your cloud-native Spring Boot applications
+
+An integral part of the lifecycle of any piece of production-grade software is proper application of testing methodologies. +
+Of the various types of tests that can be created, integration tests can often be some of the most difficult to create,
+not only because of the various real-world systems that need to be up and running (such as the PaaS, a database, other microservices etc), but also because
+the tooling isn't as well known as the tooling that exists for unit tests or tests that interact primarily with the framework the application is written in
+(think of the Spring Testing Framework here).
+
+Cloud-native applications are no exception. If anything the large number of interactions such applications may
+potentially have with other systems in the PaaS environment makes integration testing all the more necessary.
+
+This guide provides an in-depth analysis of how to create and configure your integration tests in order to properly test your
+Spring Boot application that is meant to run on OpenShift.
+The guide will show how to utilize https://maven.apache.org/surefire/maven-failsafe-plugin/[Maven Failsafe Plugin], https://maven.fabric8.io/[Fabric8 Maven Plugin] and http://arquillian.org/arquillian-cube/[Arquillian Cube] to
+test the following:
+
+* a simple web application that contains no dependencies on other services
+* a typical application that needs a database
+* a multi-module Maven project that needs a cache server to be running
+
+The guide will focus mostly on the configuration that is needed to get all the different components to work together properly
+and less on the actual implementation of the test methods (although some simple code will be shown).
+
+== What you'll need
+
+* Java 8
+* Access to an OpenShift cluster whether locally via https://www.openshift.org/minishift/[minishift] or using the different
+  flavors of https://www.openshift.com/products[OpenShift products]
+
+== Knowledge prerequisites
+
+* Intermediate knowledge of Maven
+* Working knowledge of OpenShift
+* Working knowledge of the Fabric8 Maven Plugin
+* Working knowledge of Spring Boot
+
+== Tools that will be used
+
+=== link:https://maven.apache.org/[Maven]
+
+It goes without saying that having a powerful build tool that can orchestrate the build-test lifecycle is an absolute must.
+  By properly utilizing Maven's features we can create a build configuration that is easy to understand and extend while also giving us the all important property of build repeatability. +
+Furthermore having the whole tool manage the build and test lifecycle makes it trivial to introduce proper CI for the project (since any CI system just needs to invoke the appropriate Maven commands).
+
+=== link:https://maven.apache.org/surefire/maven-failsafe-plugin/index.html[Maven Failsafe plugin]
+
+The Maven plugin that is typically used for running integration tests is the Maven Failsafe plugin.
+The objective of this plugin is to run tests against the final artifact that is the result of the build phase of a Maven module (which in the case of Spring Boot is the link:https://docs.spring.io/spring-boot/docs/current/reference/html/executable-jar.html[uber-jar]). +
+For that reason, the plugin is usually configured to run in the `integration-test` and `verify` phases of the link:https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference[Maven lifecycle], which is exactly what we will be doing.
+
+=== link:https://maven.fabric8.io[Fabric8 Maven Plugin]
+
+The Fabric8 Maven Plugin (*FMP* from now on) is a Maven plugin that allows Java applications to be deployed easily to Kubernetes or OpenShift.
+The plugin effectively allows the developer to deploy their application to Kubernetes or OpenShift by issuing a single command, thus freeing the developer of the burden
+of having to build a docker image, create resource files, etc. and triggering a deployment.
+
+FMP provides auto-configuration based on sensible defaults for all things related to build-deploy to Kubernetes / OpenShift lifecycle. +
+For example, it can automatically determine that the application is a Spring Boot application and thus provide proper Kubernetes Health Check endpoints.
+Of course, it gives the ability to override those defaults when the developer needs more control. +
+It thus essentially provides the same type of experience a developer of Spring Boot applications is used to - a lot of intelligent and sensible defaults, while ceding control when needed.
+
+=== link:http://arquillian.org/arquillian-cube/[Arquillian Cube]
+
+Arquillian Cube is an link:http://arquillian.org/[Arquillian] extension (of which no prior knowledge is necessary for the purpose of this guide) that can be used to manage Docker containers from Java tests. +
+Although the Docker capabilities of Arquillian are, without doubt, impressive, we will only be using the link:http://arquillian.org/arquillian-cube/#_kubernetes[Arquillian Cube Kubernetes] module.
+This module provides all necessary constructs needed to write tests against applications that are (or will be) deployed to Kubernetes or OpenShift.
+
+As it the case with FMP, Arquillian also provides a host of sensible defaults that can easily be changed to meet the needs of each particular testing scenario.
+
+== Testing a simple web application
+
+Our first task will be to test a simple Spring Boot application that contains its integration test in the same Maven module as the application source. +
+The application we will showcase can be found link:https://github.com/snowdrop/spring-boot-http-booster[here].
+
+For the purpose of this part of the guide, we just need to know that the application is a Spring Boot application that responds to HTTP `GET` requests to an `api/greeting` endpoint.
+
+=== Connect to OpenShift cluster
+
+The first order of business is to obtain a running OpenShift cluster. If you have access to such a cluster, then simply log in to it
+using:
+
+[source,bash]
+----
+oc login ...
+----
+
+Should you not be lucky enough to have an OpenShift cluster available, you'll be delighted to know that it's very easy to run such a cluster on your local machine either using link:https://docs.openshift.org/latest/minishift/getting-started/installing.html[Minishift]
+or the command
+
+[source,bash]
+----
+oc cluster up
+----
+
+which is part of the link:https://docs.openshift.org/latest/cli_reference/index.html[OpenShift Command Line Interface (CLI)], though it will require an established Docker connection. For more details on `oc cluster up`, see: https://github.com/openshift/origin/blob/master/docs/cluster_up_down.md 
+
+=== Test an already running application
+
+At this point of the guide (having not explained how to properly configure FMP) we will deploy the application onto OpenShift prior to running the tests. +
+This helps us advance our understanding of the entire integration testing process gradually, without having to present all details up front.
+
+[CAUTION]
+====
+Beware of doing this in a real life scenario especially if you plan to test against a production cluster. There are definitely valid use cases for running
+integration tests in production, but one should be well aware of the dangers that such cases incur.
+====
+
+
+==== Deployment of the application on OpenShift
+
+Such a task can easily be achieved by utilizing OpenShift's https://docs.openshift.org/latest/architecture/core_concepts/templates.html[Template] feature. Templates, as their name implies, provide a parameterized skeleton that can be "instantiated" to create applications, instructing OpenShift how to set the application and all its components up without further user intervention.
+For the demo application, a Template has already been created and is present link:https://raw.githubusercontent.com/snowdrop/spring-boot-http-booster/master/.openshiftio/application.yaml[here].
+
+The template first needs to be pushed to your OpenShift cluster. You can then use it to create a new application based on it. This two-step process is performed by executing the following commands:
+
+[source,bash]
+----
+oc create -f .openshiftio/application.yaml
+oc new-app --template=spring-boot-rest-http -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-http-booster.git -p SOURCE_REPOSITORY_REF=master
+----
+
+Without going into all the details of the template, it suffices to mention that the Template contains all the OpenShift Resources that are necessary to deploy the application, i.e. a `Service`, a `Deployment`, a `Route` etc.
+
+After the application has been deployed, it will have a link:https://docs.openshift.org/latest/architecture/networking/routes.html[Route] named `spring-boot-rest-http`. +
+*Route* is the OpenShift construct that allows application running inside the cluster to be accessed using a URL from outside the cluster and therefore is the perfect touch point
+for our integration tests to interact with the application.
+
+[NOTE]
+====
+In case where tests are meant to run inside an OpenShift cluster, no `Route` is necessary since the application under test can be reached using its service name.
+However we use a `Route` here since it doesn't limit us to running tests inside a cluster, meaning that the tests can run locally or in any CI environment.
+====
+
+===== Note on OpenShift Deployment
+
+Although we won't go into details about how the application actually gets deployed to OpenShift when the command above are invoked, we will however provide a high-level overview of the process.
+
+OpenShift uses a process called S2I (Source to Image).
+Although there are a lot ways S2I can be configured (as can be found link:https://docs.openshift.org/latest/using_images/s2i_images/java.html[here]),
+the template uses a conceptually simple mechanism that checks out the application's source code from Github,
+recognizes the application as a Java Maven application, uses Maven to create the project's artifact (the Spring Boot uber-jar) inside a dedicated (so called builder) Pod,
+creates a Docker image inside OpenShift's registry and finally uses it to deploy the application.
+
+For this approach to work, Maven needs to be configured to produce a Spring Boot uber-jar (in the same way as is needed to run the application locally).
+The relevant Maven configuration is the typical Spring Boot uber-jar configuration like so:
+
+[source,xml]
+----
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration/>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+----
+
+Just as a reminder we note here that this configured results in the production of two jar files when the Maven `package` phase is executed. OpenShift is able to correctly use the uber-jar
+since the `spring-boot-maven-plugin` takes care to change the suffix of the non uber-jar.
+
+==== Maven Dependencies Configuration
+
+The first order of business is to add Arquillian to the dependencies of the project. The best way to do that is to import the propert Arquillian BOMs to Maven's
+`dependencyManagement` section like so:
+
+[source,xml]
+----
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.jboss.arquillian</groupId>
+        <artifactId>arquillian-bom</artifactId>
+        <version>1.4.0.Final</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.arquillian.cube</groupId>
+        <artifactId>arquillian-cube-bom</artifactId>
+        <version>1.16.0</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+----
+
+Adding the appropriate dependencies then becomes a matter of adding the following configuration:
+
+[source,xml]
+----
+  <dependencies>
+    <dependency>
+      <groupId>org.jboss.arquillian.junit</groupId>
+      <artifactId>arquillian-junit-standalone</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.arquillian.cube</groupId>
+      <artifactId>arquillian-cube-openshift</artifactId>
+      <scope>test</scope>
+    </dependency
+   <dependencies>
+----
+
+The dependencies above provide add the minimum number of arquillian dependencies needed to interact with the application when it's deployed on OpenShift.
+
+==== Maven failsafe plugin configuration
+
+Making sure that the integration tests only run in a proper environment is very important. We don't want developers inadvertently launching the integration tests
+by accident only to have them fail because there is no OpenShift cluster available and thus creating the false impression that the build is broken.
+
+For that reason we introduce a Maven profile named `openshift-it` which will contain the failsafe plugin configuration needed to run the tests. +
+This means that the integration tests will only run when the profile is activated using `-Popenshift-it` as an argument to Maven's command-line invocation.
+
+The profiles section of `pom.xml` will now be:
+
+[source, xml]
+----
+  <profiles>
+    <profile>
+      <id>openshift-it</id>  #<1>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId> #<2>
+            <version>2.20</version>
+            <configuration>
+              <systemPropertyVariables>
+                <app.name>${project.artifactId}</app.name> #<3>
+              </systemPropertyVariables>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>integration-test</goal>
+                  <goal>verify</goal>           #<4>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  <profiles>
+----
+
+<1> The `openshift-it` profile is declared
+
+<2> The failsafe plugin is made part of the project's build when the `openshift-it` profile is enabled
+
+<3> We add a system property named `app.name` that will be available to any piece of code running as part of the failsafe plugin's lifecycle. +
+The value of this property is set to the project's `artifactId` as defined in its POM file and will be used later in the test code to allow Arquillian to access the application. +
+For that reason it is crucial that the value of the `app.name` property matches exactly the name of the `Route` used for the application under test.
+
+At this point it's imperative to note that when use the FMP defaults, all the generated Openshift resources use `project.artifactId` as their name. That is why
+we specified `project.artifactId` as the value for `app.name`. +
+Had we configured FMP to generate a Route using different name, say `myapp-route`, then we would also have to configure `app.name` with the value of  `app.route`
+
+[TIP]
+====
+Although providing details for changing FMP defaults is out of the scope of this guide, we will nonetheless mention a simple way of configuring the generated Route's name.
+
+We can add link:https://maven.fabric8.io/#resource-fragments[resource fragments] that FMP will use to override the defaults it uses. A resource fragment for `Route` could be:
+
+.src/main/fabric8/route.yml
+----
+apiVersion: v1
+kind: Route
+metadata:
+  name: myapp-route
+spec:
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: ${project.artifactId}
+----
+====
+
+
+<4> We configure two goals for the failsafe plugin, the `integration-test` and `verify` goals. By configuring these goals, the Maven surefile plugin will automatically
+participate in the corresponding Maven default lifecycle phases. See link:https://maven.apache.org/surefire/maven-failsafe-plugin/plugin-info.html[this] part of the failsafe documentation for more details.
+
+The `integration-test` goal is responsible for actually running the integration tests while `verify` is used in order to make sure that all tests passed (and fail the build if they don't).
+
+[NOTE]
+====
+It's also worth noting that we haven't specified which tests are considered integration tests. Omitting such link:https://maven.apache.org/surefire/maven-failsafe-plugin/examples/inclusion-exclusion.html[configuration]
+means that we are relying on failsafe's default behavior, which is to include all tests that satisfy any of the following patterns:
+
+* `"**/IT*.java"`
+* `"**/*IT.java"`
+* `"**/*ITCase.java"`
+====
+
+==== Arquillian Configuration
+
+Next comes adding the Arquillian configuration file which will configure Arquillian to interact with the OpenShift environment in the desired way.
+
+.src/test/resources/arquillian.xml
+----
+<arquillian xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://jboss.org/schema/arquillian"
+            xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+  <extension qualifier="openshift"> #<1>
+    <property name="namespace.use.current">true</property> #<2>
+    <property name="env.init.enabled">false</property> #<3>
+    <property name="enableImageStreamDetection">false</property> #<4>
+    <property name="namespace.cleanup.enabled">false</property> #<5>
+  </extension>
+
+</arquillian>
+----
+
+<1> The `openshift` qualifier is needed to tell Arquillian to enable its OpenShift features
+<2> Setting `namespace.use.current` to `true` means that Arquillian will use the current OpenShift project (as is returned for example by `oc project -q`) instead of creating one purely for testing purposes
+<3> Setting `env.init.enabled` to `false` ensures that no OpenShift resources will be created by the test (since we expect everything to already be deployed before the test runs)
+<4> Having `enableImageStreamDetection` set to `false` ensures that Arquillian will not perform any search for link:https://docs.openshift.com/container-platform/latest/dev_guide/managing_images.html[ImageStream] resources on the classpath
+This property needs to be set because it default's to `true` and our test setup does not necessitate using the ImageStream
+<5> By setting `namespace.cleanup.enabled` to `false` we ensure that Arquillian will not tear down the application when the tests are done
+
+The full extent of the configuration available can be seen link:http://arquillian.org/arquillian-cube/#_kubernetes_configuration_parameters[here] and link:http://arquillian.org/arquillian-cube/#_openshift_configuration_parameters[here]
+
+[NOTE]
+====
+The configuration above is optional and had it not been provided, Arquillian will substituted the properties above with default values
+====
+
+==== Test code
+
+With the necessary configuration performed and out of our way, we can now turn our attention to writing the actual test code. We will post the test code and then proceed to explain the important parts
+
+[source, java]
+----
+
+@RunWith(Arquillian.class) #<1>
+public class OpenShiftIT {  #<2>
+
+    @AwaitRoute(path = "/health") #<3>
+    @RouteURL("${app.name}")
+    private URL baseURL;
+
+    @Test
+    public void simplestTest() {   #<4>
+        given()
+          .baseUri(baseURL)
+          .get("/api/greeting")
+          .then()
+          .statusCode(200);
+    }
+}
+----
+
+<1> We use the `Arquillian` JUnit Runner to give Arquillian control over the lifecycle of the test
+
+<2> The name of the class ends with `IT`, thus indicating to the failsafe plugin that it's an integration test
+
+<3> We are instructing Arquillian to wait (which is the purpose of `AwaitRoute`) until a `Route` named `spring-boot-rest-http` (which is the value we configured for the `app.name` property in `arquillian.xml`)
+becomes available. Moreover Arquillian will use the `health` endpoint of said `Route`, waiting until getting an HTTP 200 response. +
+It should be noted that this works because the application includes a `/health` endpoint due to the fact that it includes the Spring Boot Actuator. +
+When the application becomes available, Arquillian will set the value of `baseURL` to the URL that is used to access the application from outside the cluster.
+
+<4> In this case the test is extremely simple, only testing that the `api/greeting` endpoint responds with HTTP 200
+
+[NOTE]
+====
+The HTTP interactions are performed and results verified using the excellent link:http://rest-assured.io/[RestAssured] library
+====
+
+[TIP]
+====
+Using a separate Maven profile that explicitly enables integration tests isn't the only way to limit integration tests from running.
+We could have forgone the use of `openshift-it` and instead relied on Arquillian Cube's `@RequiresOpenshift` which will only
+launch the test when an Openshift cluster is accessible. An example can be seen link:http://arquillian.org/arquillian-cube/#_openshift_annotations[here]
+====
+
+==== Test execution
+
+The integration test can now be executed from Maven like so:
+
+[source,bash]
+
+----
+mvn clean verify -Popenshift-it
+----
+
+It should be noted that Arquillian's configuration can be overridden on the command line. For example if we needed to tear down the application after the tests execute,
+we could use the following command:
+
+[source,bash]
+
+----
+mvn clean verify -Popenshift-it -Dnamespace.cleanup.enabled=true
+----
+
+==== Note on failsafe classpath and interaction with Spring Boot applications
+
+The test code shown above does not use the source code of the project in any way. +
+If that source were to be used in the test code for example to reuse some domain model then the tests would fail.
+
+The failure would occur as a result of the combination of how the failsafe plugin sets up the classpath for the tests and how
+Spring Boot lays out the application classes inside the uber-jar. Essentially the failsafe plugin places the uber-jar on the classpath and is unable to locate any of the application
+classes inside the uber-jar because Spring Boot places them in a custom location (see link:https://github.com/spring-projects/spring-boot/issues/6254#issuecomment-229599865[this] for all the details).
+
+The solution in such cases is to make the failsafe plugin use the non uber-jar which contains the application classes in their standard locations. +
+The failsafe configuration that would be used would then be:
+
+[source, xml]
+----
+  <profiles>
+    <profile>
+      <id>openshift-it</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <version>2.20</version>
+            <configuration>
+              <systemPropertyVariables>
+                <app.name>${project.artifactId}</app.name>
+              </systemPropertyVariables>
+            </configuration>
+            <classesDirectory> #<1>
+              ${project.build.directory}/${project.build.finalName}.${project.packaging}.original
+            </classesDirectory>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>integration-test</goal>
+                  <goal>verify</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  <profiles>
+----
+
+<1> Force the failsafe plugin to use the non uber-jar as the classes directory. The value of the property matches the name of the original jar produced before the `spring-boot-maven-plugin` repackages it to create the uber-jar
+
+[NOTE]
+====
+An link:https://docs.spring.io/spring-boot/docs/1.5.x/maven-plugin/examples/repackage-classifier.html[alternative solution]
+to this problem is to use configure the `spring-boot-maven-plugin` to use a classifier for the uber-jar (thus changing its name).
+The result for failsafe's perspective is that it only "sees" the non uber-jar (since it just ignores the non-standard named uber-jar). +
+This solution may or may not affect the way the application is deployed, depending on what that deployment process involves, so your mileage may vary.
+====
+
+=== Deploy application as part of the integration test process
+
+So far we have been operating under the assumption that the tests would be executed against an application that was running before Maven was invoked. +
+Although such a scenario is useful in some cases, it would also be great for CI purposes if the application could be deployed to OpenShift from source
+as part of the Maven build.
+
+In this section we will describe in depth how we can configure Maven in order to provide the developer with a single command that utilizes features provided by FMP and Arquillian
+to launch and test the application.
+
+The end result is that executing a command like
+
+[source,bash]
+----
+mvn clean verify -Popenshift,openshift-it
+----
+
+will handle the entire build-deploy-test lifecycle.
+
+==== Overview
+
+The next steps give a bird's eye view of the parts that come in to play:
+
+* FMP generates OpenShift resources
+* Maven compiles the source classes
+* The spring-boot-maven-plugin creates an uber-jar containing the output of the previous two processes
+* FMP applies an `ImageStream` on OpenShift using the uber-jar as the input to the binary S2I build
+* Failsafe uses the uber-jar as part of the classpath it provides the tests with
+* Arquillian searches for OpenShift resources on the test classpath.
+* The OpenShift resources produced by FMP are found and the application is deployed
+* Arquillian initiates the tests once the application has been successfully deployed
+
+==== FMP configuration
+
+First of all we need to make sure that FMP goals are not executed by accident as part of the default lifecycle since they affect the OpenShift cluster's state.
+For that reason all of the FMP configuration will reside inside the `openshift` profile, meaning that the profile will need
+to be enabled explicitly for any of the FMP goals to be executed.
+
+[NOTE]
+====
+The reason we introduce a new profile and avoid reusing the `openshift-it` profile is that we might want
+to execute FMP's goals independently of the integration testing process.
+The most promiment example of such a use case would one were the developer uses
+
+[source,bash]
+----
+mvn clean fabric8:deploy -Popenshift
+----
+
+in order to deploy the application into his/her local / dev Openshift environment.
+====
+
+For the purpose of this guide, we don't need to perform any specific configuration of FMP, we can just accept the defaults
+and configure it (inside the `profiles` section) like so:
+
+[source,xml]
+----
+    <profile>
+      <id>openshift</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>io.fabric8</groupId>
+            <artifactId>fabric8-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>fmp</id>
+                <goals>
+                  <goal>resource</goal>
+                  <goal>build</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+----
+
+The two FMP goals that we specify are `resource` and `build`.
+
+link:https://maven.fabric8.io/#fabric8:resource[resource] is automatically attached to the `process-resources` phase of the default Maven lifecycle
+and its purpose is to create the OpenShift resources (as files on the file system) that are needed to deploy the application. +
+These resources include the `Service`, `DeploymentConfig` and `Route` which are all necessary to make the application available outside the cluster. +
+
+It's worth noting that the produced OpenShift resources are placed inside `target/classes/META-INF/fabric8` and the specific file that will be used later
+by Arquillian is `target/classes/META-INF/fabric8/openshift.yml`. +
+Having the files under `target/classes` means that when Maven packages the application and creates the final artifact (the Spring Boot uber-jar),
+the all too important `META-INF/fabric8/openshift.yml` file will be present inside it.
+
+link:https://maven.fabric8.io/#fabric8:build[build] is automatically attached to the `pre-integration-test` phase of the default Maven lifecycle
+and takes care of applying the `BuildConfiguration` and `ImageStream` resources to the cluster that are necessary to deploy the application later on.
+
+[TIP]
+====
+A great way to see the plugins that are attached to each Maven lifecycle phase is by executing the following command:
+[source,bash]
+----
+mvn fr.jcgay.maven.plugins:buildplan-maven-plugin:list-phase -Popenshift,openshift-it
+----
+====
+
+
+==== How FMP resources are used before the tests are run
+
+Now that we have a firm grasp on how and when FMP creates the necessary OpenShift resources, we will close the loop and describe how these resources are used
+in order to launch the application before Arquillian starts the actual tests.
+
+As should be evident from the previous section, by the time Arquillian launches (as part of the `integration-test` phase of the default Maven lifecycle),
+FMP has taken care of two things:
+
+* An `ImageStream` has been applied on OpenShift that contains the Docker image built from the application's uber-jar
+* A YAML file containing all the OpenShift resources necessary to launch the application has been created at `target/classes/META-INF/fabric8/openshift.yml`
+
+The aforementioned `openshift.yml` file has also been copied to the Spring Boot uber-jar (with the `META-INF` directory structure preserved).
+This is important since as was described earlier in the guide, the uber-jar is part of the test classpath created by the failsafe plugin.
+
+When Arquillian is launched, if it has been configured to have `env.init.enabled` set to `true`, it dutifully looks for `META-INF/fabric8/openshift.yml`
+inside its classpath. Once the file is found, it used to deploy the application to OpenShift.
+
+The rest of what Arquillian does is similar as described in the section about testing an already running application.
+
+Just for reference, the Arquillian configuration we use in this case is:
+
+.src/test/resources/arquillian.xml
+----
+<arquillian xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://jboss.org/schema/arquillian"
+            xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+  <extension qualifier="openshift">
+    <property name="env.init.enabled">true</property>
+    <property name="enableImageStreamDetection">false</property>
+  </extension>
+
+</arquillian>
+----
+
+[NOTE]
+====
+Note the absence of `namespace.use.current`. This means that Arquillian will use the default value of `false` for that property
+forcing it to create a testing namespace for the resources it deploys.
+
+Furthermore the absence of `namespace.cleanup.enabled` means that Arquillian will use the default value of `true`, thus cleaning up
+the namespace after the tests have finished
+====
+
+
+== Testing an application that uses a database
+
+In this section we will introduce some extra complexity into the integration testing scenario by using a
+link:https://github.com/snowdrop/spring-boot-crud-booster[demo application] that requires a database to be present.
+
+We will show how easy it is for Arquillian to take care of the deployment of a database as well as part of the test setup.
+
+=== Configuring Arquillian to additionally setup the database
+
+As has been noted before, Arquillian offers a ton of flexibility in order to be able to address a host of different
+integration testing scenarios. +
+In this section we will see just how a very simple configuration change, suffices to get a database running on the OpenShift cluster.
+
+First of all we need to add an OpenShift file that describes the database we want to deploy:
+
+.src/test/resources/database.yml
+----
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: my-database
+    name: my-database
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+    - annotations:
+        openshift.io/imported-from: openshift/postgresql-92-centos7
+      from:
+        kind: DockerImage
+        name: openshift/postgresql-92-centos7
+      generation: null
+      importPolicy: {}
+      name: latest
+      referencePolicy:
+        type: ""
+  status:
+    dockerImageRepository: ""
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: my-database
+    name: my-database
+  spec:
+    replicas: 1
+    selector:
+      app: my-database
+      deploymentconfig: my-database
+    strategy:
+      resources: {}
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: my-database
+          deploymentconfig: my-database
+      spec:
+        containers:
+        - env:
+          - name: POSTGRESQL_DATABASE
+            value: my_data
+          - name: POSTGRESQL_PASSWORD
+            value: secret
+          - name: POSTGRESQL_USER
+            value: luke
+          image: openshift/postgresql-92-centos7
+          name: my-database
+          ports:
+          - containerPort: 5432
+            protocol: TCP
+          resources: {}
+          volumeMounts:
+          - mountPath: /var/lib/pgsql/data
+            name: my-database-volume-1
+        volumes:
+        - emptyDir: {}
+          name: my-database-volume-1
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - my-database
+        from:
+          kind: ImageStreamTag
+          name: my-database:latest
+      type: ImageChange
+  status:
+    availableReplicas: 0
+    latestVersion: 0
+    observedGeneration: 0
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: my-database
+    name: my-database
+  spec:
+    ports:
+    - name: 5432-tcp
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+    selector:
+      app: my-database
+      deploymentconfig: my-database
+  status:
+    loadBalancer: {}
+kind: List
+metadata: {}
+----
+
+To make arquillian deploy the database as part of the environment creation process, all we need to do is configure the `env.dependencies` property.
+The final `arquillian.xml` configuration file looks like:
+
+.src/test/resources/arquillian.xml
+----
+<arquillian xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://jboss.org/schema/arquillian"
+            xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+  <extension qualifier="openshift">
+    <property name="namespace.use.current">true</property>
+    <property name="env.init.enabled">true</property>
+    <property name="enableImageStreamDetection">false</property>
+    <property name="namespace.cleanup.enabled">false</property>
+    <property name="env.dependencies">file://${basedir}/target/test-classes/database.yml</property> #<1>
+  </extension>
+
+</arquillian>
+----
+
+<1> The `env.dependencies` is a comma-separated list of URLs to more environment dependencies.
+
+The only tricky thing about the value of `env.dependencies` is that it uses a Maven variable which means that we need to make sure that
+test resources have been configured to have the Maven variables substituted. +
+That can easily be achieved by adding the following inside the `build` section:
+
+[source,xml]
+----
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <filtering>true</filtering>
+      </testResource>
+    </testResources>
+----
+
+See link:https://maven.apache.org/plugins/maven-resources-plugin/examples/filter.html[this] part of the Maven documentation for more details.
+
+It is also worth noting that the `database.yml` file ends up in `target/test-classes` because we added it to `src/test/resources` which is the default location Maven
+link:https://maven.apache.org/plugins/maven-resources-plugin/[uses] for resources files used by the test code.
+
+=== Running the tests
+
+The command to run the integration tests does not change. It's:
+
+[source,bash]
+----
+mvn verify -Popenshift,openshift-it
+----
+
+== Testing a multi-module Maven project that uses a cache server
+
+Our final task will be to demonstrate how a multi-module Maven project can be configured in order to have its integration tests run
+with the same Maven command we are by now no doubt familiar with. +
+The demo application we will be testing consists of two microservices and a cache server that will all be deployed as part of the integration
+testing process. You can find the demo application link:https://github.com/snowdrop/spring-boot-cache-booster[here].
+
+=== Project structure
+
+The project is structured as a Maven multi-module project consisting of the following modules:
+
+* `name-service` provides an HTTP endpoint that returns a random name when invoked
+* `greeting-service` is the microservice that users interact with. It uses the result it obtains from the name `name-service` as part of its response. It also expects a cache server to be present for caching the results of `name-service`
+* The `tests` module is where the integration tests reside
+
+=== Overview
+
+To ensure that integration testing works properly we need to configure the following:
+
+Each one of the `name-service` and `greeting-service` microservices needs to have FMP configured in way that allows its OpenShift resources to be created on file system
+and its `BuildConfig` and `ImageStream` applied to the OpenShift cluster. This configuration is very similar to what was done in the previous sections.
+
+FMP for the `tests` module needs to be configured in such a way that allows the aggregation of the OpenShift resources of the two microservice modules into a
+single OpenShift resources file that will then be used by Arquillian.
+
+Arquillian's configuration will be very similar to what was done in the previous section were in addition to the standard OpenShift resources file produced
+by FMP, a resource file containing the definition of the cache server will also be used.
+
+=== FMP configuration
+
+In order to avoid duplicating FMP configuration in the microservices modules, we add the FMP configuration in the parent pom, thus allowing the
+submodules to inherit it. +
+The configuration is the same as we have seen in the previous sections and looks like:
+
+[source,xml]
+----
+    <profile>
+      <id>openshift</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>io.fabric8</groupId>
+            <artifactId>fabric8-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>fmp</id>
+                <goals>
+                  <goal>resource</goal>
+                  <goal>build</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+----
+
+We do however need to configure FMP explicitly in the `tests` module since that module needs to aggregate the OpenShift resources produced by the
+`resource` goal of FMP of the microservices modules.
+
+Therefore in the `pom.xml` file of the `tests` module we add the following FMP configuration:
+
+[source,xml]
+----
+<profiles>
+    <profile>
+        <id>openshift-it</id> #<1>
+        <build>
+          <plugins>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>fabric8-maven-plugin</artifactId>
+                <executions>
+                  <execution>
+                    <goals>
+                      <goal>resource</goal>
+                    </goals>
+                  </execution>
+                </executions>
+                <configuration>
+                  <profile>aggregate</profile> #<2>
+                </configuration>
+                <dependencies>
+                  <dependency> #<3>
+                    <groupId>io.openshift.booster</groupId>
+                    <artifactId>spring-boot-cache-greeting</artifactId>
+                    <version>${project.version}</version>
+                  </dependency>
+                  <dependency>
+                    <groupId>io.openshift.booster</groupId>
+                    <artifactId>spring-boot-cache-cutename</artifactId>
+                    <version>${project.version}</version>
+                  </dependency>
+                </dependencies>
+            </plugin>
+          </plugins>
+        </build>
+    </profile>
+</profiles>
+----
+
+<1> The `tests` module only has integration test code, so we introduce all the FMP configuration to the `openshift-it` profile instead of the `openshift` profile.
+Because of the way we execute the maven command (`mvn clean verify -Popenshift,openshift-it`) the configuration in the `openshift-it` profile of the module
+overrides the configuration in the `openshift` profile of the parent pom.
+
+<2> Using FMP's link:https://maven.fabric8.io/#profiles-predefined[aggregate] profile makes it search for OpenShift resource files inside
+the jars that are available via the dependencies of the module or the dependencies of the plugin itself. Any such resources files will be
+aggregated into a single file and placed in the standard `target/classes/META-INF/fabric/openshift.yml` location we have seen in previous sections. +
+
+[IMPORTANT]
+====
+Keep in mind that FMP will not attempt to generate any other OpenShift resources when this profile is enabled.
+====
+
+<3> We add the two microservices modules as dependencies of FMP. This is done in order to make FMP pick up the generated OpenShift resources files of each module
+and create an "uber" resources file containing resources of both modules as explained above.
+
+[NOTE]
+====
+Had we added the `name-service` and `greeting-service` modules to the dependencies of the `tests` module itself instead of FMP,
+the end result from an FMP's perspective would have been the same.
+However the `tests` itself has no actual code dependencies on the other modules therefore it is cleaner to add the dependencies to FMP where they
+are actually needed
+====
+
+=== Other configuration
+
+==== Spring Boot plugin
+
+In the same way that FMP was configured in the parent pom in order to avoid duplicate configuration in the microservices modules, the same is done
+with the spring-boot-maven-plugin. +
+The configuration we use is:
+
+[source,xml]
+----
+  <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-failsafe-plugin</artifactId>
+    <executions>
+      <execution>
+        <goals>
+          <goal>integration-test</goal>
+          <goal>verify</goal>
+        </goals>
+      </execution>
+    </executions>
+  </plugin>
+----
+
+We need to take care however to disable the plugin in the `tests` module like so:
+
+[source,xml]
+----
+  <plugin>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-maven-plugin</artifactId>
+      <configuration>
+          <skip>true</skip>
+      </configuration>
+  </plugin>
+----
+
+==== Cache server
+
+The cache server is defined as follows
+
+.src/test/resources/test-cacheserver.yml
+----
+apiVersion: v1
+kind: List
+items:
+  - apiVersion: extensions/v1beta1
+    kind: Deployment
+    metadata:
+      name: cache-server
+      labels:
+        app: cache-server
+    spec:
+      replicas: 1
+      strategy:
+        type: Recreate
+      template:
+        metadata:
+          labels:
+            app: cache-server
+        spec:
+          containers:
+            - env:
+              - name: DEFAULT_CACHE_EVICTION_MAX_ENTRIES
+                value: "10"
+              - name: DEFAULT_CACHE_EXPIRATION_LIFESPAN
+                value: "10000"
+              - name: INFINISPAN_CONNECTORS
+                value: hotrod
+              image: registry.access.redhat.com/jboss-datagrid-7/datagrid71-openshift:1.1
+              name: cache-server
+              ports:
+              - containerPort: 8778
+                protocol: TCP
+              - containerPort: 11211
+                protocol: TCP
+              - containerPort: 11222
+                protocol: TCP
+              - containerPort: 11333
+                protocol: TCP
+              - containerPort: 8080
+                protocol: TCP
+              - containerPort: 8443
+                protocol: TCP
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        app: cache-server
+      name: cache-server
+    spec:
+      selector:
+        app: cache-server
+      ports:
+      - name: 8080-tcp
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+      - name: 8443-tcp
+        port: 8443
+        protocol: TCP
+        targetPort: 8443
+      - name: 8778-tcp
+        port: 8778
+        protocol: TCP
+        targetPort: 8778
+      - name: 11211-tcp
+        port: 11211
+        protocol: TCP
+        targetPort: 11211
+      - name: 11222-tcp
+        port: 11222
+        protocol: TCP
+        targetPort: 11222
+      - name: 11333-tcp
+        port: 11333
+        protocol: TCP
+        targetPort: 11333
+      type: ClusterIP
+----
+
+=== Arquillian configuration
+
+With that cache server Openshift resource file in place, the only thing we need to do to make Arquillian use it as part of the environment setup is to add:
+
+[source,xml]
+----
+<property name="env.dependencies">file://${basedir}/target/test-classes/test-cacheserver.yml</property>
+----
+
+The `test-cacheserver.yml` file ends up in `target/test-classes` because we added it to `src/test/resources` which is the default location Maven
+link:https://maven.apache.org/plugins/maven-resources-plugin/[uses] for resources files used by the test code.
+
+
+The rest of the configuration as well as the test itself uses the exact same logic as described in the previous sections
+

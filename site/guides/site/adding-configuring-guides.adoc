@@ -58,7 +58,7 @@ guides: [
 <1> *The guide type:* Currently the only supported type is "guide".
 <2> *The title of your new guide:* This should be 50 characters or less, or it may be truncated.
 <3> *The description of your new guide:* This should be 150 characters or less, or it may be truncated.
-<4> *Booster URL:* This is only necessary if your guide has a corresponding booster that is downloadable via the Snowdrop launcher.
+<4> *Booster URL:* Parameters that are passed to the launcher to download a booster ZIP file. This is only necessary if your guide has a corresponding booster that is downloadable via the Snowdrop launcher.
 <5> *Content URL:* This is the fully qualified URL to the source of your guide's content. This must link to an asciidoc file that is accessible via the public internet.
 <6> *Documentation URL:* This is the path to external documentation (if any) referenced by your guide.
 <7> *Source URL:* This is the path to the source code for your guide, or for the project it describes.

@@ -60,7 +60,7 @@
       "description":"Expose business operations via a REST endpoint over HTTP",
       "urls": {
         "booster":"artifactId=http-rest&groupId=me.snowdrop.booster&mission=rest-http&runtime=spring-boot&runtimeVersion=current-community",
-        "documentation": "https://raw.githubusercontent.com/snowdrop/spring-boot-http-booster/master/guide.adoc"
+        "content": "https://raw.githubusercontent.com/snowdrop/spring-boot-http-booster/master/guide.adoc"
       },
       "tags": "http, rest, jax-rs, apache cxf",
       "versions": []
@@ -91,7 +91,7 @@
       "type":"guide",
       "title":"Distributed Tracing - OpenTracing",
       "urls": {
-        "booster": "https://raw.githubusercontent.com/snowdrop/spring-boot-opentracing-booster/master/README.adoc",
+        "content": "https://raw.githubusercontent.com/snowdrop/spring-boot-opentracing-booster/master/README.adoc",
         "documentation":"https://github.com/snowdrop/spring-boot-opentracing-booster/"
       },
       "description":"Configure and deploy a Spring Boot app instrumented using Opentracing.",
@@ -162,16 +162,6 @@
         "content":"https://raw.githubusercontent.com/snowdrop/spring-boot-istio-routing-booster/master/README.adoc"
       },
       "tags": "istio, routing",
-      "versions": []
-    },
-    {
-      "type":"guide",
-      "title":"Integration testing with Arquillian Cube and FMP on Openshift",
-      "urls": {
-        "content": "https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/integration-testing.adoc"
-      },
-      "description":"Deep dive into how to do integration testing with Arquillian Cube and FMP on Openshift",
-      "tags": "testing, arquillian, fmp",
       "versions": []
     },
     {

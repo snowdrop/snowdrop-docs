@@ -106,7 +106,7 @@
         "booster":"artifactId=externalized-config&groupId=me.snowdrop.booster&mission=configmap&runtime=spring-boot&runtimeVersion=current-community",
         "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-configmap-spring-boot"
       },
-      "tags": "configuration",
+      "tags": "configuration, setup",
       "versions": []
     },
     {
@@ -117,7 +117,7 @@
         "booster":"artifactId=health-check&groupId=me.snowdrop.booster&mission=health-check&runtime=spring-boot&runtimeVersion=current-community",
         "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-health-check-spring-boot"
       },
-      "tags": "health check",
+      "tags": "health check, setup, basic",
       "versions": []
     },
     {
@@ -129,6 +129,7 @@
         "content":"https://raw.githubusercontent.com/snowdrop/spring-boot-istio-circuit-breaker-booster/master/README.adoc"
       },
       "tags": "circuit breaker, istio",
+      "enablements": "build, testing, -local",
       "versions": []
     },
     {
@@ -140,6 +141,7 @@
         "content": "https://raw.githubusercontent.com/snowdrop/spring-boot-istio-distributed-tracing-booster/master/README.adoc"
       },
       "tags": "distributed tracing, istio",
+      "enablements": "build, testing, -local",
       "versions": []
     },
     {
@@ -151,6 +153,7 @@
         "content":"https://raw.githubusercontent.com/snowdrop/spring-boot-istio-security-booster/master/README.adoc"
       },
       "tags": "istio, security, authorization",
+      "enablements": "build, testing, -local",
       "versions": []
     },
     {
@@ -162,6 +165,7 @@
         "content":"https://raw.githubusercontent.com/snowdrop/spring-boot-istio-routing-booster/master/README.adoc"
       },
       "tags": "istio, routing",
+      "enablements": "build, testing, -local",
       "versions": []
     },
     {
@@ -175,6 +179,18 @@
       "prerequisites": "create, setup",
       "enablements": "build, setup, -local",
       "tags": "basic, deployment"
+    },
+    {
+      "type":"guide",
+      "title":"Integration Testing - Cloud-Native Apps",
+      "description":"Learn how to developer integration tests for a Spring Boot Application using cloud-native techniques.",
+      "urls": {
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/integration-testing.adoc",
+        "source": "https://github.com/snowdrop/snowdrop-docs"
+      },
+      "prerequisites": "create, setup",
+      "enablements": "build, setup, -local",
+      "tags": "setup, testing"
     },
     {
       "type":"guide",

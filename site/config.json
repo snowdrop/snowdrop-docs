@@ -244,7 +244,7 @@
         "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/intro/use-best-practices.adoc",
         "source": "https://github.com/snowdrop/snowdrop-docs"
       },
-      "prerequisites": "+intro, +site, +part-2",
+      "prerequisites": "+intro, +site, part-1, part-2",
       "tags": "intro, site, part-3, hidden",
       "enablements": "basic"
     }

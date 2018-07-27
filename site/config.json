@@ -177,8 +177,8 @@
         "source": "https://github.com/snowdrop/spring-boot-mvc-jsp"
       },
       "prerequisites": "create, setup",
-      "enablements": "build, setup, -local",
-      "tags": "basic, deployment"
+      "tags": "basic, deployment",
+      "enablements": "build, setup, -local"
     },
     {
       "type":"guide",
@@ -189,8 +189,8 @@
         "source": "https://github.com/snowdrop/snowdrop-docs"
       },
       "prerequisites": "create, setup",
-      "enablements": "build, setup, -local",
-      "tags": "setup, testing"
+      "tags": "setup, testing",
+      "enablements": "build, setup, -local"
     },
     {
       "type":"guide",
@@ -211,8 +211,8 @@
         "documentation": ""
       },
       "prerequisites": "",
-      "enablements": "basic, create",
-      "tags": "basic, setup"
+      "tags": "basic, setup",
+      "enablements": "basic, create"
     },
     {
       "type":"guide",
@@ -223,8 +223,8 @@
         "documentation": ""
       },
       "prerequisites": "",
-      "enablements": "basic, build",
-      "tags": "create, start"
+      "tags": "create, start",
+      "enablements": "basic, build"
     },
     {
       "type":"guide",
@@ -279,6 +279,42 @@
         "source": "https://github.com/snowdrop/snowdrop-docs"
       },
       "tags": "site, hidden"
+    },
+    {
+      "type":"guide",
+      "title":"Get Cloud Ready",
+      "description":"Set up your environment for Cloud Native Development.",
+      "urls": {
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/intro/get-cloud-ready.adoc",
+        "source": "https://github.com/snowdrop/snowdrop-docs"
+      },
+      "prerequisites": "",
+      "tags": "intro, site, hidden",
+      "enablements": "intro, site"
+    },
+    {
+      "type":"guide",
+      "title":"Get Started",
+      "description":"Build and run your first Cloud Native app.",
+      "urls": {
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/intro/get-started.adoc",
+        "source": "https://github.com/snowdrop/snowdrop-docs"
+      },
+      "prerequisites": "",
+      "tags": "intro, site, hidden",
+      "enablements": "intro, site"
+    },
+    {
+      "type":"guide",
+      "title":"Use Best Practices",
+      "description":"Learn how to integrate and use Cloud Native technologies.",
+      "urls": {
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/intro/use-best-practices.adoc",
+        "source": "https://github.com/snowdrop/snowdrop-docs"
+      },
+      "prerequisites": "",
+      "tags": "intro, site, hidden",
+      "enablements": "intro, site"
     }
   ]
 }

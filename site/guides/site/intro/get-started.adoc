@@ -1,0 +1,12 @@
+So you've gotten your Cloud Native link:/guides/get-cloud-ready[development environment set up], and you're ready to start building. Where do you start next?
+
+Snowdrop provides a link:/wizard[quick-start tool] that allows you to choose a use-case, download, and run a sample application directly on your local cloud.
+
+== Run an example
+
+Press "Get Started" in the site menu to run the example application generator, or click the link below.
+
+=== link:/wizard[Launch the example generator]
+
+== What next?
+Once you've deployed your first example application, you should explore the link:/guides[Snowdrop integration guides] to learn more about using best practices and Cloud Native technologies.

@@ -290,7 +290,7 @@
       },
       "prerequisites": "",
       "tags": "intro, site, hidden, part-1",
-      "enablements": "intro, site"
+      "enablements": "intro, site, part-2"
     },
     {
       "type":"guide",
@@ -302,7 +302,7 @@
       },
       "prerequisites": "intro, site, part-1",
       "tags": "intro, site, hidden, part-2",
-      "enablements": "intro, site"
+      "enablements": "intro, site, part-3"
     },
     {
       "type":"guide",
@@ -314,7 +314,7 @@
       },
       "prerequisites": "intro, site, part-2",
       "tags": "intro, site, hidden",
-      "enablements": "intro, site"
+      "enablements": "basic"
     }
   ]
 }

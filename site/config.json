@@ -289,8 +289,8 @@
         "source": "https://github.com/snowdrop/snowdrop-docs"
       },
       "prerequisites": "",
-      "tags": "intro, site, hidden, part-1",
-      "enablements": "intro, site, part-2"
+      "tags": "+intro, +site, hidden, +part-1",
+      "enablements": "+intro, +site, +part-2"
     },
     {
       "type":"guide",
@@ -300,9 +300,9 @@
         "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/intro/get-started.adoc",
         "source": "https://github.com/snowdrop/snowdrop-docs"
       },
-      "prerequisites": "intro, site, part-1",
+      "prerequisites": "+intro, +site, +part-1",
       "tags": "intro, site, hidden, part-2",
-      "enablements": "intro, site, part-3"
+      "enablements": "+intro, +site, +part-3"
     },
     {
       "type":"guide",
@@ -312,7 +312,7 @@
         "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/intro/use-best-practices.adoc",
         "source": "https://github.com/snowdrop/snowdrop-docs"
       },
-      "prerequisites": "intro, site, part-2",
+      "prerequisites": "+intro, +site, +part-2",
       "tags": "intro, site, hidden",
       "enablements": "basic"
     }

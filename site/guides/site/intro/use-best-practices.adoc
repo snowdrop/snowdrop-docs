@@ -1,0 +1,5 @@
+All set up and running on your local cloud? Let's get started integrating new technologies.
+
+Part of the beauty of Cloud Native development is you have complete control over the composition of your apps, and you can decide what does and does not get included.
+
+Check out our link:/guides[catalog of guides] to learn more about integrating technologies such a distributed tracing, load balancing, health monitoring, and more. If you're just starting out, see below for some recommended guides.

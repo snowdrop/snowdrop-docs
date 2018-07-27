@@ -289,7 +289,7 @@
         "source": "https://github.com/snowdrop/snowdrop-docs"
       },
       "prerequisites": "",
-      "tags": "+intro, +site, hidden, +part-1",
+      "tags": "+intro, +site, +part-1, hidden",
       "enablements": "+intro, +site, +part-2"
     },
     {
@@ -301,7 +301,7 @@
         "source": "https://github.com/snowdrop/snowdrop-docs"
       },
       "prerequisites": "+intro, +site, +part-1",
-      "tags": "intro, site, hidden, part-2",
+      "tags": "intro, site, part-2, hidden",
       "enablements": "+intro, +site, +part-3"
     },
     {
@@ -313,7 +313,7 @@
         "source": "https://github.com/snowdrop/snowdrop-docs"
       },
       "prerequisites": "+intro, +site, +part-2",
-      "tags": "intro, site, hidden",
+      "tags": "intro, site, part-3, hidden",
       "enablements": "basic"
     }
   ]

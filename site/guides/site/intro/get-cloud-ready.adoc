@@ -1,0 +1,15 @@
+Cloud Native development is a combination of design and development patterns that bridge the gap between local development, and production environments. Snowdrop is the easiest way to build and deploy production-grade Spring Boot applications.
+
+== Installation
+To set up your Cloud Native dev environment, you'll need to:
+
+. https://docs.openshift.org/latest/minishift/getting-started/setting-up-virtualization-environment.html[Set up your virtualization environment]
+. https://github.com/minishift/minishift/releases[Download Minishift]
+. https://docs.openshift.org/latest/minishift/getting-started/preparing-to-install.html[Install Minishift]
+. https://docs.openshift.org/latest/minishift/getting-started/quickstart.html#starting-minishift[Start Minishift]
+
+(Or https://docs.openshift.org/latest/minishift/getting-started/preparing-to-install.html[read the full Minishift Get-Started Guide] )
+
+== What next?
+
+Now that you have a virtualization environment, and have installed Minishift, you're ready to move on to the next step --- building and deploying an application! See below for options.

@@ -289,7 +289,7 @@
         "source": "https://github.com/snowdrop/snowdrop-docs"
       },
       "prerequisites": "",
-      "tags": "+intro, +site, +part-1, hidden",
+      "tags": "intro, site, part-1, hidden",
       "enablements": "+intro, +site, +part-2"
     },
     {

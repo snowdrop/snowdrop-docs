@@ -33,6 +33,16 @@
   },
   "guides": [
     {
+      "type":"guide",
+      "title":"Adding/configuring Guides",
+      "description":"How to add or configure guides to the Snowdrop website.",
+      "urls": {
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/adding-configuring-guides.adoc",
+        "source": "https://github.com/snowdrop/snowdrop-docs"
+      },
+      "tags": "internal, hidden"
+    },
+    {
       "type":"booster",
       "title":"Application Caching",
       "description":"Use application caching to improve server response time",
@@ -201,84 +211,6 @@
       },
       "tags": "basic, deployment",
       "description":"Configure and deploy a Spring Boot app using Snowdrop’s Spring Data support with Infinispan"
-    },
-    {
-      "type":"guide",
-      "title":"Setup a Cloud Native Dev. Environment",
-      "description":"Get started with Cloud Native development on your own machine.",
-      "urls": {
-        "content":"",
-        "documentation": ""
-      },
-      "prerequisites": "",
-      "tags": "basic, setup",
-      "enablements": "basic, create"
-    },
-    {
-      "type":"guide",
-      "title":"Create your first Snowdrop App",
-      "description":"Learn how to build a Spring Boot Application using Snowdrop.",
-      "urls": {
-        "content":"",
-        "documentation": ""
-      },
-      "prerequisites": "",
-      "tags": "create, start",
-      "enablements": "basic, build"
-    },
-    {
-      "type":"guide",
-      "title":"Build using Docker",
-      "description":"Learn how to build a Spring Boot Application using Docker.",
-      "urls": {
-        "content":"",
-        "documentation": ""
-      },
-      "prerequisites": "",
-      "tags": "build, cloud native"
-    },
-    {
-      "type":"guide",
-      "title":"Build using Kubernetes",
-      "description":"Learn how to build a Spring Boot Application using Kubernetes.",
-      "urls": {
-        "content":"",
-        "documentation": ""
-      },
-      "prerequisites": "",
-      "tags": "build, cloud native"
-    },
-    {
-      "type":"guide",
-      "title":"Build using Openshift",
-      "description":"Learn how to build a Spring Boot Application using Openshift.",
-      "urls": {
-        "content":"",
-        "documentation": ""
-      },
-      "prerequisites": "",
-      "tags": "build, cloud native"
-    },
-    {
-      "type":"guide",
-      "title":"Build using Maven",
-      "description":"Learn how to build a Spring Boot Application using Maven.",
-      "urls": {
-        "content":"",
-        "documentation": ""
-      },
-      "prerequisites": "",
-      "tags": "build, local"
-    },
-    {
-      "type":"guide",
-      "title":"Adding/configuring Guides",
-      "description":"How to add or configure guides to the Snowdrop website.",
-      "urls": {
-        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/adding-configuring-guides.adoc",
-        "source": "https://github.com/snowdrop/snowdrop-docs"
-      },
-      "tags": "internal, hidden"
     },
     {
       "type":"guide",

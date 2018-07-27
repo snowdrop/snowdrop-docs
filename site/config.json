@@ -278,7 +278,7 @@
         "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/adding-configuring-guides.adoc",
         "source": "https://github.com/snowdrop/snowdrop-docs"
       },
-      "tags": "site, hidden"
+      "tags": "internal, hidden"
     },
     {
       "type":"guide",

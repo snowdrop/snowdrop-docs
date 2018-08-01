@@ -1,10 +1,10 @@
-Once you have your first Snowdrop application created, your next step is deploying to a Cloud Native environment, such as link:/guides/get-cloud-ready[Minishift], or https://openshift.com[OpenShift]. There are several ways to deploy your application to these environments:
+Once you have your first Snowdrop application created, your next step is deploying to a Cloud Native environment, such as MiniShift, or https://openshift.com[OpenShift]. There are several ways to deploy your application to these environments:
 
 == Deployment types
 
-. *Using link:/guides/deployment-types-template[OpenShift Templates]:* OpenShift Templates are reusable configurations that can deploy and configure an entire OpenShift/Kubernetes application environment. You can define builds, services, routes, and more, all from a single YAML file that is loaded into the Cloud Native environment via the command line.
-. *Using the link:/guides/deployment-types-fmp[Fabric8 Maven Plugin]:* The Fabric8 Maven Plugin (FMP) is a build tool extension for link:https://maven.apache.org[Apache Maven], commonly used with Spring Boot and Java Applications. The FMP automates and abstracts most of the basic configuration necessary to deploy an application to OpenShift.
+. *Using link OpenShift Templates:* OpenShift Templates are reusable configurations that can deploy and configure an entire OpenShift/Kubernetes application environment. You can define builds, services, routes, and more, all from a single YAML file that is loaded into the Cloud Native environment via the command line.
+. *Using the Fabric8 Maven Plugin:* The Fabric8 Maven Plugin (FMP) is a build tool extension for link:https://maven.apache.org[Apache Maven], commonly used with Spring Boot and Java Applications. The FMP automates and abstracts most of the basic configuration necessary to deploy an application to OpenShift.
 
 == What next?
 
-Now that you understand the different deployment mechanisms, it's time to try one! Choose one of the options below to deploy your application.
+Now that you understand the different deployment mechanisms available, it's time to try one! Choose one of the options below to deploy your application.

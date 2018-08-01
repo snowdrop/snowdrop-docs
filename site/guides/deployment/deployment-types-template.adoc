@@ -1,0 +1,11 @@
+Once you have your first Snowdrop application created, your next step is deploying to a Cloud Native environment, such as link:/guides/get-cloud-ready[Minishift], or https://openshift.com[OpenShift]. There are several ways to deploy your application to these environments --- this guide focuses on the OpenShift Template deployment approach.
+
+== Creating an OpenShift Template
+
+== Deploying from the CLI
+
+== Deploying via OpenShift admin console
+
+== What next?
+
+Now that you understand OpenShift Templates, let's integrate some best practices and technologies! Choose one of the options below to extend your application.

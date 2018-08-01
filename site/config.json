@@ -34,6 +34,84 @@
   "guides": [
     {
       "type":"guide",
+      "title":"Get Cloud Ready",
+      "description":"Set up your environment for Cloud Native Development.",
+      "urls": {
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/intro/get-cloud-ready.adoc",
+        "source": "https://github.com/snowdrop/snowdrop-docs"
+      },
+      "prerequisites": "",
+      "tags": "intro, site, part-1, hidden",
+      "enablements": "+intro, +site, +part-2"
+    },
+    {
+      "type":"guide",
+      "title":"Get Started",
+      "description":"Build and run your first Cloud Native app.",
+      "urls": {
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/intro/get-started.adoc",
+        "source": "https://github.com/snowdrop/snowdrop-docs"
+      },
+      "prerequisites": "+intro, +site, +part-1",
+      "tags": "intro, site, part-2, hidden",
+      "enablements": "+intro, +site, +part-3"
+    },
+    {
+      "type":"guide",
+      "title":"Use Best Practices",
+      "description":"Learn how to integrate and use Cloud Native technologies.",
+      "urls": {
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/intro/use-best-practices.adoc",
+        "source": "https://github.com/snowdrop/snowdrop-docs"
+      },
+      "prerequisites": "+intro, +site, part-1, part-2",
+      "tags": "intro, site, part-3, hidden",
+      "enablements": "basic"
+    },
+
+
+    {
+      "type":"guide",
+      "title":"Learn: Deployment Types",
+      "description":"Learn how to deploy Cloud Native applications.",
+      "urls": {
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/deployment/deployment-types.adoc",
+        "source": "https://github.com/snowdrop/snowdrop-docs"
+      },
+      "prerequisites": "basic",
+      "tags": "deploy, overview",
+      "enablements": "deploy"
+    },
+    {
+      "type":"guide",
+      "title":"Deployment Types: OpenShift Templates",
+      "description":"Learn how to deploy Cloud Native applications with YAML Templates.",
+      "urls": {
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/deployment/deployment-types-template.adoc",
+        "source": "https://github.com/snowdrop/snowdrop-docs"
+      },
+      "prerequisites": "basic",
+      "tags": "deploy, openshift",
+      "enablements": ""
+    },
+    {
+      "type":"guide",
+      "title":"Deployment Types: Fabric8 Maven Plugin",
+      "description":"Learn how to deploy Cloud Native applications with FMP.",
+      "urls": {
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/deployment/deployment-types-fmp.adoc",
+        "source": "https://github.com/snowdrop/snowdrop-docs"
+      },
+      "prerequisites": "basic",
+      "tags": "deploy, fmp",
+      "enablements": ""
+    },
+
+
+
+
+    {
+      "type":"guide",
       "title":"Adding/configuring Guides",
       "description":"How to add or configure guides to the Snowdrop website.",
       "urls": {
@@ -211,42 +289,6 @@
       },
       "tags": "basic, deployment",
       "description":"Configure and deploy a Spring Boot app using Snowdrop’s Spring Data support with Infinispan"
-    },
-    {
-      "type":"guide",
-      "title":"Get Cloud Ready",
-      "description":"Set up your environment for Cloud Native Development.",
-      "urls": {
-        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/intro/get-cloud-ready.adoc",
-        "source": "https://github.com/snowdrop/snowdrop-docs"
-      },
-      "prerequisites": "",
-      "tags": "intro, site, part-1, hidden",
-      "enablements": "+intro, +site, +part-2"
-    },
-    {
-      "type":"guide",
-      "title":"Get Started",
-      "description":"Build and run your first Cloud Native app.",
-      "urls": {
-        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/intro/get-started.adoc",
-        "source": "https://github.com/snowdrop/snowdrop-docs"
-      },
-      "prerequisites": "+intro, +site, +part-1",
-      "tags": "intro, site, part-2, hidden",
-      "enablements": "+intro, +site, +part-3"
-    },
-    {
-      "type":"guide",
-      "title":"Use Best Practices",
-      "description":"Learn how to integrate and use Cloud Native technologies.",
-      "urls": {
-        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/intro/use-best-practices.adoc",
-        "source": "https://github.com/snowdrop/snowdrop-docs"
-      },
-      "prerequisites": "+intro, +site, part-1, part-2",
-      "tags": "intro, site, part-3, hidden",
-      "enablements": "basic"
     }
   ]
 }

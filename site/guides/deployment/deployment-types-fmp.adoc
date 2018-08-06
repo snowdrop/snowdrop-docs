@@ -1,8 +1,20 @@
+=DRAFT
+
 Once you have your first Snowdrop application created, your next step is deploying to a Cloud Native environment, such as link:/guides/get-cloud-ready[Minishift], or https://openshift.com[OpenShift]. There are several ways to deploy your application to these environments --- this guide focuses on the Fabric8 Maven Plugin.
 
 == Installing the Fabric8 Maven Plugin (FMP)
 
+Configuration for FMP is found both in pom.xml and src/main/fabric8 files/folders.
+
 == Deploying applications with FMP
+
+Execute the following command to build the project and deploy it to OpenShift:
+
+++++
+mvn clean fabric8:deploy
+++++
+
+NOTE:: It is recommended to run the 'clean' goal in advance of an FMP deployment to ensure that there are no outdated files remaining in the project build directories.
 
 == Configuring deployments with FMP
 

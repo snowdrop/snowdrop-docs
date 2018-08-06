@@ -1,8 +1,56 @@
+=DRAFT
+
 Once you have your first Snowdrop application created, your next step is deploying to a Cloud Native environment, such as link:/guides/get-cloud-ready[Minishift], or https://openshift.com[OpenShift]. There are several ways to deploy your application to these environments --- this guide focuses on the OpenShift Template deployment approach.
 
-== Creating an OpenShift Template
+== What is a Template?
+
+In short, an OpenShift template is a YAML-formatted file that describes a set of services to be created in an OpenShift project.
+
+Templates can be used to instantiate instances of a well-defined environment, and provide a repeatable method of configuring, hosting applications. Templates can also be parameterized to accept custom values that change
+
+== Creating an Template
+
+To create a new template, first create a blank YAML file. We will create a template that provides a minimal example for running a Spring Boot application:
+
+. *Template definition* (file header, "I'm a template!")
++
+All templates must declare that they are templates. This is accomplished by prefixing the file with the following header:
++
+----
+apiVersion: v1
+kind: Template
+----
+. *Metadata*
++
+This section defines information about the template itself. All that is required is a name, though additional fields should be provided if you plan to run the template via the OpenShift GUI:
++
+----
+metadata:
+  name: my-template-name
+  annotations:
+    iconClass: icon-css-name (Where is the list of icons?)
+    tags: tag1, tag2, tag3, etc
+    openshift.io/display-name: My Template Name (displayed on OpenShift console)
+    openshift.io/provider-display-name: "My Company, e.g. Red Hat, Inc."
+    description: >-
+      Some text describing what this template defines.
+----
+. *BuildConfig* (how the project gets built)
++
+The BuildConfig defines the process OpenShift will use to assemble the project deliverable, or output. In our case, we'll be building a Spring Boot application with Maven:
+----
+----
++
+. Deployment config
+. Service definition
 
 == Deploying from the CLI
+
+Once you have a valid, complete Template, you can deploy the template from the command line using the `oc` command.
+
+----
+oc new-app --template=my-template-name -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-istio-routing-booster -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=spring-boot-istio-routing-client
+----
 
 == Deploying via OpenShift admin console
 

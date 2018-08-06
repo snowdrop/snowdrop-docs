@@ -182,8 +182,8 @@
         "content": "https://raw.githubusercontent.com/snowdrop/spring-boot-opentracing-booster/master/README.adoc",
         "documentation":"https://github.com/snowdrop/spring-boot-opentracing-booster/"
       },
-      "description":"Configure and deploy a Spring Boot app instrumented using Opentracing.",
-      "tags": "http, tracing, instrumentation",
+      "description":"Configure and deploy a Spring Boot app instrumented using Opentracing, with Jaeger.",
+      "tags": "http, tracing, instrumentation, jaeger",
       "versions": []
     },
     {
@@ -194,7 +194,7 @@
         "booster":"artifactId=externalized-config&groupId=me.snowdrop.booster&mission=configmap&runtime=spring-boot&runtimeVersion=current-community",
         "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-configmap-spring-boot"
       },
-      "tags": "configuration, setup",
+      "tags": "configuration, setup, openshift",
       "versions": []
     },
     {
@@ -210,49 +210,49 @@
     },
     {
       "type":"booster",
-      "title":"Istio - Circuit Breaker",
+      "title":"Service Mesh - Circuit Breaker",
       "description":"Limiting access to a degraded service until it becomes available to handle requests. This helps prevent cascading failures in other services that depend on the failed services for functionality.",
       "urls": {
         "booster":"artifactId=istio-circuit-breaker&groupId=me.snowdrop.booster&mission=istio-circuit-breaker&runtime=spring-boot&runtimeVersion=current-community",
         "content":"https://raw.githubusercontent.com/snowdrop/spring-boot-istio-circuit-breaker-booster/master/README.adoc"
       },
-      "tags": "circuit breaker, istio",
+      "tags": "service mesh, circuit breaker, istio",
       "enablements": "build, testing, -local",
       "versions": []
     },
     {
       "type":"booster",
-      "title":"Istio - Distributed Tracing",
-      "description":"Integrated distributed tracing allows following requests through an application running on an Istio-enabled cluster.",
+      "title":"Service Mesh - Distributed Tracing",
+      "description":"Integrated distributed tracing allows following requests through an application running on an Service Mesh-enabled cluster.",
       "urls": {
         "booster":"artifactId=istio-distributed-tracing&groupId=me.snowdrop.booster&mission=istio-distributed-tracing&runtime=spring-boot&runtimeVersion=current-community",
         "content": "https://raw.githubusercontent.com/snowdrop/spring-boot-istio-distributed-tracing-booster/master/README.adoc"
       },
-      "tags": "distributed tracing, istio",
+      "tags": "service mesh, distributed tracing, istio",
       "enablements": "build, testing, -local",
       "versions": []
     },
     {
       "type":"booster",
-      "title":"Istio - Security",
+      "title":"Service Mesh - Security",
       "description":"Secure communication between microservices with Mutual TLS, and allow or deny access to others services using ACL.",
       "urls": {
         "booster":"artifactId=istio-security&groupId=me.snowdrop.booster&mission=istio-security&runtime=spring-boot&runtimeVersion=current-community",
         "content":"https://raw.githubusercontent.com/snowdrop/spring-boot-istio-security-booster/master/README.adoc"
       },
-      "tags": "istio, security, authorization",
+      "tags": "service mesh, security, authorization, istio",
       "enablements": "build, testing, -local",
       "versions": []
     },
     {
       "type":"booster",
-      "title":"Istio - Routing",
+      "title":"Service Mesh - Routing",
       "description":"Route traffic to/from services, including load balancing traffic to different versions of the same service. Set up A/B tests, canary deployments, or deployments during a release.",
       "urls": {
         "booster":"artifactId=istio-routing&groupId=me.snowdrop.booster&mission=istio-routing&runtime=spring-boot&runtimeVersion=current-community",
         "content":"https://raw.githubusercontent.com/snowdrop/spring-boot-istio-routing-booster/master/README.adoc"
       },
-      "tags": "istio, routing",
+      "tags": "service mesh, routing, istio",
       "enablements": "build, testing, -local",
       "versions": []
     },
@@ -282,12 +282,12 @@
     },
     {
       "type":"guide",
-      "title":"Spring Data - Infinispan",
+      "title":"Full Text Search with Spring Data & Infinispan",
       "urls": {
         "content":"https://raw.githubusercontent.com/snowdrop/spring-boot-spring-data-booster/master/README.adoc",
         "source": "https://github.com/snowdrop/spring-boot-spring-data-booster/"
       },
-      "tags": "basic, deployment",
+      "tags": "search, deployment, infinispan",
       "description":"Configure and deploy a Spring Boot app using Snowdrop’s Spring Data support with Infinispan"
     }
   ]

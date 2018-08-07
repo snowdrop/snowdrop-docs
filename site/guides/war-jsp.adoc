@@ -6,11 +6,7 @@
 
 https://github.com/snowdrop/spring-boot-mvc-jsp[Git repository of the Spring Boot WAR application]
 
-In order to use a Spring Boot project which is packaged as a WAR and which contains, by example, a JSP page with JSP Standard Tags
-
-image:image/sb-war-jsp.png[]
-
-some modifications of the Maven Spring Boot project are required to build/deploy correctly the application as a container on OpenShift or Kubernetes platform.
+In order to use a Spring Boot project which is packaged as a WAR and which contains (for example, a JSP page with JSP Standard Tags), some modifications of the Maven Spring Boot project are required to build/deploy correctly the application as a container on OpenShift or Kubernetes platform.
 
 ==== Modifications required
 

@@ -31,6 +31,41 @@
       }
     }
   },
+  "projects": [
+    {
+      "name": "Infinispan",
+      "description": "A distributed in-memory key/value data store and cache, with optional schema.",
+      "tag": "infinispan",
+      "color": "#98BBD3",
+      "urls":{
+        "logo":"https://avatars0.githubusercontent.com/u/458093?s=200&v=4",
+        "source":"https://github.com/infinispan",
+        "website":"http://infinispan.org"
+      }
+    },
+    {
+      "name": "Istio",
+      "description": "An open platform/service-mesh to connect, manage, and secure microservices.",
+      "tag": "istio",
+      "color": "#456CB3",
+      "urls":{
+        "logo":"https://avatars3.githubusercontent.com/u/23534644?s=200&v=4",
+        "source":"https://github.com/istio",
+        "website":"https://istio.io/"
+      }
+    },
+    {
+      "name": "Jaeger",
+      "description": "Open source, end-to-end distributed tracing.",
+      "tag": "jaeger",
+      "color": "#456CB3",
+      "urls":{
+        "logo":"https://avatars0.githubusercontent.com/u/28545596?s=200&v=4",
+        "source":"https://github.com/jaegertracing",
+        "website":"https://www.jaegertracing.io"
+      }
+    }
+  ],
   "guides": [
     {
       "type":"guide",
@@ -228,7 +263,7 @@
         "booster":"artifactId=istio-distributed-tracing&groupId=me.snowdrop.booster&mission=istio-distributed-tracing&runtime=spring-boot&runtimeVersion=current-community",
         "content": "https://raw.githubusercontent.com/snowdrop/spring-boot-istio-distributed-tracing-booster/master/README.adoc"
       },
-      "tags": "service mesh, distributed tracing, istio",
+      "tags": "service mesh, distributed tracing, istio, jaeger",
       "enablements": "build, testing, -local",
       "versions": []
     },

@@ -58,7 +58,7 @@
       "name": "Jaeger",
       "description": "Open source, end-to-end distributed tracing.",
       "tag": "jaeger",
-      "color": "#456CB3",
+      "color": "#75D2E8",
       "urls":{
         "logo":"/assets/img/project-logos/jaeger-logo.jpg",
         "source":"https://github.com/jaegertracing",

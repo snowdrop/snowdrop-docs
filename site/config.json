@@ -38,6 +38,11 @@
       "tags":"basic"
     },
     {
+      "name":"HTTP & REST",
+      "description" : "How to build applications using REST and related services.",
+      "tags":"http"
+    },
+    {
       "name":"Deployment",
       "description" : "Take your application from development to staging or production.",
       "tags":"deployment"

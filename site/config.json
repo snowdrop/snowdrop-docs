@@ -31,6 +31,23 @@
       }
     }
   },
+  "categories": [
+    {
+      "name":"Application Development",
+      "description" : "Best practices and patterns for cloud-native applications",
+      "tags":"basic"
+    },
+    {
+      "name":"Deployment",
+      "description" : "Take your application from development to staging or production.",
+      "tags":"deployment"
+    },
+    {
+      "name" : "Service Mesh",
+      "description" : "Connect your application with other services, control routing, and security.",
+      "tags" : "service mesh"
+    }
+  ],
   "projects": [
     {
       "name": "Infinispan",
@@ -229,7 +246,7 @@
         "booster":"artifactId=externalized-config&groupId=me.snowdrop.booster&mission=configmap&runtime=spring-boot&runtimeVersion=current-community",
         "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-configmap-spring-boot"
       },
-      "tags": "configuration, setup, openshift",
+      "tags": "configuration, setup, basic, openshift",
       "versions": []
     },
     {

@@ -6,7 +6,7 @@ To make starting up easy, Snowdrop provides a link:/wizard[quick-start tool] tha
 
 Press "Get Started" in the site menu to run the example application generator, or click the link below.
 
-*link:/wizard[Launch the example generator]*
+*link:/start[Launch the example generator]*
 
 == What next?
 Once you've deployed your first example application, you should explore the link:/guides[Snowdrop integration guides] to learn more about using best practices and Cloud Native technologies.

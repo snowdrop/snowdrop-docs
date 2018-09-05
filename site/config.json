@@ -95,8 +95,7 @@
       "title":"Get Cloud Ready",
       "description":"Set up your environment for Cloud Native Development.",
       "urls": {
-        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/intro/get-cloud-ready.adoc",
-        "source": "https://github.com/snowdrop/snowdrop-docs"
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/intro/get-cloud-ready.adoc"
       },
       "prerequisites": "",
       "tags": "intro, site, part-1, hidden",
@@ -107,8 +106,7 @@
       "title":"Get Started",
       "description":"Build and run your first Cloud Native app.",
       "urls": {
-        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/intro/get-started.adoc",
-        "source": "https://github.com/snowdrop/snowdrop-docs"
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/intro/get-started.adoc"
       },
       "prerequisites": "+intro, +site, +part-1",
       "tags": "intro, site, part-2, hidden",
@@ -119,8 +117,7 @@
       "title":"Use Best Practices",
       "description":"Learn how to integrate and use Cloud Native technologies.",
       "urls": {
-        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/intro/use-best-practices.adoc",
-        "source": "https://github.com/snowdrop/snowdrop-docs"
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/intro/use-best-practices.adoc"
       },
       "prerequisites": "+intro, +site, part-1, part-2",
       "tags": "intro, site, part-3, hidden",
@@ -133,8 +130,7 @@
       "title":"Learn: Deployment Types",
       "description":"Learn how to deploy Cloud Native applications.",
       "urls": {
-        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/deployment/deployment-types.adoc",
-        "source": "https://github.com/snowdrop/snowdrop-docs"
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/deployment/deployment-types.adoc"
       },
       "prerequisites": "basic",
       "tags": "deploy, overview",
@@ -145,8 +141,7 @@
       "title":"Deployment Types: OpenShift Templates",
       "description":"Learn how to deploy Cloud Native applications with YAML Templates.",
       "urls": {
-        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/deployment/deployment-types-template.adoc",
-        "source": "https://github.com/snowdrop/snowdrop-docs"
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/deployment/deployment-types-template.adoc"
       },
       "prerequisites": "basic",
       "tags": "deploy, openshift",
@@ -157,8 +152,7 @@
       "title":"Deployment Types: Fabric8 Maven Plugin",
       "description":"Learn how to deploy Cloud Native applications with FMP.",
       "urls": {
-        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/deployment/deployment-types-fmp.adoc",
-        "source": "https://github.com/snowdrop/snowdrop-docs"
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/deployment/deployment-types-fmp.adoc"
       },
       "prerequisites": "basic",
       "tags": "deploy, fmp",

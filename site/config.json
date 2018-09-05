@@ -11,6 +11,7 @@
   ],
   "builds": [
     { "repo": "spring-boot-bom" },
+    { "repo": "generator" },
     { "repo": "spring-boot-http-booster" },
     { "repo": "spring-boot-http-secured-booster" },
     { "repo": "spring-boot-configmap-booster" },

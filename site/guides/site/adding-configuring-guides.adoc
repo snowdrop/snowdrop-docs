@@ -65,3 +65,91 @@ guides: [
 <8> *Prerequisite tags:* Specify tags of any guides that should be completed as a prerequisite step before beginning *this* guide. Any tags negated/prefixed with "-" the dash, or minus sign will cause matching guides to be excluded. Any tags prefixed with "+", the plus sign, require the corresponding guide to strictly include the specified tag in order to match.
 <9> *Enablement tags:* Specify tags of any guides that can be completed as a followup, or "next steps", once *this* guide has been completed. Any tags negated/prefixed with "-" the dash, or minus sign will cause matching guides to be excluded. Any tags prefixed with "+", the plus sign, require the corresponding guide to strictly include the specified tag in order to match.
 <10> *Tags:* Specify tags describing this guide. These are used when matching related content on the site, and also used when calculating prerequisites and enablements of other guides. (Tags cannot be negated.)
+
+=== Using collapsible sections in guides
+The SnowDrop website will automatically render second level sections as collapsible (link:https://github.com/snowdrop/snowdrop-docs/blob/master/site/guides/site/adding-configuring-guides.adoc[like this guide itself], for example).
+This creates a visual aid that allows the reader to quickly navigate to parts of a document that they are interested, while skipping parts that are not pertinent, or useful to them. More information can be contained in each guide, and readers can explore at will.
+
+NOTE:: Sections are collapsed by default until the reader clicks on its heading, or on its entry in the table of contents.
+
+==== How to create a collapsible section
+To create a collapsible section, use a second-level heading, like so:
+
+.example-guide.adoc
+[source,asciidoc]
+----
+=== This is a collapsible second-level section
+Anything contained will be collapsed by default until the reader clicks on its heading, or on its entry in the table of contents.
+----
+
+NOTE:: Only second-level sections are collapsible, all others are displayed normally.
+
+==== A more detailed example
+This example shows how to use a collapsible section in the context of an entire guide/document.
+
+.example-guide.adoc
+[source,asciidoc]
+----
+= This is the document title
+
+== This is a first level header
+
+=== This is a collapsible second-level section
+
+Example text just for example's sake, isn't this great!? Let's write some more examples so everyone is happy and exampled out.
++
+.example-guide.adoc
+[source,asciidoc]
+....
+This example contains an example, isn't it amusing?
+....
+
+=== This is another collapsible second-level section
+Anything contained in this section will be collapsed by default
+
+== This first-level section will not be collapsible
+
+==== This is a third-level section
+This section will not be collapsible because it is not contained within a second-level section
+----
+
+== Linked Project and Tag configuration syntax
+
+The SnowDrop site can be configured to display contextual project information (related projects)
+when viewing other content such as guides and news content. This allows guide authors to quickly provide
+additional reference information to readers when their guide relates to content that is hosted on
+another website (or belongs to another project or technology).
+
+=== How to configure linked projects and tags
+
+To add a linked project to the site, edit the site  https://github.com/snowdrop/snowdrop-docs/blob/master/site/config.json[config.json] file and add a new element
+to the "projects" array, seen below:
+
+==== Linked project syntax
+.config.json
+[source,json]
+----
+...
+"projects": [
+  {
+    "name": "ProjectName", # <1>
+    "description": "The project description.", # <2>
+    "tag": "project-tag", # <3>
+    "color": "#98BBD3", # <4>
+    "urls":{
+      "logo":"http://site.com/project-logo.png", # <5>
+      "source":"https://github.com/my-organization/my-project", # <6>
+      "website":"http://example.org/myproject" # <7>
+    }
+  },
+  ...
+]
+...
+----
+<1> *Project name:* This will appear wherever project information is rendered (Should be maximum 20-30 characters)
+<2> *Project description:* This will appear wherever project information is rendered, and should be relatively short. (Less than 80 characters in length)
+<3> *Project tag:* The project will be rendered when guides or other content is tagged with this term.
+<4> *Project color:* Hex code defining the project highlight color for tags and labels
+<5> *Project logo URL:* Link to the project's logo. This should be roughly 60px x 60px (Square aspect ratio)
+<6> *Source URL:* Link to the project's source repository
+<7> *Website URL:* Link to the project's website

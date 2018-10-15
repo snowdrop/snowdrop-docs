@@ -164,8 +164,8 @@
 
     {
       "type":"guide",
-      "title":"Site configuration: Guides & Projects",
-      "description":"How to add or configure guides & projects on the Snowdrop website.",
+      "title":"Site configuration: Guides and Projects",
+      "description":"How to add or configure guides and projects on the Snowdrop website.",
       "urls": {
         "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/adding-configuring-guides.adoc",
         "source": "https://github.com/snowdrop/snowdrop-docs"

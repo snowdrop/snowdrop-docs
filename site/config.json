@@ -90,7 +90,7 @@
     }
   ],
   "guides": [
-    {
+    { 
       "type":"guide",
       "title":"Adding/configuring Guides",
       "description":"How to add or configure guides and projects on the Snowdrop website.",

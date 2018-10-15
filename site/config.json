@@ -92,6 +92,16 @@
   "guides": [
     {
       "type":"guide",
+      "title":"Adding/configuring Guides",
+      "description":"How to add or configure guides and projects on the Snowdrop website.",
+      "urls": {
+        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/adding-configuring-guides.adoc",
+        "source": "https://github.com/snowdrop/snowdrop-docs"
+      },
+      "tags": "internal, hidden"
+    },
+    {
+      "type":"guide",
       "title":"Get Cloud Ready",
       "description":"Set up your environment for Cloud Native Development.",
       "urls": {
@@ -157,20 +167,6 @@
       "prerequisites": "basic",
       "tags": "deploy, fmp",
       "enablements": ""
-    },
-
-
-
-
-    {
-      "type":"guide",
-      "title":"Site configuration: Guides and Projects",
-      "description":"How to add or configure guides and projects on the Snowdrop website.",
-      "urls": {
-        "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/adding-configuring-guides.adoc",
-        "source": "https://github.com/snowdrop/snowdrop-docs"
-      },
-      "tags": "internal, hidden"
     },
     {
       "type":"booster",

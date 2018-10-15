@@ -1,4 +1,4 @@
-== Snowdrop site: How to add or configure guides
+== Site management: Guides
 
 Configuring guides and other metadata for the Snowdrop website requires http://git-scm.com/download[Git] and a text editor. It also helps to have an asciidoc preview tool such as https://chrome.google.com/webstore/detail/asciidoctorjs-live-previe/iaalpfgpbocpdfblpnhhgllgbdbchmia?hl=en[Asciidoctor.js Live Preview] for Chrome. Guides are written in Asciidoc format.
 
@@ -113,7 +113,7 @@ Anything contained in this section will be collapsed by default
 This section will not be collapsible because it is not contained within a second-level section
 ----
 
-== Linked Project and Tag configuration syntax
+== Site management: Linked projects
 
 The SnowDrop site can be configured to display contextual project information (related projects)
 when viewing other content such as guides and news content. This allows guide authors to quickly provide

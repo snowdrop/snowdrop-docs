@@ -153,3 +153,31 @@ to the "projects" array, seen below:
 <5> *Project logo URL:* Link to the project's logo. This should be roughly 60px x 60px (Square aspect ratio)
 <6> *Source URL:* Link to the project's source repository
 <7> *Website URL:* Link to the project's website
+
+=== How to link a project to a guide
+
+To display a linked project on a guide page, you must ensure that the project tag is added to the guide's tags.
+Edit the site config.json file to modify your guide's tags:
+
+.config.json
+[source,json]
+----
+guides: [
+  ...
+  {
+    "type":"guide",
+    "title": ...,
+    "description": ...,
+    "urls": {
+      ...
+    },
+    "prerequisites": ...,
+    "enablements": ...,
+    "tags": "foo, bar, project-tag, tag2" # <1>
+  },
+  ...
+],
+----
+<1> Project tag is added to the guide's tags.
+
+Notice that the project tag has been added to the guides list of "tags". Your linked project will now appear in the sidebar of the site when viewing this guide.

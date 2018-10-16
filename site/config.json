@@ -90,7 +90,7 @@
     }
   ],
   "guides": [
-    { 
+    {
       "type":"guide",
       "title":"Adding/configuring Guides",
       "description":"How to add or configure guides and projects on the Snowdrop website.",
@@ -240,7 +240,8 @@
       "description":"Use a ConfigMap to externalize configuration and keep passwords/api keys safe. (Requires OpenShift)",
       "urls": {
         "booster":"artifactId=externalized-config&groupId=me.snowdrop.booster&mission=configmap&runtime=spring-boot&runtimeVersion=current-community",
-        "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-configmap-spring-boot"
+        "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-configmap-spring-boot",
+        "content": "https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/configuration/externalizing-application-configuration.adoc"
       },
       "tags": "configuration, setup, basic, openshift",
       "versions": []

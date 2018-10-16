@@ -13,7 +13,7 @@ snowdrop-docs/site/guides/
     guide-b.adoc
     your-new-guide.adoc
 ----
-* Add an entry to the site config.json file: https://github.com/snowdrop/snowdrop-docs/blob/master/site/config.json
+* Add an entry to the site config.json file: https://github.com/snowdrop/snowdrop-docs/blob/master/site/config.json (Refer to the section below, link:#_guide_configuration_syntax[Guide configuration syntax])
 * *IMPORTANT*: Validate the JSON before pushing changes: https://jsonlint.com/
 * Once your guide has been configured. Push changes to the `snowdrop-site` repository (or your fork, and submit a pull request).
 * Do not re-build/re-deploy the Snowdrop website. One your guide has been committed, changes are publicly visible as soon as files are updated on GitHub.

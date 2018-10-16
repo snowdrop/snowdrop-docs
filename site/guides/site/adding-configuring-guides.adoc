@@ -4,7 +4,7 @@ Configuring guides and other metadata for the Snowdrop website requires http://g
 
 === Creating a new guide
 
-* Clone the Snowdrop Docs repository: https://github.com/snowdrop/snowdrop-docs
+* Fork and Clone the Snowdrop Docs repository: https://github.com/snowdrop/snowdrop-docs
 * Place a new `*.adoc` file in the `site/guides` directory (or host your source asciidoc file on the public internet, you will need its URL later):
 +
 ----
@@ -15,8 +15,8 @@ snowdrop-docs/site/guides/
 ----
 * Add an entry to the site config.json file: https://github.com/snowdrop/snowdrop-docs/blob/master/site/config.json
 * *IMPORTANT*: Validate the JSON before pushing changes: https://jsonlint.com/
-* Once your guide has been configured. Push changes to the `snowdrop-site` repository.
-* Do not re-build/re-deploy the Snowdrop website. Changes are publicly visible as soon as files are updated on GitHub.
+* Once your guide has been configured. Push changes to the `snowdrop-site` repository (or your fork, and submit a pull request).
+* Do not re-build/re-deploy the Snowdrop website. One your guide has been committed, changes are publicly visible as soon as files are updated on GitHub.
 * Changes may take several minutes to become visible on the Snowdrop website, as GitHub sometimes caches raw documents for a period of time.
 
 === Configuring existing guides

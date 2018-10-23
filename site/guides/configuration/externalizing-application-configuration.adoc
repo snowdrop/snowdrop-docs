@@ -2,16 +2,11 @@
 
 :deploymentPlatform: OpenShift
 
-//openshift docs on configmaps
-//https://docs.openshift.org/latest/dev_guide/configmaps.html
-//https://goo.gl/cQTA2B
-//https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-configmaps-from-files
-
 link:http://kubernetes.io/docs/user-guide/configmap/[`ConfigMap`] is a {deploymentPlatform} resource type that allows you to externalize the configuration parameters that you pass to your application in the form of key-value pairs or embedded `application.properties` or `application.yaml` templates.
 The `ConfigMapPropertySource` provided by Spring Cloud Kubernetes searches the deployment configuration of your application for a ConfigMap object in which the `metadata.name` property matches the name of your {SpringBoot} application and applies the values to the deployment configuration of your application.
 The application name is set by the `spring.application.name` property.
 
-Alternatively, you can specify a custom name forhttp://localhost:8088/guides/adding-configuring-guides#_using_collapsible_sections_in_guides your ConfigMap.
+Alternatively, you can specify a custom name for your ConfigMap.
 Set the value of the `spring.cloud.kubernetes.config.name` property in the `bootstrap.properties` file of your application project to the name of your ConfigMap.
 This enables the externalized configuration to be recognized and processed by your application.
 
@@ -40,7 +35,7 @@ oc policy add-role-to-user view system:serviceaccount:$(oc project -q):{app-name
 
 === Injecting settings - Using individual properties
 
-* Specify values of individual configuration properties directly in key-value format.
+Specify values of individual configuration properties directly in key-value format.
 {deploymentPlatform} processes the ConfigMap and maps the values to your application.
 This structure is suitable for updating specific properties within an otherwise static configuration.
 +
@@ -57,18 +52,16 @@ data:
 
 === Injecting settings - Using a template
 
-* If your configuration template contains a property named `application.yaml`, {deploymentPlatform} processes the configuration template and creates the ConfigMap.
+If your configuration template contains a property named `application.yaml`, {deploymentPlatform} processes the configuration template and creates the ConfigMap.
 On application startup, {deploymentPlatform} checks if the ConfigMap contains a key with one of the following names:
-+
---
-** `application.yaml`,
-** `application.yml`,
-** `application.properties`.
---
-+
+
+* `application.yaml`
+* `application.yml`
+* `application.properties`
+
 If the key is found, {deploymentPlatform} processes and applies the content of that property as an embedded YAML configuration template.
 This allows you to update complex sets of application properties at once, while helping you to keep your template readable.
-+
+
 [source,yaml,options="nowrap"]
 ----
 kind: ConfigMap
@@ -85,9 +78,9 @@ data:
 
 === Injecting settings - Using an embedded properties file
 
-* If your ConfigMap contains a property named `application.properties`, the content of that property is treated as an embedded `application.properties` file.
+If your ConfigMap contains a property named `application.properties`, the content of that property is treated as an embedded `application.properties` file.
 Note that loading application properties from YAML files link:https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html#boot-features-external-config-yaml-shortcomings[using the `@PropertySource` annotation] is not possible.
-+
+
 [source,yaml,options="nowrap"]
 ----
 kind: ConfigMap
@@ -101,11 +94,13 @@ data:
     spring.main.web-application-type=none
     spring.main.banner-mode=off
 ----
-+
-This approach is useful for applications that use multiple profiles, where the configurations differ depending on the active profile.
-This structure allows you to maintain multiple parallel configurations in a manner similar to maintaining multiple property files.
-In the example below, alternate configurations are separated by the `---` sequence of characters.
-+
+
+==== Using a system property to select a configuration profile.
+
+You can specify multiple profiles for your external configuration by separating them with a delimiter (`---`).
+This structure allows you to maintain multiple parallel configurations in a manner similar to maintaining multiple properties files.
+You can use a system property to determine which profile to apply when you run your application.
+
 [source,yaml,options="nowrap"]
 ----
 kind: ConfigMap
@@ -128,10 +123,9 @@ data:
       message: Say Hello to the Ops
 ----
 
-==== Using a system property to select a configuration profile.
+To select the configuration profile you want to apply:
 
 . Store the system property in the `JAVA_OPTIONS` environment variable in the deployment configuration of your application.
-//`DeploymentConfig` or Kubernetes `ReplicationConfig` resource file as follows:
 +
 [source,yaml,options="nowrap"]
 ----
@@ -159,6 +153,7 @@ java -jar {app-name}.jar -Dspring.profiles.active=developer
 
 === Built-in configuration properties
 
+--
 The table below lists the configuration properties provided by Spring Cloud Kubernetes:
 
 [options="header"]
@@ -170,3 +165,4 @@ The table below lists the configuration properties provided by Spring Cloud Kube
 | spring.cloud.kubernetes.config.paths     | List    | null                       | Sets the paths where ConfigMaps are mounted
 | spring.cloud.kubernetes.config.enableApi | Boolean | true                       | Enable/Disable consuming ConfigMaps via APIs
 |===
+--

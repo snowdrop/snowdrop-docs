@@ -11,7 +11,7 @@ link:http://kubernetes.io/docs/user-guide/configmap/[`ConfigMap`] is a {deployme
 The `ConfigMapPropertySource` provided by Spring Cloud Kubernetes searches the deployment configuration of your application for a ConfigMap object in which the `metadata.name` property matches the name of your {SpringBoot} application and applies the values to the deployment configuration of your application.
 The application name is set by the `spring.application.name` property.
 
-Alternatively, you can specify a custom name for your ConfigMap.
+Alternatively, you can specify a custom name forhttp://localhost:8088/guides/adding-configuring-guides#_using_collapsible_sections_in_guides your ConfigMap.
 Set the value of the `spring.cloud.kubernetes.config.name` property in the `bootstrap.properties` file of your application project to the name of your ConfigMap.
 This enables the externalized configuration to be recognized and processed by your application.
 
@@ -21,8 +21,9 @@ The example below uses the following properties:
 * `pool.size.core`
 * `pool.size.maximum`
 
-You can inject configuration settings into your application in different ways depending on how you structure the data within the ConfigMap:
+=== Injecting settings
 
+You can inject configuration settings into your application in different ways depending on how you structure the data within the ConfigMap:
 
 // make this a prerequisite:
 // already documented in the Configmap booster doc
@@ -36,6 +37,8 @@ Without these permissions, your application will not be able to access the Confi
 oc policy add-role-to-user view system:serviceaccount:$(oc project -q):{app-name} -n $(oc project -q)
 --
 ====
+
+=== Injecting settings - Using individual properties
 
 * Specify values of individual configuration properties directly in key-value format.
 {deploymentPlatform} processes the ConfigMap and maps the values to your application.
@@ -51,6 +54,8 @@ data:
   pool.size.core: 1
   pool.size.max: 16
 ----
+
+=== Injecting settings - Using a template
 
 * If your configuration template contains a property named `application.yaml`, {deploymentPlatform} processes the configuration template and creates the ConfigMap.
 On application startup, {deploymentPlatform} checks if the ConfigMap contains a key with one of the following names:
@@ -78,7 +83,8 @@ data:
         max:16
 ----
 
-// not sure if multiple profiles are supported
+=== Injecting settings - Using an embedded properties file
+
 * If your ConfigMap contains a property named `application.properties`, the content of that property is treated as an embedded `application.properties` file.
 Note that loading application properties from YAML files link:https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html#boot-features-external-config-yaml-shortcomings[using the `@PropertySource` annotation] is not possible.
 +
@@ -122,7 +128,7 @@ data:
       message: Say Hello to the Ops
 ----
 
-** Use a system property to select which profile to enable when you run your application.
+==== Using a system property to select a configuration profile.
 +
 . Store the system property in the `JAVA_OPTIONS` environment variable in the deployment configuration of your application.
 //`DeploymentConfig` or Kubernetes `ReplicationConfig` resource file as follows:
@@ -151,7 +157,7 @@ To use the `developer` profile, for example:
 java -jar {app-name}.jar -Dspring.profiles.active=developer
 ----
 
-.Additional information
+=== Built-in configuration properties
 
 The table below lists the configuration properties provided by Spring Cloud Kubernetes:
 

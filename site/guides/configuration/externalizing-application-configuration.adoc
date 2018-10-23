@@ -159,6 +159,7 @@ java -jar {app-name}.jar -Dspring.profiles.active=developer
 
 === Built-in configuration properties
 
+--
 The table below lists the configuration properties provided by Spring Cloud Kubernetes:
 
 [options="header"]
@@ -170,3 +171,4 @@ The table below lists the configuration properties provided by Spring Cloud Kube
 | spring.cloud.kubernetes.config.paths     | List    | null                       | Sets the paths where ConfigMaps are mounted
 | spring.cloud.kubernetes.config.enableApi | Boolean | true                       | Enable/Disable consuming ConfigMaps via APIs
 |===
+--

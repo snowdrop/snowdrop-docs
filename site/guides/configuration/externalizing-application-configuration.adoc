@@ -129,7 +129,7 @@ data:
 ----
 
 ==== Using a system property to select a configuration profile.
-+
+
 . Store the system property in the `JAVA_OPTIONS` environment variable in the deployment configuration of your application.
 //`DeploymentConfig` or Kubernetes `ReplicationConfig` resource file as follows:
 +

@@ -95,7 +95,7 @@
       "title":"Katacoda Example Scenario",
       "description":"Example of a Katacoda Scenario.",
       "urls": {
-        "katacoda": "snowdrop/hello-world",
+        "katacoda": "snowdrop/hello-world"
       },
       "tags": "internal, hidden"
     },

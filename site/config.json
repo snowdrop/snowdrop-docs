@@ -105,7 +105,8 @@
       "description":"How to add or configure guides and projects on the Snowdrop website.",
       "urls": {
         "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/site/adding-configuring-guides.adoc",
-        "source": "https://github.com/snowdrop/snowdrop-docs"
+        "source": "https://github.com/snowdrop/snowdrop-docs",
+        "generator":"groupid=com.example&artifactid=example&version=0.0.1-SNAPSHOT&packagename=com.example.demo&springbootversion=1.5.16.RELEASE&template=custom&module=web&module=keycloak&module=integration"
       },
       "tags": "internal, hidden"
     },

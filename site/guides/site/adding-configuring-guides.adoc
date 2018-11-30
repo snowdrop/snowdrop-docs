@@ -35,36 +35,57 @@ guides: [
   },
   ...
   {
-    "type":"guide", # <1>
-    "title":"Title of your new guide", # <2>
-    "description":"A brief 150 or fewer characters description of the guide's purpose.", # <3>
+    "type":"guide", <1>
+    "title":"Title of your new guide", <2>
+    "description":"A brief 150 or fewer characters description of the guide's purpose.", <3>
     "urls": {
-      "booster": "artifactId=istio-routing&groupId=me.snowdrop.booster&mission=istio-routing&runtime=spring-boot&runtimeVersion=current-community" # <4>
-      "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/your-new-guide.adoc", # <5>
-      "documentation": "/guides/adding-configuring-guides" # <6>
-      "source": "https://github.com/snowdrop/snowdrop-docs" # <7>
+      "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/your-new-guide.adoc", <4>
+      "katacoda":"snowdrop/hello-world"<5>
     },
-    "prerequisites": "foo, bar, -hard", # <8>
-    "enablements": "dal, lar, -easy", # <9>
-    "tags": "baz, cab" # <10>
+    "prerequisites": "foo, bar, -hard", <6>
+    "enablements": "dal, lar, -easy", <7>
+    "tags": "baz, cab" <8>
   },
   ...
   {
     "type":"guide",
-    "title":"Configuring/adding a Guide",
+    "title":"Another guide to read",
 ...
 ],
 ----
 <1> *The guide type:* Currently the only supported type is "guide".
 <2> *The title of your new guide:* This should be 50 characters or less, or it may be truncated.
 <3> *The description of your new guide:* This should be 150 characters or less, or it may be truncated.
-<4> *Booster URL:* Parameters that are passed to the launcher to download a booster ZIP file. This is only necessary if your guide has a corresponding booster that is downloadable via the Snowdrop launcher.
-<5> *Content URL:* This is the fully qualified URL to the source of your guide's content. This must link to an asciidoc file that is accessible via the public internet.
-<6> *Documentation URL:* This is the path to external documentation (if any) referenced by your guide.
-<7> *Source URL:* This is the path to the source code for your guide, or for the project it describes.
-<8> *Prerequisite tags:* Specify tags of any guides that should be completed as a prerequisite step before beginning *this* guide. Any tags negated/prefixed with "-" the dash, or minus sign will cause matching guides to be excluded. Any tags prefixed with "+", the plus sign, require the corresponding guide to strictly include the specified tag in order to match.
-<9> *Enablement tags:* Specify tags of any guides that can be completed as a followup, or "next steps", once *this* guide has been completed. Any tags negated/prefixed with "-" the dash, or minus sign will cause matching guides to be excluded. Any tags prefixed with "+", the plus sign, require the corresponding guide to strictly include the specified tag in order to match.
-<10> *Tags:* Specify tags describing this guide. These are used when matching related content on the site, and also used when calculating prerequisites and enablements of other guides. (Tags cannot be negated.)
+<4> *Content URL:* This is the fully qualified URL to the source of your guide's content. This must link to an asciidoc file that is accessible via the public internet. (This is required unless the guide is a Katacoda scenario.)
+<5> *Katacoda Scenario URL:* A guide may display a Katacoda embedded scenario in place of content. This URL is the `organization/repository` pair of the Katacoda scenario that will be displayed.  (If 'katacoda' is provided, no other URLs will be displayed since the embed is full page.)
+<6> *Prerequisite tags:* Specify tags of any guides that should be completed as a prerequisite step before beginning *this* guide. Any tags negated/prefixed with "-" the dash, or minus sign will cause matching guides to be excluded. Any tags prefixed with "+", the plus sign, require the corresponding guide to strictly include the specified tag in order to match.
+<7> *Enablement tags:* Specify tags of any guides that can be completed as a followup, or "next steps", once *this* guide has been completed. Any tags negated/prefixed with "-" the dash, or minus sign will cause matching guides to be excluded. Any tags prefixed with "+", the plus sign, require the corresponding guide to strictly include the specified tag in order to match.
+<8> *Tags:* Specify tags describing this guide. These are used when matching related content on the site, and also used when calculating prerequisites and enablements of other guides. (Tags cannot be negated.)
+
+
+=== Guide URLs configuration
+Each guide must specify one of 'content' or 'katacoda' URLs, and may specify additional URLs to support the guide.
+
+.config.json
+[source,json]
+----
+...
+"urls": {
+  "content":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/guides/your-new-guide.adoc", <1>
+  "katacoda":"snowdrop/hello-world" <2>
+  "booster": "artifactId=istio-routing&groupId=me.snowdrop.booster&mission=istio-routing&runtime=spring-boot&runtimeVersion=current-community" <3>
+  "generator": "groupid=com.example&packagename=com.example.demo&springbootversion=1.5.16.RELEASE&template=custom&module=web&module=keycloak" <4>
+  "documentation": "/guides/adding-configuring-guides" # <5>
+  "source": "https://github.com/snowdrop/snowdrop-docs" # <6>
+},
+...
+----
+<1> *Content URL:* This is the fully qualified URL to the source of your guide's content. This must link to an asciidoc file that is accessible via the public internet. (This is required unless the guide is a Katacoda scenario.)
+<5> *Katacoda Scenario URL:* A guide may display a Katacoda embedded scenario in place of content. This URL is the `organization/repository` pair of the Katacoda scenario that will be displayed. (If 'katacoda' is provided, no other URLs will be displayed since the embed is full page.)
+<2> *Booster URL:* Parameters that are passed to the launcher to download a booster ZIP file. This is only necessary if your guide has a corresponding booster that is downloadable via the Snowdrop launcher.
+<3> *Generator URL:* Parameters that are passed to the /start generator to allow a user to customize and generate a sample project. (See "Sample Project" button under "Get the code" in right nav)
+<4> *Documentation URL:* This is the path to external documentation (if any) referenced by your guide.
+<5> *Source URL:* This is the path to the source code for your guide, or for the project it describes.
 
 === Using collapsible sections in guides
 The SnowDrop website will automatically render second level sections as collapsible (link:https://github.com/snowdrop/snowdrop-docs/blob/master/site/guides/site/adding-configuring-guides.adoc[like this guide itself], for example).
